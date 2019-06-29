@@ -9,6 +9,8 @@ secure-rm
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
 
 
+**WORK IN PROGRESS**
+
 # Usage
 
 # Commands
