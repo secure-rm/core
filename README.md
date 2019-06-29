@@ -1,25 +1,21 @@
-![Logo of the project](./assets/img/logo.sample.png)
+![Logo of the project](./assets/logo.sample.png)
 
 secure-rm
 =========
-
-Simple tool to securely erase files
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/secure-rm.svg)](https://npmjs.org/package/secure-rm)
 [![Downloads/week](https://img.shields.io/npm/dw/secure-rm.svg)](https://npmjs.org/package/secure-rm)
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
 
-<!-- toc -->
-# Usage
-<!-- usage -->
-# Commands
-<!-- commands -->
 
-# secure-rm &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+# Usage
+
+# Commands
+
 > Additional information or tag line
 
-A brief description of your project, what it is used for.
+Simple tool to securely erase files
 
 ## Installing / Getting started
 
