@@ -1,11 +1,16 @@
 const { Command, flags } = require('@oclif/command')
-const { methods } = require('../lib/methods')
+const { methods } = require('../../')
 const handle = require('./handle')
+const table = require('./table')
 
 class SecureRmCommand extends Command {
   async run () {
     const { flags, argv } = this.parse(SecureRmCommand)
-    handle(argv, flags.method, flags.keep, flags.force)
+    if (flags.table) {
+      table()
+    } else {
+      handle(argv, flags.method, flags.keep, flags.force)
+    }
   }
 }
 
@@ -22,17 +27,14 @@ SecureRmCommand.flags = {
   method: flags.option({
     char: 'm',
     description: 'erasure method',
-    options:
-      Object.keys(methods).map(key => key)
-        .concat(Object.keys(methods).map(key => methods[key].name))
+    options: Array.from(Array(methods.length).keys()).toString()
   }),
-  force: flags.boolean({ char: 'f', description: 'avoid checks' })
+  force: flags.boolean({ char: 'f', description: 'avoid checks' }),
+  table: flags.boolean({ char: 't', description: 'show methods' })
 }
 
-// HACK! need to find another way to have multiple arguments.. -> commander.js
+SecureRmCommand.args = [{ name: 'path', required: true }]
 
-SecureRmCommand.args = new Array(2000).fill({ name: 'path', hidden: true })
-SecureRmCommand.args[0] = { name: 'path', required: true }
-SecureRmCommand.args[1] = { name: 'other paths' }
+SecureRmCommand.strict = false
 
 module.exports = SecureRmCommand
