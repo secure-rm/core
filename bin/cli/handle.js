@@ -4,7 +4,7 @@ const inquirer = require('inquirer')
 const chalk = require('chalk')
 const { CLIError } = require('@oclif/errors')
 const { secureRm, methods } = require('../../')
-const errors = require('./state')
+require('./state')
 
 function handle (argv, method = '1', force) {
   method = parseInt(method)
@@ -43,12 +43,6 @@ function remove (paths, method) {
       if (err === 'EBUSY') throw new CLIError('Resource busy or locked. (You are maybe trying to delete the current directory!)')
       if (err) console.log(err)
     })
-  }
-  console.log(chalk.bold('PROCESS COMPLETED\n'))
-  if (errors()) {
-    console.log(`   ${chalk.red(errors())} files could not be deleted.`)
-  } else {
-    console.log(`   ${chalk.green('Success!')} everything went well.`)
   }
 }
 
