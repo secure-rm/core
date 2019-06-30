@@ -29,7 +29,7 @@ SecureRmCommand.flags = {
   force: flags.boolean({ char: 'f', description: 'avoid checks' })
 }
 
-// HACK! need to find another way to have multiple arguments
+// HACK! need to find another way to have multiple arguments.. -> commander.js
 
 SecureRmCommand.args = new Array(2000).fill({ name: 'path', hidden: true })
 SecureRmCommand.args[0] = { name: 'path', required: true }

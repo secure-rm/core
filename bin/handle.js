@@ -6,7 +6,7 @@ const logSymbols = require('log-symbols')
 const { CLIError } = require('@oclif/errors')
 const { cli } = require('cli-ux')
 const { eventEmitter } = require('../lib/methods')
-const secureRm = require('../lib/secureRm')
+const secureRm = require('../lib/secure-rm')
 
 function handle (argv, method = '2', force) {
   var paths = []
