@@ -1,6 +1,6 @@
 const chalk = require('chalk')
 const ui = require('cliui')()
-const { methods } = require('../../')
+const { methods } = require('../../lib/methods')
 
 ui.div(
   {

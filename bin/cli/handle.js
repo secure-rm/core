@@ -3,7 +3,9 @@ const glob = require('glob')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const { CLIError } = require('@oclif/errors')
-const { secureRm, methods } = require('../../')
+const { cli } = require('cli-ux')
+const { methods } = require('../../lib/methods')
+const rm = require('../../')
 require('./state')
 
 function handle (argv, method = '1', force) {
@@ -39,9 +41,10 @@ function handle (argv, method = '1', force) {
 
 function remove (paths, method) {
   for (let i = paths.length - 1; i >= 0; i--) {
-    secureRm(paths[i], method, (err) => {
+    rm (paths[i], method, (err) => {
       if (err === 'EBUSY') throw new CLIError('Resource busy or locked. (You are maybe trying to delete the current directory!)')
-      if (err) console.log(err)
+      // if (err.code === 'EMFILE') cli.warn(chalk.yellow(`Too many open files, cannot open ${err.path}`))
+      if (err) console.log('id1'+err)
     })
   }
 }

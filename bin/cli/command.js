@@ -1,5 +1,5 @@
 const { Command, flags } = require('@oclif/command')
-const { methods } = require('../../')
+const { methods } = require('../../lib/methods')
 const handle = require('./handle')
 const table = require('./table')
 
@@ -30,7 +30,8 @@ SecureRmCommand.flags = {
     options: Array.from(Array(methods.length).keys()).toString()
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
-  table: flags.boolean({ char: 't', description: 'show methods' })
+  // FIXME: `secure-rm -t` instead of `secure-rm <PATH> -t`
+  table: flags.boolean({ char: 't', description: 'show methods' }) 
 }
 
 SecureRmCommand.args = [{ name: 'path', required: true }]
