@@ -1,7 +1,4 @@
-![Logo of the project](./assets/logo.sample.png)
-
-secure-rm
-=========
+![Logo of the project](./assets/secure-rm.png)
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/secure-rm.svg)](https://npmjs.org/package/secure-rm)
@@ -9,15 +6,15 @@ secure-rm
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
 
 
-**WORK IN PROGRESS**
+**STILL IN BETA**
+
+Simple tool to securely erase files
 
 # Usage
 
 # Commands
 
 > Additional information or tag line
-
-Simple tool to securely erase files
 
 ## Installing / Getting started
 
