@@ -10,22 +10,42 @@
 
 Simple tool to securely erase files
 
-# Usage
+# Installing / Getting started
 
-# Commands
+### command-line version
 
-> Additional information or tag line
-
-## Installing / Getting started
+```shell
+npm install secure-rm -g
+```
 
 A quick introduction of the minimal setup you need to get a hello world up &
 running.
 
 ```shell
-commands here
+secure-rm <PATHS> [OPTIONS]
+```
+
+
+### npm module version
+
+```shell
+npm install secure-rm --save
 ```
 
 Here you should say what actually happens when you execute the code above.
+
+```javascript
+const rm = require('secure-rm')
+
+rm (path, method, (err) => {
+  if (err) throw err
+  console.log('Success!')
+})
+```
+
+```javascript
+rm (path, method, callback)
+```
 
 ## Developing
 
@@ -110,4 +130,10 @@ Documents your database design and schemas, relations etc...
 ## Licensing
 
 State what the license is and how to find the text version of the license.
+
+# Usage
+
+# Commands
+
+> Additional information or tag line
 
