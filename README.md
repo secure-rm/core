@@ -12,24 +12,24 @@ Simple tool to securely erase files
 
 # Installing / Getting started
 
-### command-line version
+## command-line version
 
 ```shell
-npm install secure-rm -g
+$ npm install secure-rm -g
 ```
 
 A quick introduction of the minimal setup you need to get a hello world up &
 running.
 
 ```shell
-secure-rm <PATHS> [OPTIONS]
+$ secure-rm <PATHS> [OPTIONS]
 ```
 
 
-### npm module version
+## npm module version
 
 ```shell
-npm install secure-rm --save
+$ npm install secure-rm --save
 ```
 
 Here you should say what actually happens when you execute the code above.
@@ -37,11 +37,13 @@ Here you should say what actually happens when you execute the code above.
 ```javascript
 const rm = require('secure-rm')
 
-rm (path, method, (err) => {
+rm ('./folder/*.js', '1', (err) => {
   if (err) throw err
   console.log('Success!')
 })
 ```
+
+Supports file globbing.
 
 ```javascript
 rm (path, method, callback)
