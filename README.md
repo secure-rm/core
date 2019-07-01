@@ -4,7 +4,7 @@
 [![Version](https://img.shields.io/npm/v/secure-rm.svg)](https://npmjs.org/package/secure-rm)
 [![Downloads/week](https://img.shields.io/npm/dw/secure-rm.svg)](https://npmjs.org/package/secure-rm)
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
-[!(https://img.shields.io/badge/status-STILL_IN_BETA-red.svg)]
+[!(https://img.shields.io/badge/-status-STILL_IN_BETA-red.svg)]
 
 Simple tool to securely erase files
 
