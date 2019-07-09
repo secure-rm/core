@@ -1,16 +1,58 @@
 const chalk = require('chalk')
-const { cli } = require('cli-ux')
+var Multispinner = require('multispinner')
 const { eventEmitter } = require('../../lib/methods')
 
-eventEmitter.on('writing', (file) => cli.action.start(chalk.bold.yellow('Writing ') + file))
-eventEmitter.on('deleting', (file) => cli.action.start(chalk.bold.magenta('Deleting ') + file))
-eventEmitter.on('info', (file, info) => cli.action.start(chalk.bold.blue(info) + file))
+var multispinner = new Multispinner(
+  { 'Start': 'Files analyzed' },
+  {
+    color: {
+      incomplete: 'cyan',
+      success: 'green',
+      error: 'red'
+    }
+  }
+)
+
+multispinner.success('Start')
+
+eventEmitter.on('writing', (file) => {
+  multispinner.spinners[file] = {
+    state: 'incomplete',
+    current: '',
+    text: chalk.bold.yellow('Writing ') + file
+  }
+})
+
+eventEmitter.on('deleting', (file) => {
+  multispinner.spinners[file] = {
+    state: 'incomplete',
+    current: '',
+    text: chalk.bold.magenta('Deleting ') + file
+  }
+})
+
+eventEmitter.on('info', (file, info) => {
+  multispinner.spinners[file] = {
+    state: 'incomplete',
+    current: '',
+    text: chalk.bold.blue(info) + file
+  }
+})
+
 eventEmitter.on('ending', (file) => {
-  cli.action.start(chalk.green('Done ') + file)
-  cli.action.stop('')
+  multispinner.spinners[file].text = file
+  multispinner.success(file)
+  /* cli.action.start(chalk.green('Done ') + file)
+  cli.action.stop('') */
 })
 eventEmitter.on('error', (file, err) => {
-  cli.action.start(chalk.bold.red('Error ') + file)
+  multispinner.spinners[file] = {
+    state: 'error',
+    current: '',
+    text: file + ' ' + chalk.bold.red(err)
+  }
+  // multispinner.error(file)
+  /* cli.action.start(chalk.bold.red('Error ') + file)
   cli.action.stop('')
-  cli.warn(chalk.yellow(err))
+  cli.warn(chalk.yellow(err)) */
 })

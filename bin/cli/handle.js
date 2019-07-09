@@ -2,11 +2,8 @@ const path = require('path')
 const glob = require('glob')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
-const { CLIError } = require('@oclif/errors')
-// const { cli } = require('cli-ux')
 const { methods } = require('../../lib/methods')
 const rm = require('../../')
-require('./state')
 
 function handle (argv, method = '1', force) {
   method = parseInt(method)
@@ -16,9 +13,10 @@ function handle (argv, method = '1', force) {
     paths = paths.concat(glob.sync(path.join(process.cwd(), argv[i])))
   }
   if (paths.length === 0) {
-    throw new CLIError('No such file or directory.')
+    // throw new CLIError('No such file or directory.')
   }
   if (force) {
+    require('./state')
     remove(paths, method)
   } else {
     inquirer.prompt([
@@ -34,6 +32,7 @@ function handle (argv, method = '1', force) {
       }
     ])
       .then(answers => {
+        require('./state')
         remove(answers.choices, method)
       })
   }
@@ -42,9 +41,9 @@ function handle (argv, method = '1', force) {
 function remove (paths, method) {
   for (let i = paths.length - 1; i >= 0; i--) {
     rm(paths[i], method, (err) => {
-      // if (err === 'EBUSY') throw new CLIError('Resource busy or locked. (You are maybe trying to delete the current directory!)')
+      // if (err.code === 'EBUSY') throw new CLIError('Resource busy or locked. (You are maybe trying to delete the current directory!)')
       // if (err.code === 'EMFILE') cli.warn(chalk.yellow(`Too many open files, cannot open ${err.path}`))
-      if (err) console.log('ERROR' + err)
+      if (err) console.log(err)
     })
   }
 }
