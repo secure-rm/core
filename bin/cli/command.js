@@ -1,16 +1,23 @@
 const { Command, flags } = require('@oclif/command')
+const Parser = require('@oclif/parser')
 const { methods } = require('../../lib/methods')
 const handle = require('./handle')
 const table = require('./table')
 
+flags.custom = (opts = {}, action) => {
+  return Parser.flags.boolean(Object.assign(
+    opts, {
+      parse: (_, cmd) => {
+        action()
+        cmd.exit(0)
+      }
+    }))
+}
+
 class SecureRmCommand extends Command {
   async run () {
     const { flags, argv } = this.parse(SecureRmCommand)
-    if (flags.table) {
-      table()
-    } else {
-      handle(argv, flags.method, flags.keep, flags.force)
-    }
+    handle(argv, flags.method, flags.keep, flags.force)
   }
 }
 
@@ -27,11 +34,10 @@ SecureRmCommand.flags = {
   method: flags.option({
     char: 'm',
     description: 'erasure method',
-    options: Array.from(Array(methods.length).keys()).toString()
+    options: Array.from(Array(methods.length).keys()).map(x => x.toString())
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
-  // FIXME: `secure-rm -t` instead of `secure-rm <PATH> -t`
-  table: flags.boolean({ char: 't', description: 'show methods' }) 
+  table: flags.custom({ char: 't', description: 'show the methods table' }, table())
 }
 
 SecureRmCommand.args = [{ name: 'path', required: true }]
