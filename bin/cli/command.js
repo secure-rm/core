@@ -37,7 +37,7 @@ SecureRmCommand.flags = {
     options: Array.from(Array(methods.length).keys()).map(x => x.toString())
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
-  table: flags.custom({ char: 't', description: 'show the methods table' }, table())
+  table: flags.custom({ char: 't', description: 'show the methods table' }, table)
 }
 
 SecureRmCommand.args = [{ name: 'path', required: true }]

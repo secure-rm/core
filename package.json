@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Simple tool to securely erase files",
   "main": "index.js",
   "scripts": {
