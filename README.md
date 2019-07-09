@@ -6,6 +6,9 @@
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
 [![](https://img.shields.io/badge/status-STILL_IN_BETA-red.svg)]()
 
+**WARNING** THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
+The documentation is not complete either.
+
 Simple tool to securely erase files
 
 # Installing / Getting started
