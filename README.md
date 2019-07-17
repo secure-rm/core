@@ -64,12 +64,22 @@ $ secure-rm ./folder/*.js ./garbage ./file.js
 The different flags are detailed in the built-in help:
 ```shell
 $ secure-rm -h
+
+USAGE
+  $ secure-rm PATH
+
+OPTIONS
+  -f, --force               avoid checks
+  -h, --help                show CLI help
+  -m, --method=0|1|2|3|4|5  erasure method
+  -t, --table               show the methods table
+  -v, --version             show CLI version
 ```
 ![Built-in help](./assets/built-in_help.png)
 
-### methods
+### Methods
 
-Id | Name | Passes | Description
+ID | Name | Passes | Description
 -- | ---- | ------ | -----------
  0 | Pseudorandom data | 1 | The fastest wiping scheme. Your data is overwritten with random data (if you use a CSPRNG the data is indistinguishable from random noise.)
  1 | British HMG IS5(Baseline) | 1 | Your data is overwritten with zeroes.
