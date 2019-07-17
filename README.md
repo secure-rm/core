@@ -13,37 +13,41 @@ Completely erases files by making recovery impossible.
 
 # Installing
 
-## Command-line version
-
-```shell
-$ npm install secure-rm -g
-```
-
-## npm module version
+You can use this package in two different ways, the _npm module version_:
 
 ```shell
 $ npm install secure-rm --save
 ```
 
-# Getting started
-
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
+Or the _command-line version_:
 
 ```shell
-$ secure-rm <PATHS> [OPTIONS]
+$ npm install secure-rm -g
 ```
-Here you should say what actually happens when you execute the code above.
 
+# Getting started
+
+If you want your application to delete specific files with a single pass (method 1), use this code snippet:
 ```javascript
 const rm = require('secure-rm')
 
-rm ('./folder/*.js', '1', (err) => {
+rm('./folder/*.js', '1', (err) => {
   if (err) throw err
   console.log('Success!')
 })
 ```
+The function is asynchronous.
 
+If you want to delete files on the fly, just use the command-line tool:
+```shell
+$ secure-rm ./folder/*.js
+```
+
+# Documentation
+
+```shell
+$ secure-rm <PATHS> [OPTIONS]
+```
 Supports file globbing.
 
 ```javascript
