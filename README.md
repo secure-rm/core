@@ -89,25 +89,23 @@ ID | Name | Passes | Description
 
 ## Developing
 
-### Built With
-List main libraries, frameworks used including versions (React, Angular etc...)
+### Main packages
+* [oclif](https://github.com/oclif/oclif) : CLI Framework
+* [Inquirer.js](https://github.com/SBoudrias/Inquirer.js) : interactive command line user interfaces
 
 ### Prerequisites
-What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
-
+You need to have [Git](https://git-scm.com/downloads) and [npm](https://www.npmjs.com/get-npm) installed on your system.
 
 ### Setting up Dev
-
-Here's a brief intro about what a developer must do in order to start developing
-the project further:
+You'll need to clone the repository and install the required packages.
+Just execute these commands:
 
 ```shell
 git clone https://github.com/oganexon/secure-rm.git
 cd secure-rm/
 npm install
 ```
-
-And state what happens step-by-step. If there is any virtual environment, local server or database feeder needed, explain here.
+You are ready to develop.
 
 ### Deploying / Publishing
 give instructions on how to build and release a new version
