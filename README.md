@@ -5,8 +5,8 @@
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
 [![](https://img.shields.io/badge/status-STILL_IN_BETA-red.svg)]()
 
-:warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
-The documentation is not complete either.
+> :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
+> The documentation is not complete either.
 
 Completely erases files by making recovery impossible.
 
