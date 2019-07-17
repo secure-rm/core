@@ -65,7 +65,7 @@ The different flags are detailed in the built-in help:
 ```shell
 $ secure-rm -h
 ```
-![Built-in help](./assets/help.png)
+![Built-in help](./assets/built-in_help.png)
 
 ## Developing
 
