@@ -1,6 +1,5 @@
 ![Logo of the project](./assets/secure-rm.png)
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/secure-rm.svg)](https://npmjs.org/package/secure-rm)
 [![Downloads/week](https://img.shields.io/npm/dw/secure-rm.svg)](https://npmjs.org/package/secure-rm)
 [![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
@@ -36,23 +35,37 @@ rm('./folder/*.js', '1', (err) => {
   console.log('Success!')
 })
 ```
-The function is asynchronous.
 
-If you want to delete files on the fly, just use the command-line tool:
+If you want to delete files on the fly, just use the command line tool:
 ```shell
 $ secure-rm ./folder/*.js
 ```
 
 # Documentation
 
+## npm module 
+
+```javascript
+rm(path, method, callback)
+```
+It will search for files if the path is a glob pattern, or the folder/file specified.
+You have to specify a method, they are described below.
+The function (asynchronous) then run the callback when all the files has been removed.
+
+## Command line tool
+
 ```shell
 $ secure-rm <PATHS> [OPTIONS]
 ```
-Supports file globbing.
-
-```javascript
-rm (path, method, callback)
+The tool supports file globbing and multiple arguments like:
+```shell
+$ secure-rm ./folder/*.js ./garbage ./file.js
 ```
+The different flags are detailed in the built-in help:
+```shell
+$ secure-rm -h
+```
+![Built-in help](./assets/help.png)
 
 ## Developing
 
@@ -69,26 +82,12 @@ Here's a brief intro about what a developer must do in order to start developing
 the project further:
 
 ```shell
-git clone https://github.com/your/your-project.git
-cd your-project/
-packagemanager install
+git clone https://github.com/oganexon/secure-rm.git
+cd secure-rm/
+npm install
 ```
 
 And state what happens step-by-step. If there is any virtual environment, local server or database feeder needed, explain here.
-
-### Building
-
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here. for example:
-
-```shell
-./configure
-make
-make install
-```
-
-Here again you should state what actually happens when the code above gets
-executed.
 
 ### Deploying / Publishing
 give instructions on how to build and release a new version
@@ -103,7 +102,7 @@ And again you'd need to tell what the previous code actually does.
 
 ## Versioning
 
-We can maybe use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
 
 
 ## Configuration

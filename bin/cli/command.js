@@ -21,7 +21,7 @@ class SecureRmCommand extends Command {
   }
 }
 
-SecureRmCommand.description = `Simple tool to securely erase files
+SecureRmCommand.description = `Completely erases files by making recovery impossible.
 ...
 Extra documentation goes here
 `
