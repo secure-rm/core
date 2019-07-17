@@ -1,7 +1,7 @@
 {
   "name": "secure-rm",
   "version": "0.5.2",
-  "description": "Simple tool to securely erase files",
+  "description": "Completely erases files by making recovery impossible.",
   "main": "index.js",
   "scripts": {
     "start": "node bin/run",
@@ -17,8 +17,6 @@
     "glob": "^7.1.4",
     "inquirer": "^6.4.1",
     "multispinner": "^0.2.1",
-    "ololog": "^1.1.141",
-    "q-i": "^2.0.1",
     "rimraf": "^2.6.3"
   },
   "devDependencies": {

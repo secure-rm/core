@@ -9,23 +9,15 @@
 **WARNING** THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
 The documentation is not complete either.
 
-Simple tool to securely erase files
+Completely erases files by making recovery impossible.
 
-# Installing / Getting started
+# Installing
 
-## command-line version
+## Command-line version
 
 ```shell
 $ npm install secure-rm -g
 ```
-
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
-
-```shell
-$ secure-rm <PATHS> [OPTIONS]
-```
-
 
 ## npm module version
 
@@ -33,6 +25,14 @@ $ secure-rm <PATHS> [OPTIONS]
 $ npm install secure-rm --save
 ```
 
+# Getting started
+
+A quick introduction of the minimal setup you need to get a hello world up &
+running.
+
+```shell
+$ secure-rm <PATHS> [OPTIONS]
+```
 Here you should say what actually happens when you execute the code above.
 
 ```javascript
