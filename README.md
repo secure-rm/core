@@ -1,14 +1,20 @@
-![Logo of the project](./assets/secure-rm.png)
+<h1 align="center">
+  <img src="./assets/secure-rm.png" alt="Logo of the project">
+  <br>
+  Completely erases files by making recovery impossible.
+  <br>
+  <br>
+</h1>
 
-[![Version](https://img.shields.io/npm/v/secure-rm.svg)](https://npmjs.org/package/secure-rm)
-[![Downloads/week](https://img.shields.io/npm/dw/secure-rm.svg)](https://npmjs.org/package/secure-rm)
-[![License](https://img.shields.io/npm/l/secure-rm.svg)](https://github.com/MaelAcier/secure-rm/blob/master/package.json)
-[![](https://img.shields.io/badge/status-STILL_IN_BETA-red.svg)]()
+<p align="center">
+  <a href="https://travis-ci.org/standard/standard"><img src="https://img.shields.io/npm/v/secure-rm.svg" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/standard"><img src="https://img.shields.io/npm/dw/secure-rm.svg" alt="Downloads/week"></a>
+  <a href="https://www.npmjs.com/package/eslint-config-standard"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License"></a>
+  <a ><img src="https://img.shields.io/badge/status-STILL_IN_BETA-red.svg"></a>
+</p>
 
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
 > The documentation is not complete either.
-
-Completely erases files by making recovery impossible.
 
 # Installing
 
@@ -41,7 +47,7 @@ If you want to delete files on the fly, just use the command line tool:
 $ secure-rm ./folder/*.js
 ```
 
-# Documentation
+# Documentation / Usage
 
 ## npm module 
 
@@ -141,6 +147,8 @@ Give an example
 
 Explain your code style and show how to check it.
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
 ## Api Reference
 
 If the api is external, link to api documentation. If not describe your api including authentication methods as well as explaining all the endpoints with their required parameters.
@@ -155,9 +163,4 @@ Documents your database design and schemas, relations etc...
 
 State what the license is and how to find the text version of the license.
 
-# Usage
-
-# Commands
-
-> Additional information or tag line
 
