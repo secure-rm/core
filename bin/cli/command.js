@@ -21,9 +21,9 @@ class SecureRmCommand extends Command {
   }
 }
 
-SecureRmCommand.description = `Completely erases files by making recovery impossible.
-...
-Extra documentation goes here
+SecureRmCommand.description = `CLI help:
+Completely erases files by making recovery impossible.
+For extra documentation, go to https://www.npmjs.com/package/secure-rm .
 `
 
 SecureRmCommand.flags = {
@@ -33,7 +33,7 @@ SecureRmCommand.flags = {
   help: flags.help({ char: 'h' }),
   method: flags.option({
     char: 'm',
-    description: 'erasure method',
+    description: 'select the erasure method',
     options: Array.from(Array(methods.length).keys()).map(x => x.toString())
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
