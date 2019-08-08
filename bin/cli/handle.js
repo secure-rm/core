@@ -43,7 +43,7 @@ function remove (paths, method) {
     rm(paths[i], method, (err) => {
       // if (err.code === 'EBUSY') throw new CLIError('Resource busy or locked. (You are maybe trying to delete the current directory!)')
       // if (err.code === 'EMFILE') cli.warn(chalk.yellow(`Too many open files, cannot open ${err.path}`))
-      if (err) console.log(err)
+      if (err) console.log(err + "coming from here")
     })
   }
 }

@@ -1,4 +1,4 @@
-const log = require('ololog').configure({ time: true, locate: false, tag: true })
+const log = require('ololog').configure({ time: true, locate: false, tag: true }).handleNodeErrors()
 const chalk = require('chalk')
 const { eventEmitter } = require('../../lib/methods')
 
@@ -8,6 +8,7 @@ eventEmitter.on('info', (file, info) => log(chalk.bold.blue(info) + file))
 eventEmitter.on('ending', (file) => {
   log(chalk.green('Done ') + file)
 })
+eventEmitter.on('warn', (file, err) => log.warn(chalk.yellow(err) + file))
 eventEmitter.on('error', (file, err) => {
   log.error(chalk.bold.red('Error ') + file)
   log.warn(chalk.yellow(err))
