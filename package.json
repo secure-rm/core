@@ -18,6 +18,7 @@
     "glob": "^7.1.4",
     "inquirer": "^6.4.1",
     "multispinner": "^0.2.1",
+    "ololog": "^1.1.146",
     "rimraf": "^2.6.3"
   },
   "devDependencies": {
