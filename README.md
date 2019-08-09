@@ -91,7 +91,7 @@ ID | Name | Passes | Description
  1 | Pseudorandom byte | 1 | Overwriting with a random byte.
  2 | Zeroes | 1 | Overwriting with zeroes.
  3 | Ones | 1 | Overwriting with ones.
- 4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes; \nPass 2: Overwriting with random data.
+ 4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes; <br>Pass 2: Overwriting with random data.
  5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;
 Pass 2: Overwriting with ones;
 Pass 3: Overwriting with random data as well as verifying the writing of this data.
