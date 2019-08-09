@@ -1,53 +1,52 @@
 const chalk = require('chalk')
-const ui = require('cliui')()
+const Table = require('tty-table')
 const { methods } = require('../../lib/methods')
 
-ui.div(
+const header = [
   {
-    text: chalk.bold.yellow('Id'),
-    width: 5
+    value: "Id",
+    headerColor: "yellow",
+    color: "magenta",
+    width: 10
   },
   {
-    text: chalk.bold.yellow('Name'),
+    value: "Name",
+    color: "white",
     width: 30
   },
   {
-    text: chalk.bold.yellow('Passes'),
-    width: 12
+    value: "Passes",
+    color: "white",
+    width: 15,
   },
   {
-    text: chalk.bold.yellow('Description'),
-    width: 80
+    value: "Description",
+    color: "white",
+    align: "left"
   }
-)
+]
+
+var rows = []
 
 for (let i = 0, l = methods.length; i < l; i++) {
-  ui.div(
-    {
-      text: i,
-      width: 5
-    },
-    {
-      text: methods[i].name,
-      width: 30
-    },
-    {
-      text: methods[i].passes,
-      width: 12
-    },
-    {
-      text: methods[i].description,
-      width: 60
-    }
-  )
-  /* ui.div(
-    `${i}\t ${methods[i].name}\t ${methods[i].passes}\t ${methods[i].description}\n`
-  ) */
+  rows.push([i, methods[i].name, methods[i].passes, methods[i].description])
 }
 
-function table () {
-  console.log(chalk.bold('METHODS\n'))
-  console.log(ui.toString())
+var t1 = Table(header, rows, {
+  borderStyle: 1,
+  borderColor: "blue",
+  paddingBottom: 0,
+  headerAlign: "center",
+  align: "center",
+  color: "white",
+  // truncate: "..."
+})
+
+const str1 = t1.render()
+
+function table() {
+  console.log(chalk.bold('METHODS'))
+  console.log(str1)
 }
 
 module.exports = table
