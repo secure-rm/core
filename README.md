@@ -85,22 +85,18 @@ OPTIONS
 
 ### Methods
 
+<div id="methods-table">
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
  0 | Pseudorandom data | 1 | Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
  1 | Pseudorandom byte | 1 | Overwriting with a random byte.
  2 | Zeroes | 1 | Overwriting with zeroes.
  3 | Ones | 1 | Overwriting with ones.
- 4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes; <br>Pass 2: Overwriting with random data.
- 5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;
-Pass 2: Overwriting with ones;
-Pass 3: Overwriting with random data as well as verifying the writing of this data.
- 6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;
-Pass 2: Overwriting with a random byte;
-Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
- 7 | US Department of Defense DoD 5220.22-M (E) | 3 | Pass 1: Overwriting with zeroes as well as checking the writing;
-Pass 2: Overwriting with ones and checking the writing;
-Pass 3: Overwriting with random data as well as verifying the writing.
+ 4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with random data.
+ 5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3: Overwriting with random data as well as verifying the writing of this data.
+ 6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;<br>Pass 2: Overwriting with a random byte;<br>Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
+ 7 | US Department of Defense DoD 5220.22-M (E) | 3 | Pass 1: Overwriting with zeroes as well as checking the writing;<br>Pass 2: Overwriting with ones and checking the writing;<br>Pass 3: Overwriting with random data as well as verifying the writing.
+</div>
 
 ## Developing
 
