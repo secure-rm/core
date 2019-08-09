@@ -4,25 +4,25 @@ const { methods } = require('../../lib/methods')
 
 const header = [
   {
-    value: "Id",
-    headerColor: "yellow",
-    color: "magenta",
+    value: 'Id',
+    headerColor: 'yellow',
+    color: 'magenta',
     width: 10
   },
   {
-    value: "Name",
-    color: "white",
+    value: 'Name',
+    color: 'white',
     width: 30
   },
   {
-    value: "Passes",
-    color: "white",
-    width: 15,
+    value: 'Passes',
+    color: 'white',
+    width: 15
   },
   {
-    value: "Description",
-    color: "white",
-    align: "left"
+    value: 'Description',
+    color: 'white',
+    align: 'left'
   }
 ]
 
@@ -34,17 +34,17 @@ for (let i = 0, l = methods.length; i < l; i++) {
 
 var t1 = Table(header, rows, {
   borderStyle: 1,
-  borderColor: "blue",
+  borderColor: 'blue',
   paddingBottom: 0,
-  headerAlign: "center",
-  align: "center",
-  color: "white",
+  headerAlign: 'center',
+  align: 'center',
+  color: 'white'
   // truncate: "..."
 })
 
 const str1 = t1.render()
 
-function table() {
+function table () {
   console.log(chalk.bold('METHODS'))
   console.log(str1)
 }

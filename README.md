@@ -87,12 +87,20 @@ OPTIONS
 
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
- 0 | Pseudorandom data | 1 | The fastest wiping scheme. Your data is overwritten with random data (if you use a CSPRNG the data is indistinguishable from random noise.)
- 1 | British HMG IS5(Baseline) | 1 | Your data is overwritten with zeroes.
- 2 | Russian GOST P50739-95 | 2 | GOST P50739-95 wiping scheme calls for a single pass of zeroes followed by a single pass of random data.
- 3 | British HMG IS5 (Enhanced) | 3 | British HMG IS5 (Enhanced) is a three pass overwriting algorithm: first pass – with zeroes, second pass – with ones and the last pass with random data.
- 4 | US Army AR380-19 | 3 | AR380-19 is data wiping scheme specified and published by the U.S. Army. AR380-19 is three pass overwriting algorithm: first pass – with random data, second with a random byte and the third pass with the complement of the 2nd pass.
- 5 | US Department of Defense DoD 5220.22-M (E) | 3 | DoD 5220.22-M (E) is a three pass overwriting algorithm: first pass – with zeroes, second pass – with ones and the last pass – with random data.
+ 0 | Pseudorandom data | 1 | Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
+ 1 | Pseudorandom byte | 1 | Overwriting with a random byte.
+ 2 | Zeroes | 1 | Overwriting with zeroes.
+ 3 | Ones | 1 | Overwriting with ones.
+ 4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes; \nPass 2: Overwriting with random data.
+ 5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;
+Pass 2: Overwriting with ones;
+Pass 3: Overwriting with random data as well as verifying the writing of this data.
+ 6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;
+Pass 2: Overwriting with a random byte;
+Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
+ 7 | US Department of Defense DoD 5220.22-M (E) | 3 | Pass 1: Overwriting with zeroes as well as checking the writing;
+Pass 2: Overwriting with ones and checking the writing;
+Pass 3: Overwriting with random data as well as verifying the writing.
 
 ## Developing
 
