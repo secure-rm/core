@@ -3,7 +3,7 @@ const path = require('path')
 const chalk = require('chalk')
 const { methods } = require('../lib/methods')
 
-const regex = /(<div id="methods-table">)([\s\S]*)(<\/div>)/gm
+const regex = /(<!--AUTO GENERATED TABLE START-->)([\s\S]*)(<!--AUTO GENERATED TABLE END-->)/gm
 const readme = path.join(__dirname, '../README.md')
 
 var newText = `ID | Name | Passes | Description

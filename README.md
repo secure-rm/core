@@ -85,7 +85,7 @@ OPTIONS
 
 ### Methods
 
-<div id="methods-table">
+<!--AUTO GENERATED TABLE START-->
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
  0 | Pseudorandom data | 1 | Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
@@ -96,7 +96,7 @@ ID | Name | Passes | Description
  5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3: Overwriting with random data as well as verifying the writing of this data.
  6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;<br>Pass 2: Overwriting with a random byte;<br>Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
  7 | US Department of Defense DoD 5220.22-M (E) | 3 | Pass 1: Overwriting with zeroes as well as checking the writing;<br>Pass 2: Overwriting with ones and checking the writing;<br>Pass 3: Overwriting with random data as well as verifying the writing.
-</div>
+<!--AUTO GENERATED TABLE END-->
 
 ## Developing
 
