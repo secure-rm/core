@@ -36,7 +36,7 @@ If you want your application to delete specific files with a single pass (method
 ```javascript
 const rm = require('secure-rm')
 
-rm('./folder/*.js', '1', (err) => {
+rm('./folder/*.js', (err) => {
   if (err) throw err
   console.log('Success!')
 })
@@ -52,10 +52,11 @@ $ secure-rm ./folder/*.js
 ## npm module 
 
 ```javascript
-rm(path, method, callback)
+rm(path, [method,[ callback)
 ```
 It will search for files if the path is a glob pattern, or the folder/file specified.
-You have to specify a method, they are described below.
+By default, method 1 is chosen. (British HMG IS5(Baseline))
+You can pick another one, they are described below.
 The function (asynchronous) then run the callback when all the files has been removed.
 
 ## Command line tool
