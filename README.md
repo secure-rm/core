@@ -49,20 +49,19 @@ $ secure-rm ./folder/*.js
 
 ### npm module 
 
-
 **`rm(path[, method], callback)`**
 
-* `path` [<string>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type):
+* `path` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type):
   * an absolute path (e.g. `D:\data`, `/d/data`)
   * a relative path (e.g. `./data/file.js`, `../../data`)
   * a [glob pattern](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js`, `./**/*`, `@(pattern|pat*|pat?erN)`)
-* `method` [<string>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) (optional):
+* `method` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) (optional):
   * By default, method 0 (Pseudorandom data)
   * You can pick another one, they are described below.
-* `callback` [<function>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
-  * returns `err` [<Error>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
+* `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+  * returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
 
-Exemple:
+Example:
 ```javascript
 rm('./data/file.js', '7' (err) => {
   if (err) throw err
@@ -90,11 +89,22 @@ rm.event.on('error', (file, err) => console.log('Error ' + err + file))
 ```shell
 $ secure-rm <PATHS> [OPTIONS]
 ```
-The tool supports file globbing and multiple arguments like:
+* `PATHS`:
+  * one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
+  * supports [glob patterns](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js ./**/* @(pattern|pat*|pat?erN)`)
+  * 
+* `OPTIONS` (flags):
+  * `-f, --force`: avoid checks if you want to use it in a shell or bash file;
+  * `-h, --help`: show CLI help, see below;
+  * `-m, --method`: numerical ID of the method, default is 0. See them detailed below;
+  * `-t, --table `: show the methods table. See them detailed below;
+  * `-v, --version ` show CLI version
+
+Example:
 ```shell
-$ secure-rm ./folder/*.js ./garbage ./file.js
+$ secure-rm ./folder/*.js ./garbage ./file.js -m 6 -f
 ```
-The different flags are detailed in the built-in help:
+You can invoke the built-in help with `secure-rm -h`:
 
 <!--AUTO GENERATED HELP START-->
 ```shell
@@ -149,7 +159,7 @@ npm install
 ```
 You are ready to develop.
 
-### Deploying / Publishing
+<!--### Deploying / Publishing
 give instructions on how to build and release a new version
 In case there's some step you have to take that publishes this project to a
 server, this is the right time to state it.
@@ -159,34 +169,43 @@ packagemanager deploy your-project -s server.com -u username -p password
 ```
 
 And again you'd need to tell what the previous code actually does.
+-->
 
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
 
-
-## Configuration
+<!--## Configuration
 
 Here you should write what are all of the configurations a user can enter when
 using the project.
+-->
 
 ## Tests
 
+> Soon
+<!--
 Describe and show how to run the tests with code examples.
 Explain what these tests test and why.
 
 ```shell
 Give an example
 ```
+-->
 
-## Style guide
+## Style guide [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-Explain your code style and show how to check it.
+This project uses [JavaScript Standard Style](https://cdn.rawgit.com/standard/standard/master/badge.svg). Please respect this convention.
 
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+We provide an easy installation for you, just run:
+```shell
+$ npm run style-setup
+```
+
+And then `npm run style` each time you want to check style.
+
+Or install a [plugin](https://standardjs.com/awesome.html#editor-plugins) for you favorite editor and ignore the recommandations above.
 
 ## Licensing
 
-State what the license is and how to find the text version of the license.
-
-
+This project is under [MIT License](/LICENSE).

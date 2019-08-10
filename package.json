@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node bin/run",
     "style": "standard --verbose | snazzy",
-    "dev-setup": "npm install -g standard snazzy",
+    "style-setup": "npm install -g standard snazzy",
     "test": "jest",
     "readme-helper": "node tools/readme-helper"
   },
