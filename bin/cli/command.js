@@ -17,7 +17,7 @@ flags.custom = (opts = {}, action) => {
 class SecureRmCommand extends Command {
   async run () {
     const { flags, argv } = this.parse(SecureRmCommand)
-    handle(argv, flags.method, flags.keep, flags.force)
+    handle(argv, flags.method, flags.force)
   }
 }
 

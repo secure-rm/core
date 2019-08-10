@@ -10,11 +10,10 @@
   <a href="https://travis-ci.org/standard/standard"><img src="https://img.shields.io/npm/v/secure-rm.svg" alt="Version"></a>
   <a href="https://www.npmjs.com/package/standard"><img src="https://img.shields.io/npm/dw/secure-rm.svg" alt="Downloads/week"></a>
   <a href="https://www.npmjs.com/package/eslint-config-standard"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License"></a>
-  <img src="https://img.shields.io/badge/status-STILL_IN_BETA-red.svg">
 </p>
 
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
-> The documentation is not complete either.
+> But it wil be ready soon...
 
 # Installing
 
@@ -68,6 +67,7 @@ The tool supports file globbing and multiple arguments like:
 $ secure-rm ./folder/*.js ./garbage ./file.js
 ```
 The different flags are detailed in the built-in help:
+
 <!--AUTO GENERATED HELP START-->
 ```shell
 CLI help:

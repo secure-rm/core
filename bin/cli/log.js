@@ -1,16 +1,14 @@
 const log = require('ololog').configure({ time: true, locate: false, tag: true }).handleNodeErrors()
+const chalk = require('chalk')
+const { eventEmitter } = require('../../lib/methods')
 
-log('foo', 'bar', 'baz')
-log.red('red text')
-log.bright.red.underline('multiple ')
-log.blue('red text')
+eventEmitter.on('starting', (file) => log(chalk.bold.yellow('Starting ') + file))
+eventEmitter.on('unlinking', (file) => log(chalk.bold.magenta('Unlinking ') + file))
+eventEmitter.on('done', (file) => log(chalk.bold.green('Done ') + file))
 
-log('    ', 'foo\nbar\nbar')
+eventEmitter.on('info', (file, info) => log(chalk.bold.blue(info) + file))
 
-log({ foo: true, bar: 42 })
+eventEmitter.on('warn', (file, err) => log.warn(chalk.yellow(err) + file))
+eventEmitter.on('error', (file, err) => log.error(chalk.red(err) + file))
 
-log('a regular message')
-log.info('an info message')
-log.warn('a warning')
-log.error('an error')
-log.debug('a debug message')
+module.exports = log
