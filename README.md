@@ -171,7 +171,7 @@ packagemanager deploy your-project -s server.com -u username -p password
 And again you'd need to tell what the previous code actually does.
 -->
 
-## Versioning
+### Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
 
@@ -181,7 +181,7 @@ Here you should write what are all of the configurations a user can enter when
 using the project.
 -->
 
-## Tests
+### Tests
 
 > Soon
 <!--
@@ -193,7 +193,9 @@ Give an example
 ```
 -->
 
-## Style guide [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+### Style guide
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
 This project uses [JavaScript Standard Style](https://cdn.rawgit.com/standard/standard/master/badge.svg). Please respect this convention.
 
@@ -204,8 +206,8 @@ $ npm run style-setup
 
 And then `npm run style` each time you want to check style.
 
-Or install a [plugin](https://standardjs.com/awesome.html#editor-plugins) for you favorite editor and ignore the recommandations above.
+Or install a [plugin](https://standardjs.com/awesome.html#editor-plugins) for your favorite editor and ignore the recommandations above.
 
-## Licensing
+### Licensing
 
 This project is under [MIT License](/LICENSE).
