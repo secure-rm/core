@@ -13,7 +13,7 @@
 </p>
 
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
-> But it wil be ready soon...
+> But it will be ready soon...
 
 # Installing
 
