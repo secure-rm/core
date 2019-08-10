@@ -7,9 +7,9 @@
 </h1>
 
 <p align="center">
-  <a href="https://travis-ci.org/standard/standard"><img src="https://img.shields.io/npm/v/secure-rm.svg" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/standard"><img src="https://img.shields.io/npm/dw/secure-rm.svg" alt="Downloads/week"></a>
-  <a href="https://www.npmjs.com/package/eslint-config-standard"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License"></a>
+  <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/v/secure-rm.svg" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/dw/secure-rm.svg" alt="Downloads/week"></a>
+  <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License"></a>
 </p>
 
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
