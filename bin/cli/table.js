@@ -5,8 +5,7 @@ const { methods } = require('../../lib/methods')
 const header = [
   {
     value: 'Id',
-    headerColor: 'yellow',
-    color: 'magenta',
+    color: 'redBright',
     width: 10
   },
   {
@@ -34,9 +33,10 @@ for (let i = 0, l = methods.length; i < l; i++) {
 
 var t1 = Table(header, rows, {
   borderStyle: 1,
-  borderColor: 'blue',
+  borderColor: 'cyan',
   paddingBottom: 0,
   headerAlign: 'center',
+  headerColor: 'yellow',
   align: 'center',
   color: 'white'
   // truncate: "..."

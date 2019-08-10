@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node bin/run",
     "posttest": "standard",
-    "test": "jest"
+    "test": "jest",
+    "readme-helper": "node tools/readme-helper"
   },
   "dependencies": {
     "@oclif/command": "^1.5.18",

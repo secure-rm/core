@@ -60,7 +60,6 @@ You can pick another one, they are described below.
 The function (asynchronous) then run the callback when all the files has been removed.
 
 ## Command line tool
-
 ```shell
 $ secure-rm <PATHS> [OPTIONS]
 ```
@@ -69,23 +68,31 @@ The tool supports file globbing and multiple arguments like:
 $ secure-rm ./folder/*.js ./garbage ./file.js
 ```
 The different flags are detailed in the built-in help:
+<!--AUTO GENERATED HELP START-->
 ```shell
-$ secure-rm -h
+CLI help:
 
 USAGE
   $ secure-rm PATH
 
 OPTIONS
-  -f, --force               avoid checks
-  -h, --help                show CLI help
-  -m, --method=0|1|2|3|4|5  erasure method
-  -t, --table               show the methods table
-  -v, --version             show CLI version
+  -f, --force                   avoid checks
+  -h, --help                    show CLI help
+  -m, --method=0|1|2|3|4|5|6|7  select the erasure method
+  -t, --table                   show the methods table
+  -v, --version                 show CLI version
+
+DESCRIPTION
+  Completely erases files by making recovery impossible.
+  For extra documentation, go to https://www.npmjs.com/package/secure-rm
+
+
 ```
+<!--AUTO GENERATED HELP END-->
 
 ### Methods
 
-<!--AUTO GENERATED TABLE START-->
+<!--AUTO GENERATED METHODS TABLE START-->
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
  0 | Pseudorandom data | 1 | Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
@@ -96,7 +103,7 @@ ID | Name | Passes | Description
  5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3: Overwriting with random data as well as verifying the writing of this data.
  6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;<br>Pass 2: Overwriting with a random byte;<br>Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
  7 | US Department of Defense DoD 5220.22-M (E) | 3 | Pass 1: Overwriting with zeroes as well as checking the writing;<br>Pass 2: Overwriting with ones and checking the writing;<br>Pass 3: Overwriting with random data as well as verifying the writing.
-<!--AUTO GENERATED TABLE END-->
+<!--AUTO GENERATED METHODS TABLE END-->
 
 ## Developing
 
@@ -113,7 +120,7 @@ Just execute these commands:
 
 ```shell
 git clone https://github.com/oganexon/secure-rm.git
-cd secure-rm/
+cd ./secure-rm/
 npm install
 ```
 You are ready to develop.

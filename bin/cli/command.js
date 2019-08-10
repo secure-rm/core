@@ -23,7 +23,7 @@ class SecureRmCommand extends Command {
 
 SecureRmCommand.description = `CLI help:
 Completely erases files by making recovery impossible.
-For extra documentation, go to https://www.npmjs.com/package/secure-rm .
+For extra documentation, go to https://www.npmjs.com/package/secure-rm
 `
 
 SecureRmCommand.flags = {
