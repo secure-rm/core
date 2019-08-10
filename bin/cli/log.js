@@ -2,8 +2,8 @@ const log = require('ololog').configure({ time: true, locate: false, tag: true }
 const chalk = require('chalk')
 const { eventEmitter } = require('../../lib/methods')
 
-eventEmitter.on('starting', (file) => log(chalk.bold.yellow('Starting ') + file))
-eventEmitter.on('unlinking', (file) => log(chalk.bold.magenta('Unlinking ') + file))
+eventEmitter.on('start', (file) => log(chalk.bold.yellow('Starting ') + file))
+eventEmitter.on('unlink', (file) => log(chalk.bold.magenta('Unlinking ') + file))
 eventEmitter.on('done', (file) => log(chalk.bold.green('Done ') + file))
 
 eventEmitter.on('info', (file, info) => log(chalk.bold.blue(info) + file))

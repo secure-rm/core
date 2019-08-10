@@ -76,8 +76,8 @@ When running, secure-rm emits events to let you know the progression of the dele
 You can indeed intercept error and ending events for _each_ file.
 
 ```javascript
-rm.event.on('starting', (file) => console.log('Starting ' + file))
-rm.event.on('unlinking', (file) => console.log('Unlinking ' + file))
+rm.event.on('start', (file) => console.log('Starting ' + file))
+rm.event.on('unlink', (file) => console.log('Unlinking ' + file))
 rm.event.on('done', (file) => console.log('Done ' + file))
 
 rm.event.on('info', (file, info) => console.log('Info ' + info + file))
