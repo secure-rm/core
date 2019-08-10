@@ -3,7 +3,6 @@
   <br>
   Completely erases files by making recovery impossible.
   <br>
-  <br>
 </h1>
 
 <p align="center">
@@ -15,7 +14,7 @@
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
 > But it will be ready soon...
 
-# Installing
+## Install
 
 You can use this package in two different ways, the _npm module version_:
 
@@ -29,9 +28,9 @@ Or the _command-line version_:
 $ npm install secure-rm -g
 ```
 
-# Getting started
+## Getting started
 
-If you want your application to delete specific files with a single pass (method 1), use this code snippet:
+If you want your application to delete specific files with a pass of cryptographically strong pseudo-random data, use this code snippet:
 ```javascript
 const rm = require('secure-rm')
 
@@ -46,19 +45,35 @@ If you want to delete files on the fly, just use the command line tool:
 $ secure-rm ./folder/*.js
 ```
 
-# Documentation / Usage
+## Usage
 
-## npm module 
+### npm module 
 
+
+**`rm(path[, method], callback)`**
+
+* `path` [<string>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type):
+  * an absolute path (e.g. `D:\data`, `/d/data`)
+  * a relative path (e.g. `./data/file.js`, `../../data`)
+  * a [glob pattern](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js`, `./**/*`, `@(pattern|pat*|pat?erN)`)
+* `method` [<string>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) (optional):
+  * By default, method 0 (Pseudorandom data)
+  * You can pick another one, they are described below.
+* `callback` [<function>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+  * returns `err` [<Error>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
+
+Exemple:
 ```javascript
-rm(path, [method,[ callback)
+rm('./data/file.js', '7' (err) => {
+  if (err) throw err
+  console.log('Success!')
+})
 ```
-It will search for files if the path is a glob pattern, or the folder/file specified.
-By default, method 1 is chosen. (British HMG IS5(Baseline))
-You can pick another one, they are described below.
-The function (asynchronous) then run the callback when all the files has been removed.
 
-### Events
+#### Events
+When running, secure-rm emits events to let you know the progression of the deletion.
+
+You can indeed intercept error and ending events for _each_ file.
 
 ```javascript
 rm.event.on('starting', (file) => console.log('Starting ' + file))
@@ -71,7 +86,7 @@ rm.event.on('warn', (file, err) => console.log('Warning ' + err + file))
 rm.event.on('error', (file, err) => console.log('Error ' + err + file))
 ```
 
-## Command line tool
+### Command line tool
 ```shell
 $ secure-rm <PATHS> [OPTIONS]
 ```
