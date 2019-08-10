@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/run",
-    "posttest": "standard",
+    "posttest": "npx standard",
     "test": "jest",
     "readme-helper": "node tools/readme-helper"
   },
