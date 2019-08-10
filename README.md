@@ -58,6 +58,19 @@ By default, method 1 is chosen. (British HMG IS5(Baseline))
 You can pick another one, they are described below.
 The function (asynchronous) then run the callback when all the files has been removed.
 
+### Events
+
+```javascript
+rm.event.on('starting', (file) => console.log('Starting ' + file))
+rm.event.on('unlinking', (file) => console.log('Unlinking ' + file))
+rm.event.on('done', (file) => console.log('Done ' + file))
+
+rm.event.on('info', (file, info) => console.log('Info ' + info + file))
+
+rm.event.on('warn', (file, err) => console.log('Warning ' + err + file))
+rm.event.on('error', (file, err) => console.log('Error ' + err + file))
+```
+
 ## Command line tool
 ```shell
 $ secure-rm <PATHS> [OPTIONS]
