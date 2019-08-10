@@ -107,10 +107,6 @@ ID | Name | Passes | Description
 
 ## Developing
 
-### Main packages
-* [oclif](https://github.com/oclif/oclif) : CLI Framework
-* [Inquirer.js](https://github.com/SBoudrias/Inquirer.js) : interactive command line user interfaces
-
 ### Prerequisites
 You need to have [Git](https://git-scm.com/downloads) and [npm](https://www.npmjs.com/get-npm) installed on your system.
 
@@ -160,16 +156,6 @@ Give an example
 Explain your code style and show how to check it.
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
-## Api Reference
-
-If the api is external, link to api documentation. If not describe your api including authentication methods as well as explaining all the endpoints with their required parameters.
-
-
-## Database
-
-Explaining what database (and version) has been used. Provide download links.
-Documents your database design and schemas, relations etc... 
 
 ## Licensing
 
