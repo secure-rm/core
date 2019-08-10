@@ -11,10 +11,9 @@
   },
   "dependencies": {
     "@oclif/command": "^1.5.18",
-    "@oclif/config": "^1.13.0",
-    "@oclif/plugin-help": "^2.2.0",
+    "@oclif/parser": "^3.8.4",
     "glob": "^7.1.4",
-    "inquirer": "^6.4.1",
+    "inquirer": "^6.5.0",
     "ololog": "^1.1.146",
     "rimraf": "^2.6.3",
     "tty-table": "^2.7.3"
