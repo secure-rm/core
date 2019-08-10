@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Completely erases files by making recovery impossible.",
   "main": "index.js",
   "scripts": {
@@ -46,9 +46,15 @@
   ],
   "keywords": [
     "secure",
+    "data erasure",
+    "remove",
+    "delete",
     "wipe out",
     "clean",
-    "erase"
+    "erase",
+    "shred",
+    "overwrite",
+    "glob"
   ],
   "license": "MIT"
 }

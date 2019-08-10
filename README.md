@@ -92,7 +92,6 @@ $ secure-rm <PATHS> [OPTIONS]
 * `PATHS`:
   * one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
   * supports [glob patterns](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js ./**/* @(pattern|pat*|pat?erN)`)
-  * 
 * `OPTIONS` (flags):
   * `-f, --force`: avoid checks if you want to use it in a shell or bash file;
   * `-h, --help`: show CLI help, see below;
