@@ -14,6 +14,8 @@
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
 > But it will be ready soon...
 
+Choose one of the multiple methods provided (8 to date), it's up to you!
+
 ## Install
 
 You can use this package in two different ways, the _npm module version_:
@@ -97,7 +99,7 @@ $ secure-rm <PATHS> [OPTIONS]
   * `-h, --help`: show CLI help, see below;
   * `-m, --method`: numerical ID of the method, default is 0. See them detailed below;
   * `-t, --table `: show the methods table. See them detailed below;
-  * `-v, --version ` show CLI version
+  * `-v, --version ` show CLI version.
 
 Example:
 ```shell
