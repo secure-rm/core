@@ -158,6 +158,12 @@ While you don't get an error, the tool can handle this issue.
 
 If you really need to delete millions of file in one time, split the task (e.g. ./your_folder/a* then ./your_folder/b* ...).
 
+## TODO
+
+- [ ] release of 1.0.0 (stable API);
+- [ ] tests;
+- [ ] Support of 64bit files.
+
 ## Developing
 
 ### Prerequisites
