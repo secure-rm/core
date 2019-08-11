@@ -8,7 +8,7 @@
     "style": "standard --verbose | snazzy",
     "style-setup": "npm install -g standard snazzy",
     "test": "jest",
-    "readme-helper": "node tools/readme-helper"
+    "readme": "node tools/readme-helper"
   },
   "dependencies": {
     "@oclif/command": "^1.5.18",

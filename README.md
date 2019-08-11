@@ -30,6 +30,8 @@ Or the _command-line version_:
 $ npm install secure-rm -g
 ```
 
+Secure-rm will retry 3 times if an error occur to ensure the task succeeded.
+
 ## Getting started
 
 If you want your application to delete specific files with a pass of cryptographically strong pseudo-random data, use this code snippet:
@@ -115,11 +117,11 @@ USAGE
   $ secure-rm PATH
 
 OPTIONS
-  -f, --force                   avoid checks
-  -h, --help                    show CLI help
-  -m, --method=0|1|2|3|4|5|6|7  select the erasure method
-  -t, --table                   show the methods table
-  -v, --version                 show CLI version
+  -f, --force                       avoid checks
+  -h, --help                        show CLI help
+  -m, --method=0|1|2|3|4|5|6|7|8|9  select the erasure method
+  -t, --table                       show the methods table
+  -v, --version                     show CLI version
 
 DESCRIPTION
   Completely erases files by making recovery impossible.
@@ -141,8 +143,20 @@ ID | Name | Passes | Description
  4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with random data.
  5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3: Overwriting with random data as well as verifying the writing of this data.
  6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;<br>Pass 2: Overwriting with a random byte;<br>Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
- 7 | US Department of Defense DoD 5220.22-M (E) | 3 | Pass 1: Overwriting with zeroes as well as checking the writing;<br>Pass 2: Overwriting with ones and checking the writing;<br>Pass 3: Overwriting with random data as well as verifying the writing.
+ 7 | Bruce Schneier Algorithm | 7 | Pass 1: Overwriting with zeros;<br>Pass 2: Overwriting with ones;<br>Pass 3-7: Overwriting with random data.
+ 8 | Bruce Schneier Algorithm | 33 | Pass 1-33: Overwriting with random data.
+ 9 | Peter Gutmann Algorithm | 35 | Pass 1-4: Overwriting with random data;<br>Pass 5: Overwriting with 0x55;<br>Pass 6: Overwriting with 0xAA;<br>Pass 7-9: Overwriting with 0x92 0x49 0x24, then cycling through the bytes;<br>Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;<br>Pass 26-28: Same as 7-9;<br>Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;<br>Pass 32-35: Overwriting with random data.
 <!--AUTO GENERATED METHODS TABLE END-->
+
+## Troubleshooting / Common issues
+
+### "WARN Too many open files, cannot ...:"
+
+Don't worry, you've just submited too much file for Node.
+The tool will retry 3 times to ensure the task succeeded.
+While you don't get an error, the tool can handle this issue.
+
+If you really need to delete millions of file in one time, split the task (e.g. ./your_folder/a* then ./your_folder/b* ...).
 
 ## Developing
 
@@ -158,7 +172,10 @@ git clone https://github.com/oganexon/secure-rm.git
 cd ./secure-rm/
 npm install
 ```
-You are ready to develop.
+To invoke the command line tool, run:
+```shell
+npm start -- [ARGS]
+```
 
 <!--### Deploying / Publishing
 give instructions on how to build and release a new version
