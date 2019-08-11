@@ -117,11 +117,11 @@ USAGE
   $ secure-rm PATH
 
 OPTIONS
-  -f, --force                       avoid checks
-  -h, --help                        show CLI help
-  -m, --method=0|1|2|3|4|5|6|7|8|9  select the erasure method
-  -t, --table                       show the methods table
-  -v, --version                     show CLI version
+  -f, --force                          avoid checks
+  -h, --help                           show CLI help
+  -m, --method=0|1|2|3|4|5|6|7|8|9|10  select the erasure method
+  -t, --table                          show the methods table
+  -v, --version                        show CLI version
 
 DESCRIPTION
   Completely erases files by making recovery impossible.
@@ -140,12 +140,13 @@ ID | Name | Passes | Description
  1 | Pseudorandom byte | 1 | Overwriting with a random byte.
  2 | Zeroes | 1 | Overwriting with zeroes.
  3 | Ones | 1 | Overwriting with ones.
- 4 | Russian GOST P50739-95 | 2 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with random data.
+ 4 | Russian State Standard GOST R 50739-95 | 2 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with random data.
  5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3: Overwriting with random data as well as verifying the writing of this data.
  6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;<br>Pass 2: Overwriting with a random byte;<br>Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
- 7 | Bruce Schneier Algorithm | 7 | Pass 1: Overwriting with zeros;<br>Pass 2: Overwriting with ones;<br>Pass 3-7: Overwriting with random data.
- 8 | Bruce Schneier Algorithm | 33 | Pass 1-33: Overwriting with random data.
- 9 | Peter Gutmann Algorithm | 35 | Pass 1-4: Overwriting with random data;<br>Pass 5: Overwriting with 0x55;<br>Pass 6: Overwriting with 0xAA;<br>Pass 7-9: Overwriting with 0x92 0x49 0x24, then cycling through the bytes;<br>Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;<br>Pass 26-28: Same as 7-9;<br>Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;<br>Pass 32-35: Overwriting with random data.
+ 7 | Royal Canadian Mounted Police TSSIT OPS-II | 7 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3-6: Same as 1-2;<br>Pass 7: Overwriting with a random data as well as review the writing of this character.
+ 8 | Bruce Schneier Algorithm | 7 | Pass 1: Overwriting with zeros;<br>Pass 2: Overwriting with ones;<br>Pass 3-7: Overwriting with random data.
+ 9 | Bruce Schneier Algorithm | 33 | Pass 1-33: Overwriting with random data.
+ 10 | Peter Gutmann Algorithm | 35 | Pass 1-4: Overwriting with random data;<br>Pass 5: Overwriting with 0x55;<br>Pass 6: Overwriting with 0xAA;<br>Pass 7-9: Overwriting with 0x92 0x49 0x24, then cycling through the bytes;<br>Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;<br>Pass 26-28: Same as 7-9;<br>Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;<br>Pass 32-35: Overwriting with random data.
 <!--AUTO GENERATED METHODS TABLE END-->
 
 ## Troubleshooting / Common issues
