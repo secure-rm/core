@@ -157,6 +157,10 @@ While you don't get an error, the tool can handle this issue.
 
 If you really need to delete millions of file in one time, split the task (e.g. ./your_folder/a* then ./your_folder/b* ...).
 
+## Changelog
+
+See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/secure-rm/releases).
+
 ## TODO
 
 - [ ] Release of 1.0.0 (stable API)
