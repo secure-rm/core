@@ -14,8 +14,6 @@
 > :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
 > But it will be ready soon...
 
-Choose one of the multiple methods provided (8 to date), it's up to you!
-
 ## Install
 
 You can use this package in two different ways, the _npm module version_:
@@ -167,6 +165,10 @@ If you really need to delete millions of file in one time, split the task (e.g. 
 - [ ] Support of 64bit files
 
 ## Developing
+
+Contributions are welcome. Fork this repository and issue a pull request with your changes.
+
+Please add new tests for new functionality, adapt the existing ones if needed, and make sure that `npm test` succeeds.
 
 ### Prerequisites
 You need to have [Git](https://git-scm.com/downloads) and [npm](https://www.npmjs.com/get-npm) installed on your system.
