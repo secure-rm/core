@@ -55,19 +55,19 @@ $ secure-rm ./folder/*.js
 
 **`rm(path[, method], callback)`**
 
-* `path` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type):
+* `path` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) :
   * an absolute path (e.g. `D:\data`, `/d/data`)
   * a relative path (e.g. `./data/file.js`, `../../data`)
   * a [glob pattern](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js`, `./**/*`, `@(pattern|pat*|pat?erN)`)
-* `method` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) (optional):
+* `method` [\<Number\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type) (optional) :
   * By default, method 0 (Pseudorandom data)
   * You can pick another one, they are described below.
-* `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+* `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) :
   * returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
 
 Example:
 ```javascript
-rm('./data/file.js', '7' (err) => {
+rm('./data/file.js', 7, (err) => {
   if (err) throw err
   console.log('Success!')
 })
@@ -161,9 +161,10 @@ If you really need to delete millions of file in one time, split the task (e.g. 
 
 ## TODO
 
-- [ ] release of 1.0.0 (stable API);
-- [ ] tests;
-- [ ] Support of 64bit files.
+- [ ] Release of 1.0.0 (stable API)
+- [ ] Implement more tests
+- [ ] TypeScript
+- [ ] Support of 64bit files
 
 ## Developing
 

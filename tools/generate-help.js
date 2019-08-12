@@ -14,7 +14,7 @@ execute('node bin/run "-h"', (err, stdout) => {
   if (err) throw err
   fs.readFile(readme, (err, data) => {
     if (err) throw err
-    let text = data.toString().replace(regex, '$1' + stdout + '$3')
+    const text = data.toString().replace(regex, '$1' + stdout + '$3')
     fs.writeFile(readme, text, (err) => {
       if (err) throw err
       console.log('\n' + chalk.bold('Auto generated help has been saved to README.md!'))

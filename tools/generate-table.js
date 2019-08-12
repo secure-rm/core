@@ -15,7 +15,7 @@ for (let i = 0, l = methods.length; i < l; i++) {
 
 fs.readFile(readme, (err, data) => {
   if (err) throw err
-  let text = data.toString().replace(regex, '$1' + newText + '$3')
+  const text = data.toString().replace(regex, '$1' + newText + '$3')
   fs.writeFile(readme, text, (err) => {
     if (err) throw err
     console.log('\n' + chalk.bold('Auto generated methods table has been saved to README.md!'))
