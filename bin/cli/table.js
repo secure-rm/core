@@ -6,17 +6,16 @@ const header = [
   {
     value: 'Id',
     color: 'redBright',
-    width: 20
+    width: 50
   },
   {
     value: 'Name',
-    color: 'white',
-    width: 30
+    color: 'white'
   },
   {
     value: 'Passes',
     color: 'white',
-    width: 15
+    width: 30
   },
   {
     value: 'Description',
