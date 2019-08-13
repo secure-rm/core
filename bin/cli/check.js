@@ -6,7 +6,7 @@ const log = require('./log')
 const { methods } = require('../../lib/methods')
 const srm = require('../../')
 
-function handle (argv, methodID = '0', force) {
+function check (argv, methodID = '0', force) {
   methodID = parseInt(methodID)
   var paths = []
   for (let i = 0, len = argv.length; i < len; i++) {
@@ -51,4 +51,4 @@ function remove (paths, methodID) {
   }
 }
 
-module.exports = handle
+module.exports = check
