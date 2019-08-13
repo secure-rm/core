@@ -4,7 +4,7 @@ const inquirer = require('inquirer')
 const chalk = require('chalk')
 const log = require('./log')
 const { methods } = require('../../lib/methods')
-const rm = require('../../')
+const srm = require('../../')
 
 function handle (argv, methodID = '0', force) {
   methodID = parseInt(methodID)
@@ -40,13 +40,13 @@ function handle (argv, methodID = '0', force) {
 function remove (paths, methodID) {
   for (let i = paths.length - 1; i >= 0; i--) {
     const start = process.hrtime()
-    rm(paths[i], methodID, (err) => {
+    srm(paths[i], methodID, (err, path) => {
       const diff = process.hrtime(start)
       const timeFixed = diff[0] > 0
         ? `${(diff[0] + diff[1] / 1e9).toFixed(3)}s (${diff[0] * 1e3 + diff[1] / 1e6} ms)`
         : `${diff[0] / 1e3 + diff[1] / 1e6} ms`
-      if (err) log.error(chalk.red.bold('Deletion of ') + chalk.red(paths[i]) + chalk.red.bold(` failed in ${timeFixed}:\n`) + chalk.red(err))
-      else log.info(chalk.cyan(paths[i]) + chalk.cyan.bold(` deleted in ${timeFixed}.`))
+      if (err) log.error(chalk.red.bold('Deletion of ') + chalk.red(path) + chalk.red.bold(` failed in ${timeFixed}:\n`) + chalk.red(err))
+      else log.info(chalk.cyan(path) + chalk.cyan.bold(` deleted in ${timeFixed}.`))
     })
   }
 }

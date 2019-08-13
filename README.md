@@ -32,15 +32,30 @@ Secure-rm will retry 3 times if an error occur to ensure the task succeeded.
 
 ## Getting started
 
-If you want your application to delete specific files with a pass of cryptographically strong pseudo-random data, use this code snippet:
-```javascript
-const rm = require('secure-rm')
+If you want your application to delete specific files with a pass of cryptographically strong pseudo-random data, use one of these code snippets:
 
-rm('./folder/*.js', (err) => {
+### Callback version
+
+```javascript
+const srm = require('secure-rm')
+
+srm('./folder/*.js', (err, path) => {
   if (err) throw err
-  console.log('Success!')
+  console.log(`Successfully removed ${path} !`)
 })
 ```
+
+### Promise version
+
+```javascript
+const srm = require('secure-rm')
+
+srm('./folder/*.js')
+  .then((path) => console.log(`Successfully removed ${path} !`))
+  .catch((err) => {throw err})
+```
+
+### Command line version
 
 If you want to delete files on the fly, just use the command line tool:
 ```shell
@@ -51,7 +66,7 @@ $ secure-rm ./folder/*.js
 
 ### npm module 
 
-**`rm(path[, method], callback)`**
+**`rm(path[, method] [, callback])`**
 
 * `path` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) :
   * an absolute path (e.g. `D:\data`, `/d/data`)
@@ -60,15 +75,29 @@ $ secure-rm ./folder/*.js
 * `method` [\<Number\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type) (optional) :
   * By default, method 0 (Pseudorandom data)
   * You can pick another one, they are described below.
-* `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) :
+* `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) (if missing, return a promise):
   * returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
 
-Example:
+Examples:
 ```javascript
-rm('./data/file.js', 7, (err) => {
+srm('./data/file.js', (err, path) => {
   if (err) throw err
-  console.log('Success!')
+  console.log(`Successfully removed ${path} !`)
 })
+
+srm('/data/*.js', 7, (err, path) => {
+  if (err) throw err
+  console.log(`Successfully removed ${path} !`)
+})
+
+srm('./*')
+  .then((path) => console.log(`Successfully removed ${path} !`))
+  .catch((err) => {throw err})
+
+srm('./folder/*.js', 5)
+  .then((path) => console.log(`Successfully removed ${path} !`))
+  .catch((err) => {throw err})
+
 ```
 
 #### Events
@@ -77,14 +106,14 @@ When running, secure-rm emits events to let you know the progression of the dele
 You can indeed intercept error and ending events for _each_ file.
 
 ```javascript
-rm.event.on('start', (file) => console.log('Starting ' + file))
-rm.event.on('unlink', (file) => console.log('Unlinking ' + file))
-rm.event.on('done', (file) => console.log('Done ' + file))
+srm.event.on('start', (file) => console.log('Starting ' + file))
+srm.event.on('unlink', (file) => console.log('Unlinking ' + file))
+srm.event.on('done', (file) => console.log('Done ' + file))
 
-rm.event.on('info', (file, info) => console.log('Info ' + info + file))
+srm.event.on('info', (file, info) => console.log('Info ' + info + file))
 
-rm.event.on('warn', (file, err) => console.log('Warning ' + err + file))
-rm.event.on('error', (file, err) => console.log('Error ' + err + file))
+srm.event.on('warn', (file, err) => console.log('Warning ' + err + file))
+srm.event.on('error', (file, err) => console.log('Error ' + err + file))
 ```
 
 ### Command line tool
@@ -141,7 +170,7 @@ ID | Name | Passes | Description
  4 | Russian State Standard GOST R 50739-95 | 2 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with random data.
  5 | British HMG Infosec Standard 5 | 3 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3: Overwriting with random data as well as verifying the writing of this data.
  6 | US Army AR380-19 | 3 | Pass 1: Overwriting with random data;<br>Pass 2: Overwriting with a random byte;<br>Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.
- 7 | *Secure-rm method* | 4 | Pass 1-2: Overwriting with random data;<br>Pass 3: Renaming the file with random data;<br>Pass 4: Truncating between 25% and 75% of the file.
+ 7 | **Secure-rm method** | 4 | Pass 1-2: Overwriting with random data;<br>Pass 3: Renaming the file with random data;<br>Pass 4: Truncating between 25% and 75% of the file.
  8 | Royal Canadian Mounted Police TSSIT OPS-II | 7 | Pass 1: Overwriting with zeroes;<br>Pass 2: Overwriting with ones;<br>Pass 3-6: Same as 1-2;<br>Pass 7: Overwriting with a random data as well as review the writing of this character.
  9 | Bruce Schneier Algorithm | 7 | Pass 1: Overwriting with zeros;<br>Pass 2: Overwriting with ones;<br>Pass 3-7: Overwriting with random data.
  10 | Bruce Schneier Algorithm | 33 | Pass 1-33: Overwriting with random data.
