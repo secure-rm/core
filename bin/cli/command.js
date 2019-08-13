@@ -1,7 +1,7 @@
 const { Command, flags } = require('@oclif/command')
 const Parser = require('@oclif/parser')
 const { methods } = require('../../lib/methods')
-const handle = require('./handle')
+const check = require('./check')
 const table = require('./table')
 
 flags.custom = (opts = {}, action) => {
@@ -17,7 +17,7 @@ flags.custom = (opts = {}, action) => {
 class SecureRmCommand extends Command {
   async run () {
     const { flags, argv } = this.parse(SecureRmCommand)
-    handle(argv, flags.method, flags.force)
+    check(argv, flags.method, flags.force)
   }
 }
 

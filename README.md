@@ -78,7 +78,7 @@ $ secure-rm ./folder/*.js
 * `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) (if missing, return a promise):
   * returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
 
-Examples:
+#### Examples:
 ```javascript
 srm('./data/file.js', (err, path) => {
   if (err) throw err
@@ -176,6 +176,8 @@ ID | Name | Passes | Description
  10 | Bruce Schneier Algorithm | 33 | Pass 1-33: Overwriting with random data.
  11 | Peter Gutmann Algorithm | 35 | Pass 1-4: Overwriting with random data;<br>Pass 5: Overwriting with 0x55;<br>Pass 6: Overwriting with 0xAA;<br>Pass 7-9: Overwriting with 0x92 0x49 0x24, then cycling through the bytes;<br>Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;<br>Pass 26-28: Same as 7-9;<br>Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;<br>Pass 32-35: Overwriting with random data.
 <!--AUTO GENERATED METHODS TABLE END-->
+
+Note: Node ensures that the file is correctly written, checking the writing in these algorithms is unnecessary.
 
 ## Troubleshooting / Common issues
 
