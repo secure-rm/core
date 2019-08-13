@@ -9,6 +9,11 @@ const header = [
     width: 10
   },
   {
+    value: 'textId',
+    color: 'redBright',
+    width: 20
+  },
+  {
     value: 'Name',
     color: 'white',
     width: 30
@@ -27,8 +32,8 @@ const header = [
 
 var rows = []
 
-for (let i = 0, l = methods.length; i < l; i++) {
-  rows.push([i, methods[i].name, methods[i].passes, methods[i].description])
+for (let method in methods) {
+  rows.push([methods[method].numericalID, method, methods[method].name, methods[method].passes, methods[method].description])
 }
 
 var t1 = Table(header, rows, {

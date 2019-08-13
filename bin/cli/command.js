@@ -1,6 +1,5 @@
 const { Command, flags } = require('@oclif/command')
 const Parser = require('@oclif/parser')
-const { methods } = require('../../lib/methods')
 const check = require('./check')
 const table = require('./table')
 
@@ -33,8 +32,7 @@ SecureRmCommand.flags = {
   help: flags.help({ char: 'h' }),
   method: flags.option({
     char: 'm',
-    description: 'select the erasure method',
-    options: Array.from(Array(methods.length).keys()).map(x => x.toString())
+    description: 'select the erasure method'
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
   table: flags.custom({ char: 't', description: 'show the methods table' }, table)
