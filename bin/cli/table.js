@@ -6,17 +6,16 @@ const header = [
   {
     value: 'Id',
     color: 'redBright',
-    width: 10
+    width: 50
   },
   {
     value: 'Name',
-    color: 'white',
-    width: 30
+    color: 'white'
   },
   {
     value: 'Passes',
     color: 'white',
-    width: 15
+    width: 30
   },
   {
     value: 'Description',
@@ -27,8 +26,8 @@ const header = [
 
 var rows = []
 
-for (let i = 0, l = methods.length; i < l; i++) {
-  rows.push([i, methods[i].name, methods[i].passes, methods[i].description])
+for (let method in methods) {
+  rows.push([method, methods[method].name, methods[method].passes, methods[method].description])
 }
 
 var t1 = Table(header, rows, {

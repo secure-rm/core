@@ -1,8 +1,11 @@
 const { Command, flags } = require('@oclif/command')
 const Parser = require('@oclif/parser')
-const { methods } = require('../../lib/methods')
-const handle = require('./handle')
+const chalk = require('chalk')
+const check = require('./check')
 const table = require('./table')
+const { methods } = require('../../lib/methods')
+
+const validIDs = Array.from(Object.keys(methods))
 
 flags.custom = (opts = {}, action) => {
   return Parser.flags.boolean(Object.assign(
@@ -17,7 +20,7 @@ flags.custom = (opts = {}, action) => {
 class SecureRmCommand extends Command {
   async run () {
     const { flags, argv } = this.parse(SecureRmCommand)
-    handle(argv, flags.method, flags.force)
+    check(argv, flags)
   }
 }
 
@@ -34,9 +37,26 @@ SecureRmCommand.flags = {
   method: flags.option({
     char: 'm',
     description: 'select the erasure method',
-    options: Array.from(Array(methods.length).keys()).map(x => x.toString())
+    default: 'secure',
+    parse: input => {
+      if (validIDs.includes(input)) return input
+      else {
+        console.log(chalk.bold.yellow(`'${input}' is not a valid ID. \nList of valid IDs: ${validIDs}`))
+        return 'secure'
+      }
+    }
+  }),
+  retries: flags.option({
+    char: 'r',
+    description: 'max retries if error',
+    parse: input => {
+      return typeof input === 'number'
+        ? input
+        : null
+    }
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
+  globbing: flags.boolean({ description: 'allow or not file globbing', default: true, allowNo: true }),
   table: flags.custom({ char: 't', description: 'show the methods table' }, table)
 }
 
