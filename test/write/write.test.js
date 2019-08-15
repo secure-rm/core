@@ -2,35 +2,32 @@ const fs = require('fs')
 const path = require('path')
 const util = require('util')
 const { write } = require('../../lib/write')
+const expected = require('./write.expected.js')
 
 const readFile = util.promisify(fs.readFile)
-const copyFile = util.promisify(fs.copyFile)
+const writeFile = util.promisify(fs.writeFile)
 const unlink = util.promisify(fs.unlink)
 
-const base = path.resolve(__dirname, './base')
-const nonRandomFunctions = ['zeroes', 'ones', 'complementary']
-
 describe('Non-random write functions are correct:', () => {
-  for (let i = 0; i < nonRandomFunctions.length; i++) {
-    test(nonRandomFunctions[i].toString(), done => {
-      copyFile(base, path.resolve(__dirname, nonRandomFunctions[i]))
-        .then(() => write.init(path.resolve(__dirname, nonRandomFunctions[i])))
-        .then(({ fileSize, file }) => write[nonRandomFunctions[i]](file, fileSize))
+  for (let i = 0; i < expected.length; i++) {
+    let file = path.resolve(__dirname, expected[i].name || expected[i].function)
+
+    test(expected[i].description, done => {
+      writeFile(file, Buffer.from([0x05, 0xfa, 0x6a, 0x63, 0xe0, 0x2e, 0xea, 0x92, 0x65, 0xf9]))
+        .then(() => write.init(file))
+        .then(({ fileSize, file }) => {
+          return expected[i].arg
+            ? write[expected[i].function](file, expected[i].arg, fileSize)
+            : write[expected[i].function](file, fileSize)
+        })
         .then(({ file }) => readFile(file))
-        .then((result) => readFile(path.resolve(__dirname, './file-reference', nonRandomFunctions[i]))
-          .then((expected) => {
-            expect(result).toStrictEqual(expected)
-            done()
-          })
-          .catch((err) => { throw err }))
+        .then((result) => {
+          expect(result).toStrictEqual(expected[i].expectedValue)
+          unlink(file)
+            .catch((err) => { throw err })
+          done()
+        })
         .catch((err) => { throw err })
     })
-  }
-})
-
-afterAll(() => {
-  for (let i = 0; i < nonRandomFunctions.length; i++) {
-    unlink(path.resolve(__dirname, nonRandomFunctions[i]))
-      .catch((err) => { throw err })
   }
 })
