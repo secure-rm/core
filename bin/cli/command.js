@@ -56,7 +56,7 @@ SecureRmCommand.flags = {
     }
   }),
   force: flags.boolean({ char: 'f', description: 'avoid checks' }),
-  globbing: flags.boolean({ char: 'g', description: 'allow or not file globbing', default: true, allowNo: true }),
+  globbing: flags.boolean({ description: 'allow or not file globbing', default: true, allowNo: true }),
   table: flags.custom({ char: 't', description: 'show the methods table' }, table)
 }
 

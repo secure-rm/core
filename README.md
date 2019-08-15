@@ -11,8 +11,7 @@
   <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License"></a>
 </p>
 
-> :warning: **WARNING** :warning: THIS TOOL IS STILL IN DEVELOPEMENT, USE IT AT YOUR OWN RISKS!
-> But it will be ready soon...
+> v1.0.0 will be released soon, stay tuned!
 
 ## Install
 
@@ -68,39 +67,50 @@ $ secure-rm ./folder/*.js
 
 **`rm(path[, options] [, callback])`**
 
-* `path` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) :
-  * an absolute path (e.g. `D:\data`, `/d/data`)
-  * a relative path (e.g. `./data/file.js`, `../../data`)
-  * a [glob pattern](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js`, `./**/*`, `@(pattern|pat*|pat?erN)`)
-* `options` [\<Object\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) (optional) :
-  * `method` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) : ID of the method (default: 'secure')
-  * `customMethod` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) : your own method to remove a file (if specified, priority over `method`)
-  * `maxBusyTries` [\<Number\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type) : number of retries if an error is encountered.
-  * `disableGlob` [\<Boolean\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type) : allow or not file globbing (default: true)
-* `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) (if missing, return a promise):
-  * returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
+- `path` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) :
+  - an absolute path (e.g. `D:\data`, `/d/data`);
+  - a relative path (e.g. `./data/file.js`, `../../data`);
+  - a [glob pattern](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js`, `./**/*`, `@(pattern|pat*|pat?erN)`).
+- `options` [\<Object\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) (optional) :
+  - `method` [\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) : ID of the method (default: 'secure');
+  - `customMethod` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) : your own method to remove a file (if specified, priority over `method`);
+  - `maxBusyTries` [\<Number\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type) : number of retries if an error occur;
+  - `disableGlob` [\<Boolean\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Boolean_type) : allow or not file globbing (default: true).
+- `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) (if missing, return a promise):
+  - returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
 
 #### Examples:
 ```javascript
-srm('./data/file.js', (err, path) => {
+const options = {
+  method: 'gutmann',
+  maxBusyTries: 5,
+  disableGlob: true
+}
+
+srm('./data/file*.js', options, (err, path) => {
   if (err) throw err
   console.log(`Successfully removed ${path} !`)
 })
-
-srm('/data/*.js', 7, (err, path) => {
-  if (err) throw err
-  console.log(`Successfully removed ${path} !`)
-})
-
-srm('./*')
-  .then((path) => console.log(`Successfully removed ${path} !`))
-  .catch((err) => {throw err})
-
-srm('./folder/*.js', 5)
-  .then((path) => console.log(`Successfully removed ${path} !`))
-  .catch((err) => {throw err})
-
 ```
+
+```javascript
+const options = {
+  customMethod: function (file, callback) {
+    srm.write.init(file)
+      .then(({ fileSize, file }) => srm.write.zeroes(file, fileSize))
+      .then(({ fileSize, file }) => srm.write.ones(file, fileSize))
+      .then(({ fileSize, file }) => srm.write.random(file, fileSize))
+      .then(({ file }) => srm.write.unlink(file))
+      .then(() => callback())
+      .catch((err) => callback(err))
+}
+
+srm('./*', options)
+  .then((path) => console.log(`Successfully removed ${path} !`))
+  .catch((err) => {throw err})
+```
+
+See [write.js](./lib/write.js) file for more details.
 
 #### Events
 When running, secure-rm emits events to let you know the progression of the deletion.
@@ -122,15 +132,17 @@ srm.event.on('error', (file, err) => console.log('Error ' + err + file))
 ```shell
 $ secure-rm <PATHS> [OPTIONS]
 ```
-* `PATHS`:
-  * one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
-  * supports [glob patterns](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js ./**/* @(pattern|pat*|pat?erN)`)
-* `OPTIONS` (flags):
-  * `-f, --force`: avoid checks if you want to use it in a shell or bash file;
-  * `-h, --help`: show CLI help, see below;
-  * `-m, --method`: numerical ID of the method, default is 0. See them detailed below;
-  * `-t, --table `: show the methods table. See them detailed below;
-  * `-v, --version ` show CLI version.
+- `PATHS`:
+  - one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
+  - supports [glob patterns](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js ./**/* @(pattern|pat*|pat?erN)`)
+- `OPTIONS` (flags):
+  - `-f, --force`: avoid checks if you want to use it in a shell or bash file;
+  - `-h, --help`: show CLI help, see below;
+  - `-m, --method`: numerical ID of the method, default is 0. See them detailed below;
+  - `-r, --retries`: max retries if an error occur;
+  - `-t, --table `: show the methods table. See them detailed below;
+  - `-v, --version `: show CLI version;
+  - `--no-globbing `: disable file globbing.
 
 Example:
 ```shell
@@ -146,17 +158,17 @@ USAGE
   $ secure-rm PATH
 
 OPTIONS
-  -f, --force                             avoid checks
-  -h, --help                              show CLI help
-  -m, --method=0|1|2|3|4|5|6|7|8|9|10|11  select the erasure method
-  -t, --table                             show the methods table
-  -v, --version                           show CLI version
+  -f, --force            avoid checks
+  -h, --help             show CLI help
+  -m, --method=method    [default: secure] select the erasure method
+  -r, --retries=retries  max retries if error
+  -t, --table            show the methods table
+  -v, --version          show CLI version
+  --[no-]globbing        allow or not file globbing
 
 DESCRIPTION
   Completely erases files by making recovery impossible.
   For extra documentation, go to https://www.npmjs.com/package/secure-rm
-
-
 ```
 <!--AUTO GENERATED HELP END-->
 
