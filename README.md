@@ -241,7 +241,7 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
 
 ## 📌 TODO
 
-- [ ] Release of 1.0.0 (stable API)
+- [x] Release of 1.0.0 (stable API)
 - [ ] Implement more tests
 - [ ] TypeScript
 - [ ] Support of 64bit files
