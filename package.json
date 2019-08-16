@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node bin/run",
     "style": "standard --verbose --env jest",
-    "style-setup": "npm install -g standard",
+    "dev-setup": "npm install -g standard jest",
     "test": "jest",
     "readme": "node tools/readme-helper"
   },
@@ -47,6 +47,7 @@
   "keywords": [
     "secure",
     "data erasure",
+    "file deletion",
     "remove",
     "delete",
     "wipe out",

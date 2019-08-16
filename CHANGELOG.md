@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Documentation:
   - Windows advice.
+  - Beautified the whole.
 
 ## [0.14.0] - 2019-08-15
 
