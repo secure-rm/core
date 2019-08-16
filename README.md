@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./assets/secure-rm.png" alt="Logo of the project">
+  <img src="./assets/secure-rm.png" alt="Secure-rm">
   <br>
   Completely erases files by making recovery impossible.
   <br>
@@ -8,28 +8,35 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/v/secure-rm.svg" alt="Version"></a>
   <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/dw/secure-rm.svg" alt="Downloads/week"></a>
-  <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License"></a>
+  <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License: MIT"></a>
+  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Tested with Jest"></a>
 </p>
 
-> v1.0.0 will be released soon, stay tuned!
+## ❓ Why
 
-## Install
+When you delete a file using the `rm` command or `fs.unlink` in node, it only remove direct pointers to the data disk sectors and make the data recovery possible with common software tools.
+
+Permanent data erasure goes beyond basic file deletion commands, which:
+1. Allow for selection of a specific standard, based on unique needs, and
+2. Verify the overwriting method has been successful and removed data across the entire device.
+
+## 📦 Install
 
 You can use this package in two different ways, the _npm module version_:
 
 ```shell
-$ npm install secure-rm --save
+npm install secure-rm --save
 ```
 
 Or the _command-line version_:
 
 ```shell
-$ npm install secure-rm -g
+npm install secure-rm -g
 ```
 
 Secure-rm will retry 3 times if an error occur to ensure the task succeeded.
 
-## Getting started
+## 🚀 Getting started
 
 If you want your application to delete specific files with a pass of cryptographically strong pseudo-random data, use one of these code snippets:
 
@@ -58,10 +65,10 @@ srm('./folder/*.js')
 
 If you want to delete files on the fly, just use the command line tool:
 ```shell
-$ secure-rm ./folder/*.js
+secure-rm ./folder/*.js
 ```
 
-## Usage
+## 📚 Usage
 
 ### npm module 
 
@@ -110,7 +117,7 @@ srm('./*', options)
   .catch((err) => {throw err})
 ```
 
-See [write.js](./lib/write.js) file for more details.
+If you want to make your own cutom method, see [write.js](./lib/write.js) file for more details.
 
 #### Events
 When running, secure-rm emits events to let you know the progression of the deletion.
@@ -130,7 +137,7 @@ srm.event.on('error', (file, err) => console.log('Error ' + err + file))
 
 ### Command line tool
 ```shell
-$ secure-rm <PATHS> [OPTIONS]
+secure-rm <PATHS> [OPTIONS]
 ```
 - `PATHS`:
   - one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
@@ -146,7 +153,7 @@ $ secure-rm <PATHS> [OPTIONS]
 
 Example:
 ```shell
-$ secure-rm ./folder/*.js ./garbage ./file.js -m 6 -f
+secure-rm ./folder/*.js ./garbage ./file.js -m 6 -f
 ```
 You can invoke the built-in help with `secure-rm -h`:
 
@@ -155,7 +162,7 @@ You can invoke the built-in help with `secure-rm -h`:
 CLI help:
 
 USAGE
-  $ secure-rm PATH
+ $ secure-rm PATH
 
 OPTIONS
   -f, --force            avoid checks
@@ -193,7 +200,24 @@ ID | Name | Passes | Description
 
 Note: Node ensures that the file is correctly written, checking the writing in these algorithms is unnecessary.
 
-## Troubleshooting / Common issues
+## 🚩 Troubleshooting / Common issues
+
+Should works on OS X, Linux, and Windows.
+
+### File systems
+
+secure-rm will only work on file systems that overwrite blocks in place.
+
+List of known file systems that will not work:
+- ext3
+- ext4
+- AthFS – AtheOS
+- OneFS
+- ssd's at large
+- reiserfs
+- ...
+- especially on the vast majority of
+journaled file systems.
 
 ### "WARN Too many open files, cannot ...:"
 
@@ -203,18 +227,26 @@ While you don't get an error, the tool can handle this issue.
 
 If you really need to delete millions of file in one time, split the task (e.g. ./your_folder/a* then ./your_folder/b* ...).
 
-## Changelog
+### Using Windows:
+
+Be sure to use `secure-rm ".\path\file"` with doublequotes since back-slashes will always be interpreted as escape characters, not path separators.
+
+Another solution is to double the back-slashes like: `secure-rm .\\path\\file`
+
+Or if you can, use forward slashes!
+
+## 📜 Changelog
 
 See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/secure-rm/releases).
 
-## TODO
+## 📌 TODO
 
 - [ ] Release of 1.0.0 (stable API)
 - [ ] Implement more tests
 - [ ] TypeScript
 - [ ] Support of 64bit files
 
-## Contributing
+## 🏗 Contributing
 
 See [contributing guidelines](/CONTRIBUTING.md)
 

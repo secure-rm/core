@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/run",
+    "release": "np",
     "style": "standard --verbose --env jest",
-    "style-setup": "npm install -g standard",
+    "dev-setup": "npm install -g standard jest np",
     "test": "jest",
     "readme": "node tools/readme-helper"
   },
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "jest": "^24.8.0",
+    "np": "^5.0.3",
     "standard": "^12.0.1"
   },
   "author": "Oganexon @oganexon",
@@ -37,6 +39,9 @@
   "oclif": {
     "bin": "secure-rm"
   },
+  "np": {
+    "yarn": false
+  },
   "bin": {
     "secure-rm": "./bin/run"
   },
@@ -47,6 +52,7 @@
   "keywords": [
     "secure",
     "data erasure",
+    "file deletion",
     "remove",
     "delete",
     "wipe out",

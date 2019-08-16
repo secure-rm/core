@@ -21,6 +21,11 @@ To invoke the command line tool, run:
 npm start -- [ARGS]
 ```
 
+If you want to install all the tools, juste run:
+```shell
+npm run dev-setup
+```
+
 <!--### Deploying / Publishing
 give instructions on how to build and release a new version
 In case there's some step you have to take that publishes this project to a
@@ -37,23 +42,14 @@ And again you'd need to tell what the previous code actually does.
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
 
-<!--## Configuration
-
-Here you should write what are all of the configurations a user can enter when
-using the project.
--->
 
 ### Tests
 
-> Soon
-<!--
-Describe and show how to run the tests with code examples.
-Explain what these tests test and why.
+This project uses the framework [Jest](https://jestjs.io/). Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 
-```shell
-Give an example
-```
--->
+Simply run `jest` to run the tests.
+
+There are not enough tests, you can add more.
 
 ### Style guide
 
@@ -61,11 +57,8 @@ Give an example
 
 This project uses [JavaScript Standard Style](https://cdn.rawgit.com/standard/standard/master/badge.svg). Please respect this convention.
 
-We provide an easy installation for you, just run:
-```shell
-$ npm run style-setup
-```
+You can install a [plugin](https://standardjs.com/awesome.html#editor-plugins) for your favorite editor if you want.
 
-And then `npm run style` each time you want to check style.
+### Pull request
 
-Or install a [plugin](https://standardjs.com/awesome.html#editor-plugins) for your favorite editor and ignore the recommandations above.
+Please follow the [pull request template](./github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
