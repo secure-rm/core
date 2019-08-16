@@ -12,8 +12,6 @@
   <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Tested with Jest"></a>
 </p>
 
-> v1.0.0 will be released soon, stay tuned!
-
 ## ❓ Why
 
 When you delete a file using the `rm` command or `fs.unlink` in node, it only remove direct pointers to the data disk sectors and make the data recovery possible with common software tools.
@@ -27,13 +25,13 @@ Permanent data erasure goes beyond basic file deletion commands, which:
 You can use this package in two different ways, the _npm module version_:
 
 ```shell
-$ npm install secure-rm --save
+npm install secure-rm --save
 ```
 
 Or the _command-line version_:
 
 ```shell
-$ npm install secure-rm -g
+npm install secure-rm -g
 ```
 
 Secure-rm will retry 3 times if an error occur to ensure the task succeeded.
@@ -67,7 +65,7 @@ srm('./folder/*.js')
 
 If you want to delete files on the fly, just use the command line tool:
 ```shell
-$ secure-rm ./folder/*.js
+secure-rm ./folder/*.js
 ```
 
 ## 📚 Usage
@@ -119,7 +117,7 @@ srm('./*', options)
   .catch((err) => {throw err})
 ```
 
-See [write.js](./lib/write.js) file for more details.
+If you want to make your own cutom method, see [write.js](./lib/write.js) file for more details.
 
 #### Events
 When running, secure-rm emits events to let you know the progression of the deletion.
@@ -139,7 +137,7 @@ srm.event.on('error', (file, err) => console.log('Error ' + err + file))
 
 ### Command line tool
 ```shell
-$ secure-rm <PATHS> [OPTIONS]
+secure-rm <PATHS> [OPTIONS]
 ```
 - `PATHS`:
   - one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
@@ -155,7 +153,7 @@ $ secure-rm <PATHS> [OPTIONS]
 
 Example:
 ```shell
-$ secure-rm ./folder/*.js ./garbage ./file.js -m 6 -f
+secure-rm ./folder/*.js ./garbage ./file.js -m 6 -f
 ```
 You can invoke the built-in help with `secure-rm -h`:
 
@@ -164,7 +162,7 @@ You can invoke the built-in help with `secure-rm -h`:
 CLI help:
 
 USAGE
-  $ secure-rm PATH
+ $ secure-rm PATH
 
 OPTIONS
   -f, --force            avoid checks

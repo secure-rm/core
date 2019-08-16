@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node bin/run",
+    "release": "np",
     "style": "standard --verbose --env jest",
-    "dev-setup": "npm install -g standard jest",
+    "dev-setup": "npm install -g standard jest np",
     "test": "jest",
     "readme": "node tools/readme-helper"
   },
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "jest": "^24.8.0",
+    "np": "^5.0.3",
     "standard": "^12.0.1"
   },
   "author": "Oganexon @oganexon",
@@ -36,6 +38,9 @@
   },
   "oclif": {
     "bin": "secure-rm"
+  },
+  "np": {
+    "yarn": false
   },
   "bin": {
     "secure-rm": "./bin/run"
