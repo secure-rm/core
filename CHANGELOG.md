@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - More tests.
 
+### Changed
+- Documentation:
+  - Windows advice.
+
 ## [0.14.0] - 2019-08-15
 
 ### Added

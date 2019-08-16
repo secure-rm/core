@@ -10,11 +10,13 @@ function check (argv, { method, retries, force, globbing }) {
   let paths = []
   if (globbing) {
     for (let i = 0, len = argv.length; i < len; i++) {
-      if (path.isAbsolute(argv[i])) {
+      if (path.sep !== '/') {
+        argv[i] = argv[i].split(path.sep).join('/')
         paths = paths.concat(argv[i])
       } else {
         paths = paths.concat(glob.sync(path.join(process.cwd(), argv[i])))
       }
+      console.log(paths)
     }
   } else paths = argv
   if (paths.length === 0) console.log(chalk.bold.yellow('No such file or directory.'))

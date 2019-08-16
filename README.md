@@ -203,6 +203,14 @@ While you don't get an error, the tool can handle this issue.
 
 If you really need to delete millions of file in one time, split the task (e.g. ./your_folder/a* then ./your_folder/b* ...).
 
+### Using Windows:
+
+Be sure to use `secure-rm ".\path\file"` with doublequotes since back-slashes will always be interpreted as escape characters, not path separators.
+
+Another solution is to double the back-slashes like: `secure-rm .\\path\\file`
+
+Or if you can, use forward slashes!
+
 ## Changelog
 
 See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/secure-rm/releases).
