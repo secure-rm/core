@@ -9,14 +9,14 @@ const { methods } = require('../../lib/methods')
 function check (argv, { method, retries, force, globbing }) {
   let paths = []
   if (globbing) {
-    for (let i = 0, len = argv.length; i < len; i++) {
+    for (let i = 0; i < argv.length; i++) {
+      if (!path.isAbsolute(argv[i])) {
+        argv[i] = path.join(process.cwd(), argv[i])
+      }
       if (path.sep !== '/') {
         argv[i] = argv[i].split(path.sep).join('/')
-        paths = paths.concat(argv[i])
-      } else {
-        paths = paths.concat(glob.sync(path.join(process.cwd(), argv[i])))
       }
-      console.log(paths)
+      paths = paths.concat(glob.sync(argv[i]))
     }
   } else paths = argv
   if (paths.length === 0) console.log(chalk.bold.yellow('No such file or directory.'))
