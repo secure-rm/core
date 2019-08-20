@@ -2,6 +2,8 @@ const chalk = require('chalk')
 const Table = require('tty-table')
 const { methods } = require('../../lib/methods')
 
+// Draw the methods table
+
 const header = [
   {
     value: 'Id',
