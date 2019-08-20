@@ -5,8 +5,18 @@ const check = require('./check')
 const table = require('./table')
 const { methods } = require('../../lib/methods')
 
+// List of valid methods IDs
 const validIDs = Array.from(Object.keys(methods))
 
+// Parse the input
+class SecureRmCommand extends Command {
+  async run () {
+    const { flags, argv } = this.parse(SecureRmCommand)
+    check(argv, flags)
+  }
+}
+
+// Custom flag
 flags.custom = (opts = {}, action) => {
   return Parser.flags.boolean(Object.assign(
     opts, {
@@ -17,18 +27,13 @@ flags.custom = (opts = {}, action) => {
     }))
 }
 
-class SecureRmCommand extends Command {
-  async run () {
-    const { flags, argv } = this.parse(SecureRmCommand)
-    check(argv, flags)
-  }
-}
-
+// CLI description
 SecureRmCommand.description = `CLI help:
 Completely erases files by making recovery impossible.
 For extra documentation, go to https://www.npmjs.com/package/secure-rm
 `
 
+// CLI flags
 SecureRmCommand.flags = {
   // add --version flag to show CLI version
   version: flags.version({ char: 'v' }),
@@ -60,8 +65,10 @@ SecureRmCommand.flags = {
   table: flags.custom({ char: 't', description: 'show the methods table' }, table)
 }
 
+// CLI args
 SecureRmCommand.args = [{ name: 'path', required: true }]
 
+// Multiple args allowed
 SecureRmCommand.strict = false
 
 module.exports = SecureRmCommand

@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "Completely erases files by making recovery impossible.",
   "main": "index.js",
   "scripts": {
@@ -50,6 +50,7 @@
     "/lib"
   ],
   "keywords": [
+    "privacy",
     "secure",
     "data erasure",
     "file deletion",

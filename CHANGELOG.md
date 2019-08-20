@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2019-08-20
+
+### Added
+- Comment on every file.
+- Error recap at the end of the process.
+
+## [1.1.0] - 2019-08-19
+
+### Fixed
+- Command line tool bugs with paths.
+
 ## [1.0.1] - 2019-08-16
 
 Release of 1.0.0 (stable API)
