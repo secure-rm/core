@@ -1,6 +1,6 @@
-const chalk = require('chalk')
-const Table = require('tty-table')
-const { methods } = require('../../lib/methods')
+import chalk from 'chalk'
+import Table from 'tty-table'
+import { methods, validIDs } from '../lib/methods'
 
 // Draw the methods table
 
@@ -28,8 +28,8 @@ const header = [
 
 var rows = []
 
-for (let method in methods) {
-  rows.push([method, methods[method].name, methods[method].passes, methods[method].description])
+for (let i = 0; i < validIDs.length; i++) {
+  rows.push([validIDs[i], methods[validIDs[i] as typeof validIDs].name, methods[validIDs[i] as typeof validIDs].passes, methods[validIDs[i] as typeof validIDs].description])
 }
 
 var t1 = Table(header, rows, {
@@ -45,9 +45,7 @@ var t1 = Table(header, rows, {
 
 const str1 = t1.render()
 
-function table () {
+export default function table () {
   console.log(chalk.bold('METHODS'))
   console.log(str1)
 }
-
-module.exports = table

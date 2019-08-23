@@ -1,7 +1,9 @@
-const { write, eventEmitter } = require('./write')
+import fs from 'fs'
+import util from 'util'
+import { write, eventEmitter } from './write'
 
 // Emit event with better message error
-function eventError (err, file) {
+function eventError(err: NodeJS.ErrnoException, file: string): void {
   if (err) {
     switch (err.code) {
       case 'EMFILE':
@@ -25,17 +27,34 @@ function eventError (err, file) {
   }
 }
 
+class Method {
+  readonly name: string
+  readonly passes: number
+  readonly description: string
+  // FIXME method type is any
+  readonly method: any
+  constructor({ name, passes, description, method }: { name: string, passes: number, description: string, method: any }) {
+    this.name = name
+    this.passes = passes
+    this.description = description
+    this.method = method
+    this.method.__promisify__ = function (file: string) {
+      return util.promisify(this.method)
+    }
+  }
+}
+
 // Object listing every methods
 const methods = {
-  'randomData': {
+  'randomData': new Method({
     name: 'Pseudorandom data',
     passes: 1,
     description: `Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"
 and "New Zealand Information and Communications Technology Standard NZSIT 402" 
 Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.random(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -43,14 +62,15 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
           callback(err)
         })
     }
-  },
-  'randomByte': {
+    
+  }),
+  'randomByte': new Method({
     name: 'Pseudorandom byte',
     passes: 1,
     description: 'Overwriting with a random byte.',
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.randomByte(file, fileSize))
+        .then(({ file, fileSize }) => write.randomByte(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -58,14 +78,14 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
           callback(err)
         })
     }
-  },
-  'zeroes': {
+  }),
+  'zeroes': new Method({
     name: 'Zeroes',
     passes: 1,
     description: 'Overwriting with zeroes.',
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -73,14 +93,14 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
           callback(err)
         })
     }
-  },
-  'ones': {
+  }),
+  'ones': new Method( {
     name: 'Ones',
     passes: 1,
     description: 'Overwriting with ones.',
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.ones(file, fileSize))
+        .then(({ file, fileSize }) => write.ones(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -88,19 +108,19 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
           callback(err)
         })
     }
-  },
-  'secure': {
+  }),
+  'secure': new Method( {
     name: '**Secure-rm method**',
     passes: 3,
     description:
       `Pass 1: Overwriting with random data;
 Pass 2: Renaming the file with random data;
 Pass 3: Truncating between 25% and 75% of the file.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.random(file, fileSize))
-        .then(({ fileSize, file }) => write.rename(file, fileSize))
-        .then(({ fileSize, file }) => write.truncate(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize))
+        .then(({ file, fileSize }) => write.rename(file, fileSize))
+        .then(({ file, fileSize }) => write.truncate(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -108,17 +128,17 @@ Pass 3: Truncating between 25% and 75% of the file.`,
           callback(err)
         })
     }
-  },
-  'GOST_R50739-95': {
+  }),
+  'GOST_R50739-95': new Method({
     name: 'Russian State Standard GOST R50739-95',
     passes: 2,
     description:
       `Pass 1: Overwriting with zeroes;
 Pass 2: Overwriting with random data.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
-        .then(({ fileSize, file }) => write.random(file, fileSize))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -126,8 +146,8 @@ Pass 2: Overwriting with random data.`,
           callback(err)
         })
     }
-  },
-  'HMG_IS5': {
+  }),
+  'HMG_IS5': new Method({
     name: 'British HMG Infosec Standard 5',
     passes: 3,
     description:
@@ -138,11 +158,11 @@ and "Navy Staff Office Publication NAVSO P-5239-26"
 Pass 1: Overwriting with zeroes;
 Pass 2: Overwriting with ones;
 Pass 3: Overwriting with random data as well as verifying the writing of this data.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
-        .then(({ fileSize, file }) => write.ones(file, fileSize))
-        .then(({ fileSize, file }) => write.random(file, fileSize))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.ones(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -150,19 +170,19 @@ Pass 3: Overwriting with random data as well as verifying the writing of this da
           callback(err)
         })
     }
-  },
-  'AR380-19': {
+  }),
+  'AR380-19': new Method({
     name: 'US Army AR380-19',
     passes: 3,
     description:
       `Pass 1: Overwriting with random data;
 Pass 2: Overwriting with a random byte;
 Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.random(file, fileSize))
-        .then(({ fileSize, file }) => write.randomByte(file, fileSize))
-        .then(({ fileSize, file }) => write.complementary(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize))
+        .then(({ file, fileSize }) => write.randomByte(file, fileSize))
+        .then(({ file, fileSize }) => write.complementary(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -170,8 +190,8 @@ Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writi
           callback(err)
         })
     }
-  },
-  'VSITR': {
+  }),
+  'VSITR': new Method({
     name: 'Standard of the Federal Office for Information Security (BSI-VSITR)',
     passes: 7,
     description:
@@ -180,15 +200,15 @@ Pass 1: Overwriting with zeroes;
 Pass 2: Overwriting with ones;
 Pass 3-6: Same as 1-2;
 Pass 7: Overwriting with a random data as well as review the writing of this character.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
-        .then(({ fileSize, file }) => write.ones(file, fileSize))
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
-        .then(({ fileSize, file }) => write.ones(file, fileSize))
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
-        .then(({ fileSize, file }) => write.ones(file, fileSize))
-        .then(({ fileSize, file }) => write.random(file, fileSize))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.ones(file, fileSize))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.ones(file, fileSize))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.ones(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -196,19 +216,19 @@ Pass 7: Overwriting with a random data as well as review the writing of this cha
           callback(err)
         })
     }
-  },
-  'schneier': {
+  }),
+  'schneier': new Method( {
     name: 'Bruce Schneier Algorithm',
     passes: 7,
     description:
       `Pass 1: Overwriting with zeros;
 Pass 2: Overwriting with ones;
 Pass 3-7: Overwriting with random data.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.zeroes(file, fileSize))
-        .then(({ fileSize, file }) => write.ones(file, fileSize))
-        .then(({ fileSize, file }) => write.random(file, fileSize, 5))
+        .then(({ file, fileSize }) => write.zeroes(file, fileSize))
+        .then(({ file, fileSize }) => write.ones(file, fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize, 5))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -216,15 +236,15 @@ Pass 3-7: Overwriting with random data.`,
           callback(err)
         })
     }
-  },
-  'pfitzner': {
+  }),
+  'pfitzner': new Method({
     name: 'Pfitzner Method',
     passes: 33,
     description:
       `Pass 1-33: Overwriting with random data.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.random(file, fileSize, 33))
+        .then(({ file, fileSize }) => write.random(file, fileSize, 33))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -232,8 +252,8 @@ Pass 3-7: Overwriting with random data.`,
           callback(err)
         })
     }
-  },
-  'gutmann': {
+  }),
+  'gutmann': new Method({
     name: 'Peter Gutmann Algorithm',
     passes: 35,
     description:
@@ -245,16 +265,16 @@ Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;
 Pass 26-28: Same as 7-9;
 Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;
 Pass 32-35: Overwriting with random data.`,
-    method: function (file, callback) {
+    method: function (file: string, callback: Function) {
       write.init(file)
-        .then(({ fileSize, file }) => write.random(file, fileSize, 4))
-        .then(({ fileSize, file }) => write.byte(file, 0x55, fileSize))
-        .then(({ fileSize, file }) => write.byte(file, 0xAA, fileSize))
-        .then(({ fileSize, file }) => write.cycleBytes(file, [0x92, 0x49, 0x24], fileSize))
-        .then(({ fileSize, file }) => write.incrementByte(file, { start: 0x00, end: 0xFF, increment: 0x11 }, fileSize))
-        .then(({ fileSize, file }) => write.cycleByte(file, [0x92, 0x49, 0x24], fileSize))
-        .then(({ fileSize, file }) => write.cycleByte(file, [0x6D, 0xB6, 0xDB], fileSize))
-        .then(({ fileSize, file }) => write.random(file, fileSize, 4))
+        .then(({ file, fileSize }) => write.random(file, fileSize, 4))
+        .then(({ file, fileSize }) => write.byte(file, 0x55, fileSize))
+        .then(({ file, fileSize }) => write.byte(file, 0xAA, fileSize))
+        .then(({ file, fileSize }) => write.cycleBytes(file, [0x92, 0x49, 0x24], fileSize))
+        .then(({ file, fileSize }) => write.incrementByte(file, { start: 0x00, end: 0xFF, increment: 0x11 }, fileSize))
+        .then(({ file, fileSize }) => write.cycleBytes(file, [0x92, 0x49, 0x24], fileSize))
+        .then(({ file, fileSize }) => write.cycleBytes(file, [0x6D, 0xB6, 0xDB], fileSize))
+        .then(({ file, fileSize }) => write.random(file, fileSize, 4))
         .then(({ file }) => write.unlink(file))
         .then(() => callback())
         .catch((err) => {
@@ -262,8 +282,8 @@ Pass 32-35: Overwriting with random data.`,
           callback(err)
         })
     }
-  }/*
-  T: {
+  })/*
+  T: new Method({
     name: 'Template',
     passes: 3,
     description:
@@ -278,7 +298,10 @@ Pass 32-35: Overwriting with random data.`,
           callback(err)
         })
     }
-  }, */
+  }), */
 }
 
-module.exports = { methods, eventEmitter }
+// List of valid methods IDs
+const validIDs = <unknown>Object.keys(methods) as keyof typeof methods
+
+export { methods, eventEmitter, validIDs }

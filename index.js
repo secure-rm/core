@@ -1,3 +1,3 @@
-const secureRm = require('./lib/secure-rm')
+const secureRm = require('./dist/lib/secure-rm')
 
 module.exports = secureRm

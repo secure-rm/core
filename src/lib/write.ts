@@ -1,31 +1,31 @@
-const fs = require('fs')
-const path = require('path')
-const events = require('events')
-const crypto = require('crypto')
-const { kMaxLength } = require('buffer')
+import fs from 'fs'
+import path from 'path'
+import events from 'events'
+import crypto from 'crypto'
+import { kMaxLength } from 'buffer'
 
 const eventEmitter = new events.EventEmitter()
 
 // Function to offset an array
-const offset = (arr, offset) => [...arr.slice(offset), ...arr.slice(0, offset)]
+const offset = (arr: number[], offset: number) => [...arr.slice(offset), ...arr.slice(0, offset)]
 
 // Object listing writing methods
 const write = {
   // Needed to provide file size
-  init: file => {
+  init: (file: string): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       fs.stat(file, (err, stats) => {
         if (err) reject(err)
         else if (stats.size <= kMaxLength) {
           eventEmitter.emit('start', file)
-          resolve({ fileSize: stats.size, file })
+          resolve({ file, fileSize: stats.size })
         } else {
           reject(Error('64bit files are not yet supported.'))
         }
       })
     })
   },
-  random: (file, fileSize, passes) => {
+  random: (file: string, fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       const buffer = Buffer.alloc(fileSize)
       crypto.randomFill(buffer, (err, randomBuffer) => {
@@ -33,116 +33,118 @@ const write = {
         eventEmitter.emit('info', file, 'Writing random data ')
         fs.writeFile(file, randomBuffer, (err) => {
           if (err) reject(err)
-          else if (passes > 1) {
-            write.random(file, fileSize, passes - 1)
-              .then(() => resolve({ fileSize, file }))
+          else if ((passes as number) > 1) {
+            write.random(file, fileSize, passes! - 1)
+              .then(() => resolve({ file, fileSize }))
               .catch((err) => reject(err))
-          } else resolve({ fileSize, file })
+          } else resolve({ file, fileSize })
         })
       })
     })
   },
-  zeroes: (file, fileSize, passes) => {
+  zeroes: (file: string, fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, 'Writing zeroes ')
-      fs.writeFile(file, Buffer.alloc(fileSize, 0), (err) => {
+      fs.writeFile(file, Buffer.alloc(fileSize, 0b00000000), (err) => {
         if (err) reject(err)
-        else if (passes > 1) {
-          write.zeroes(file, fileSize, passes - 1)
-            .then(() => resolve({ fileSize, file }))
+        else if ((passes as number) > 1) {
+          write.zeroes(file, fileSize, passes! - 1)
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
-  ones: (file, fileSize, passes) => {
+  ones: (file: string, fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, 'Writing ones ')
       fs.writeFile(file, Buffer.alloc(fileSize, 0b11111111), (err) => {
         if (err) reject(err)
-        else if (passes > 1) {
-          write.ones(file, fileSize, passes - 1)
-            .then(() => resolve({ fileSize, file }))
+        else if ((passes as number) > 1) {
+          write.ones(file, fileSize, passes! - 1)
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
   // Write one byte on the whole file
-  byte: (file, data, fileSize, passes) => {
+  byte: (file: string, data: number, fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, `Writing 0x${data.toString(16)} `)
       fs.writeFile(file, Buffer.alloc(fileSize, data), (err) => {
         if (err) reject(err)
-        else if (passes > 1) {
-          write.byte(file, data, fileSize, passes - 1)
-            .then(() => resolve({ fileSize, file }))
+        else if ((passes as number) > 1) {
+          write.byte(file, data, fileSize, passes! - 1)
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
   // Write an array of bytes on the whole file
-  bytes: (file, dataArray, fileSize, passes) => {
+  bytes: (file: string, dataArray: number[], fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, `Writing ${dataArray.map(x => '0x' + x.toString(16))} `)
-      const dataConverted = Uint8Array.from(dataArray)
+      // const dataConverted = Uint8Array.from(dataArray)
+      const dataConverted = Buffer.from(dataArray)
       fs.writeFile(file, Buffer.alloc(fileSize, dataConverted), (err) => {
         if (err) reject(err)
-        else if (passes > 1) {
-          write.bytes(file, dataArray, fileSize, passes - 1)
-            .then(() => resolve({ fileSize, file }))
+        else if ((passes as number) > 1) {
+          write.bytes(file, dataArray, fileSize, passes! - 1)
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
   // Write an array of bytes on the whole file
   // And then cycle through the array
-  cycleBytes: (file, dataArray, fileSize, passes = 1) => {
+  cycleBytes: (file: string, dataArray: number[], fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, `Writing ${dataArray.map(x => '0x' + x.toString(16))} `)
-      const dataConverted = Uint8Array.from(dataArray)
+      // const dataConverted = Uint8Array.from(dataArray)
+      const dataConverted = Buffer.from(dataArray)
       fs.writeFile(file, Buffer.alloc(fileSize, dataConverted), (err) => {
         if (err) reject(err)
-        else if (passes < dataArray.length) {
-          write.cycleBytes(file, offset(dataArray, 1), fileSize, passes + 1)
-            .then(() => resolve({ fileSize, file }))
+        else if ((passes as number) < dataArray.length) {
+          write.cycleBytes(file, offset(dataArray, 1), fileSize, passes! + 1)
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
   // Write start byte on the whole file
   // And then + increment until end byte
-  incrementByte: (file, { start, end, increment }, fileSize) => {
+  incrementByte: (file: string, { start, end, increment }: { start: number, end: number, increment: number }, fileSize: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, `Writing 0x${start.toString(16)} `)
       fs.writeFile(file, Buffer.alloc(fileSize, start), (err) => {
         if (err) reject(err)
         else if (start + increment <= end) {
           write.incrementByte(file, { start: start + increment, end: end, increment }, fileSize)
-            .then(() => resolve({ fileSize, file }))
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
-  randomByte: (file, fileSize, passes) => {
+  randomByte: (file: string, fileSize: number, passes?: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, 'Writing random byte ')
       fs.writeFile(file, Buffer.alloc(fileSize, crypto.randomBytes(1)[0]), (err) => {
         if (err) reject(err)
-        else if (passes > 1) {
-          write.randomByte(file, fileSize, passes - 1)
-            .then(() => resolve({ fileSize, file }))
+        else if ((passes as number) > 1) {
+          write.randomByte(file, fileSize, passes! - 1)
+            .then(() => resolve({ file, fileSize }))
             .catch((err) => reject(err))
-        } else resolve({ fileSize, file })
+        } else resolve({ file, fileSize })
       })
     })
   },
   // Write the binary complement
-  complementary: (file, fileSize) => {
+  complementary: (file: string, fileSize: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, 'Reading file ')
       fs.readFile(file, (err, data) => {
@@ -155,37 +157,37 @@ const write = {
           eventEmitter.emit('info', file, 'Writing binary complement ')
           fs.writeFile(file, data, (err) => {
             if (err) reject(err)
-            else resolve({ fileSize, file })
+            else resolve({ file, fileSize })
           })
         }
       })
     })
   },
   // Rename to random string
-  rename: (file, fileSize) => {
+  rename: (file: string, fileSize: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       const newName = crypto.randomBytes(9).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
-      const newPath = path.join(path.dirname(file), newName)
+      const newPath = path.join(path.dirname(file as string), newName)
       eventEmitter.emit('info', file, `Renaming to ${newName} `)
       fs.rename(file, newPath, (err) => {
         if (err) reject(err)
-        else resolve({ fileSize, file: newPath })
+        else resolve({ file: newPath, fileSize })
       })
     })
   },
   // Truncate to between 25% and 75% of the file size
-  truncate: (file, fileSize) => {
+  truncate: (file: string, fileSize: number): Promise<{ file: string, fileSize: number }> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('info', file, 'Truncating ')
       const newSize = Math.floor((Math.random() * 0.5 + 0.25) * fileSize)
       fs.truncate(file, newSize, (err) => {
         if (err) reject(err)
-        else resolve({ fileSize: newSize, file })
+        else resolve({ file, fileSize: newSize })
       })
     })
   },
   // End function: unlink the file pointer
-  unlink: file => {
+  unlink: (file: string): Promise<void> => {
     return new Promise((resolve, reject) => {
       eventEmitter.emit('unlink', file)
       fs.unlink(file, (err) => {
@@ -199,4 +201,4 @@ const write = {
   }
 }
 
-module.exports = { write, eventEmitter }
+export { write, eventEmitter }
