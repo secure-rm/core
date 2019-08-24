@@ -1,4 +1,5 @@
 language : node_js
+
 matrix:
   include:
     - name: "Linux"
@@ -6,20 +7,29 @@ matrix:
     - name: "macOS"
       os: osx
     - name: "Windows"
-      os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell      # 'language: python' is an error on Travis CI Windows
-      # python: 3.7         # 'python:' is ignored on Travis CI Windows
+      os: windows
+      language: shell
       before_install:
-        - choco install nodejs  # this install takes at least 1 min 30 sec
-      #  - python -m pip install --upgrade pip
+        - choco install nodejs.install
       #env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-node_js :
- - stable
-install:
- - npm install
-script:
- - npm test
+
+node_js:
+  - "6"
+  - "8"
+  - "10"
+  # - "11" TODO: add 11 in April when 12 goes live.
+  - "node"
+
+cache:
+  directories:
+    - "node_modules"
+
 branches:
   only:
   - master
   - develop
+install:
+
+ - npm install
+script:
+ - npm test
