@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "1.2.0-0",
+  "version": "1.2.0-1",
   "description": "Completely erases files by making recovery impossible.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -53,10 +53,11 @@
     "yarn": false
   },
   "bin": {
-    "secure-rm": "./bin/run"
+    "secure-rm": "./dist/cli/run"
   },
   "files": [
-    "/dist"
+    "/dist",
+    "index.d.ts"
   ],
   "keywords": [
     "privacy",
