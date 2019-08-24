@@ -1,4 +1,4 @@
- version: 2.1
+  version: 2.1
   jobs:
     build:
       docker: 
@@ -6,11 +6,3 @@
       steps:
         - checkout # check out the code in the project directory
         - run: echo "hello world" # run the `echo` command
-    build-macos: 
-      macos:  
-        xcode: "10.0.0" 
-    build-windows:
-      executor: circleci/windows@1.0.0/vs2019
-      steps:
-        - checkout
-        - run: Write-Host 'Hello, Windows'
