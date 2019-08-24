@@ -1,8 +1,23 @@
 language : node_js
-os:
- - linux
- - osx
- - windows
+matrix:
+  include:
+    - name: "Linux"
+      os: linux
+      # python: 3.7           # this works for Linux but is ignored on macOS or Windows
+    - name: "macOS"
+      os: osx
+      osx_image: xcode11  # Python 3.7.2 running on macOS 10.14.3
+      language: shell       # 'language: python' is an error on Travis CI macOS
+      # python: 3.7         # 'python:' is ignored on Travis CI macOS
+      before_install: python3 --version ; pip3 --version ; sw_vers
+    - name: "Windows"
+      os: windows           # Windows 10.0.17134 N/A Build 17134
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      # python: 3.7         # 'python:' is ignored on Travis CI Windows
+      #before_install:
+      #  - choco install python  # this install takes at least 1 min 30 sec
+      #  - python -m pip install --upgrade pip
+      #env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 node_js :
  - stable
 install:
