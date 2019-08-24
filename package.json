@@ -2,7 +2,8 @@
   "name": "secure-rm",
   "version": "1.1.1",
   "description": "Completely erases files by making recovery impossible.",
-  "main": "index.js",
+  "main": "dist/lib/secure-rm.js",
+  "types": "dist/lib/secure-rm.d.ts",
   "scripts": {
     "start": "node bin/run",
     "build": "npm run build-ts && npm run lint",
@@ -54,7 +55,6 @@
     "secure-rm": "./bin/run"
   },
   "files": [
-    "/bin",
     "/dist"
   ],
   "keywords": [

@@ -41,13 +41,13 @@ export default function secureRm(path: string, options?: Options | Callback, cal
 // Callback version
 function secureRmCallback(path: string, options: ParsedOptions, callback: Callback): void {
   if (options.customMethod) {
-    rimraf(path as string, {
+    rimraf(path, {
       unlink: options.customMethod,
       maxBusyTries: options.maxBusyTries || 3,
       disableGlob: options.disableGlob || false
     }, (err: NodeJS.ErrnoException) => callback(err, path))
   } else if (validIDs.includes(options.method)) {
-    rimraf(path as string, {
+    rimraf(path, {
       unlink: methods[options.method].method,
       maxBusyTries: options.maxBusyTries || 3,
       disableGlob: options.disableGlob || false
@@ -61,7 +61,7 @@ function secureRmCallback(path: string, options: ParsedOptions, callback: Callba
 function secureRmPromise(path: string, options: ParsedOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     if (options.customMethod) {
-      rimraf(path as string, {
+      rimraf(path, {
         unlink: options.customMethod,
         maxBusyTries: options.maxBusyTries || 3,
         disableGlob: options.disableGlob || false
@@ -70,7 +70,7 @@ function secureRmPromise(path: string, options: ParsedOptions): Promise<string> 
         else resolve(path)
       })
     } else if (validIDs.includes(options.method)) {
-      rimraf(path as string, {
+      rimraf(path, {
         unlink: methods[options.method].method,
         maxBusyTries: options.maxBusyTries || 3,
         disableGlob: options.disableGlob || false
