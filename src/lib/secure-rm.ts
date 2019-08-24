@@ -1,7 +1,7 @@
 import fs from 'fs'
 import rimraf from 'rimraf'
 import { methods, validIDs } from './methods'
-export { write, eventEmitter } from './write'
+export { write, eventEmitter as event } from './write'
 
 interface Options {
   method?: string
@@ -37,6 +37,8 @@ export default function secureRm(path: string, options?: Options | Callback, cal
   if (callback) secureRmCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
   else return secureRmPromise(path, options as ParsedOptions)
 }
+
+// (module).exports = secureRm
 
 // Callback version
 function secureRmCallback(path: string, options: ParsedOptions, callback: Callback): void {

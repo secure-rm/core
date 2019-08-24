@@ -1,6 +1,6 @@
 const fs = require('fs')
 const util = require('util')
-const { write } = require('../../lib/write')
+const { write } = require('../../dist/lib/write')
 const expected = require('./write-non-random-expectation.js')
 
 const readFile = util.promisify(fs.readFile)
