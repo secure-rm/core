@@ -10,7 +10,6 @@
   <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/dw/secure-rm.svg?style=for-the-badge" alt="Downloads/week"></a>
   <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg?style=for-the-badge" alt="License: MIT"></a>
 </p>
-<hr>
 <p align="center">
   <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=for-the-badge&label=master%20build" alt="Build status: master"></a>
   <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=for-the-badge&label=development%20build" alt="Build status: develop"></a>
@@ -258,7 +257,6 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
   <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/secure-rm?style=for-the-badge" alt="Node version"></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/language-typescript-blue?style=for-the-badge" alt="language"></a>
 </p>
-<hr>
 <p align="center">
   <img src="https://img.shields.io/github/contributors/oganexon/secure-rm?style=for-the-badge" alt="Contributors">
   <img src="https://img.shields.io/github/last-commit/oganexon/secure-rm/develop?style=for-the-badge" alt="Last commit">
