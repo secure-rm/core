@@ -10,7 +10,9 @@
   <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/dw/secure-rm.svg" alt="Downloads/week"></a>
   <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg" alt="License: MIT"></a>
   <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Tested with Jest"></a>
-  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://travis-ci.org/oganexon/secure-rm.svg?branch=master" alt="Build status"></a>
+  <br>
+  Master: <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://travis-ci.org/oganexon/secure-rm.svg?branch=master" alt="Build status"></a>
+  Development: <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://travis-ci.org/oganexon/secure-rm.svg?branch=develop" alt="Build status"></a>
 </p>
 
 ## ❓ Why
