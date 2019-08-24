@@ -1,3 +1,3 @@
 const srm = require('..')
 
-console.log(srm.default)
+console.log(srm)

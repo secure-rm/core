@@ -1,7 +1,7 @@
 import fs from 'fs'
 import rimraf from 'rimraf'
 import { methods, validIDs } from './methods'
-export { write, eventEmitter as event } from './write'
+export { write, eventEmitter } from './write'
 
 interface Options {
   method?: string
