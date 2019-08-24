@@ -1,17 +1,17 @@
 language : node_js
 
-matrix:
-  include:
-    - name: "Linux"
-      os: linux
-    - name: "macOS"
-      os: osx
-    - name: "Windows"
-      os: windows
-      language: shell
-      before_install:
-        - choco install nodejs.install
-      #env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+# matrix:
+#   include:
+#     - name: "Linux"
+#       os: linux
+#     - name: "macOS"
+#       os: osx
+#     - name: "Windows"
+#       os: windows
+#       language: shell
+#       before_install:
+#         - choco install nodejs.install
+#       #env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 
 node_js:
   - "6"
@@ -19,6 +19,11 @@ node_js:
   - "10"
   # - "11" TODO: add 11 in April when 12 goes live.
   - "node"
+
+os:
+  - linux
+  - osx
+  - windows
 
 cache:
   directories:
