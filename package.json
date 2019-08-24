@@ -53,10 +53,11 @@
     "yarn": false
   },
   "bin": {
-    "secure-rm": "./dist/cli/run"
+    "secure-rm": "./bin/run"
   },
   "files": [
     "/dist",
+    "/bin",
     "index.d.ts"
   ],
   "keywords": [
