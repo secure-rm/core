@@ -6,11 +6,11 @@
       steps:
         - checkout # check out the code in the project directory
         - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
+            name: update-npm
+            command: 'sudo npm install -g npm@latest'
         - run:
-          name: install-npm
-          command: npm install
+            name: install-npm
+            command: npm install
         - run: # run tests
-          name: test
-          command: npm test
+            name: test
+            command: npm test
