@@ -7,10 +7,10 @@ matrix:
       os: osx
     - name: "Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
-      language: shell       # 'language: python' is an error on Travis CI Windows
+      language: node_js      # 'language: python' is an error on Travis CI Windows
       # python: 3.7         # 'python:' is ignored on Travis CI Windows
-      before_install:
-        - choco install nodejs.install   # this install takes at least 1 min 30 sec
+      # before_install:
+      #  - choco install nodejs.install   # this install takes at least 1 min 30 sec
       #  - python -m pip install --upgrade pip
       #env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 node_js :
