@@ -11,7 +11,7 @@
   <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg?style=for-the-badge" alt="License: MIT"></a>
 </p>
 <p align="center">
-  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=for-the-badge&label=master%20build" alt="Build status: master"></a>
+  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/master.svg?style=for-the-badge&label=master%20build" alt="Build status: master"></a>
   <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=for-the-badge&label=development%20build" alt="Build status: develop"></a>
 </p>
 
