@@ -1,3 +1,7 @@
-const secureRm = require('./lib/secure-rm')
+const secureRm = require('./dist/lib/secure-rm')
 
-module.exports = secureRm
+let srm = secureRm.default
+srm.write = secureRm.write
+srm.event = secureRm.eventEmitter
+
+module.exports = srm

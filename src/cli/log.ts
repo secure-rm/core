@@ -1,6 +1,7 @@
-const log = require('ololog').configure({ time: true, locate: false, tag: true }).handleNodeErrors()
-const chalk = require('chalk')
-const { eventEmitter } = require('../../lib/methods')
+import chalk from 'chalk'
+import { eventEmitter } from '../lib/methods'
+import ololog from 'ololog'
+const log = ololog.configure({ time: true, locate: false, tag: true }).handleNodeErrors()
 
 eventEmitter.on('start', (file) => log(chalk.bold.yellow('Starting ') + file))
 eventEmitter.on('unlink', (file) => log(chalk.bold.magenta('Unlinking ') + file))
@@ -11,4 +12,4 @@ eventEmitter.on('info', (file, info) => log(chalk.bold.blue(info) + file))
 eventEmitter.on('warn', (file, err) => log.warn(chalk.yellow(err) + file))
 eventEmitter.on('error', (file, err) => log.error(chalk.red(err) + file))
 
-module.exports = log
+export default log
