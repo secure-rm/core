@@ -2,7 +2,7 @@ import inquirer from 'inquirer'
 import chalk from 'chalk'
 import log from './log'
 import { methods, eventEmitter  } from '../lib/methods'
-import srm from '../lib/secure-rm'
+import srm from '..'
 
 interface Flags {
   method: keyof typeof methods | undefined

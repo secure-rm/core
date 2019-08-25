@@ -3,29 +3,29 @@ import rimraf from 'rimraf'
 import { methods, validIDs } from './methods'
 export { write, eventEmitter } from './write'
 
-interface Options {
+export interface Options {
   method?: string
   customMethod?: typeof fs.unlink
   maxBusyTries?: number
   disableGlob?: boolean
 }
 
-interface ParsedOptions {
+export interface ParsedOptions {
   method: keyof typeof methods
   customMethod?: typeof fs.unlink
   maxBusyTries?: number
   disableGlob?: boolean
 }
 
-type Callback = (err: NodeJS.ErrnoException | null, path: string) => void
+export type Callback = (err: NodeJS.ErrnoException | null, path: string) => void
 
 // Main function when secure-rm is called
-export function secureRm(path: string): Promise<string>
-export function secureRm(path: string, options: Options): Promise<string>
-export function secureRm(path: string, callback: Callback): void
-export function secureRm(path: string, options: Options, callback: Callback): void
+export function unlink(path: string): Promise<string>
+export function unlink(path: string, options: Options): Promise<string>
+export function unlink(path: string, callback: Callback): void
+export function unlink(path: string, options: Options, callback: Callback): void
 
-export default function secureRm(path: string, options?: Options | Callback, callback?: Callback) {
+export function unlink(path: string, options?: Options | Callback, callback?: Callback) {
   // Parse if callback is provided
   if (callback === undefined && typeof options === 'function') {
     callback = options
@@ -34,14 +34,14 @@ export default function secureRm(path: string, options?: Options | Callback, cal
   // Define method if none is provided
   if (typeof (options as Options).method !== 'string') (options as Options).method = 'secure'
 
-  if (callback) secureRmCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
-  else return secureRmPromise(path, options as ParsedOptions)
+  if (callback) unlinkCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
+  else return unlinkPromise(path, options as ParsedOptions)
 }
 
 // (module).exports = secureRm
 
 // Callback version
-function secureRmCallback(path: string, options: ParsedOptions, callback: Callback): void {
+function unlinkCallback(path: string, options: ParsedOptions, callback: Callback): void {
   if (options.customMethod) {
     rimraf(path, {
       unlink: options.customMethod,
@@ -60,7 +60,7 @@ function secureRmCallback(path: string, options: ParsedOptions, callback: Callba
 }
 
 // Promise version
-function secureRmPromise(path: string, options: ParsedOptions): Promise<string> {
+function unlinkPromise(path: string, options: ParsedOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     if (options.customMethod) {
       rimraf(path, {

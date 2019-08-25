@@ -11,10 +11,10 @@ interface ForInterface {
   increment: number;
 }
 
-declare function secureRm(path: string): Promise<string>;
-declare function secureRm(path: string, options: Options): Promise<string>;
-declare function secureRm(path: string, callback: Callback): void;
-declare function secureRm(path: string, options: Options, callback: Callback): void;
+declare function srm(path: string): Promise<string>;
+declare function srm(path: string, options: Options): Promise<string>;
+declare function srm(path: string, callback: Callback): void;
+declare function srm(path: string, options: Options, callback: Callback): void;
 
 declare namespace srm {
     const write: {
