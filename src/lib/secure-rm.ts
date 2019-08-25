@@ -32,7 +32,7 @@ export function unlink(path: string, options?: Options | Callback, callback?: Ca
     options = { method: 'secure' }
   }
   // Define method if none is provided
-  if (typeof (options as Options).method !== 'string') (options as Options).method = 'secure'
+  if (typeof (options as Options).method === undefined) (options as Options).method = 'secure'
 
   if (callback) unlinkCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
   else return unlinkPromise(path, options as ParsedOptions)
