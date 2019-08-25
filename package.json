@@ -57,8 +57,7 @@
   },
   "files": [
     "/dist",
-    "/bin",
-    "index.d.ts"
+    "/bin"
   ],
   "keywords": [
     "privacy",
