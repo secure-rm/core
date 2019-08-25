@@ -1,4 +1,4 @@
-const srm = require('..')
+const srm = require('../..')
 
 describe('Invalid IDs throw:', () => {
   const values = [-1, '1', 10e5, 'string', 'SECURE', ['secure']]

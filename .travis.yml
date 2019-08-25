@@ -22,5 +22,8 @@ branches:
 install:
  - npm install
 
+before_script:
+ - npm run build-ts
+
 script:
  - npm test

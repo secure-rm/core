@@ -1,4 +1,4 @@
-import srm from '..'
+import srm from '../..'
 
 describe('Invalid IDs throw:', () => {
   const values = ['1', 'string', 'SECURE']
