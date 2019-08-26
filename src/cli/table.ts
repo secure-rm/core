@@ -1,8 +1,8 @@
 import chalk from 'chalk'
 import Table from 'tty-table'
-import { methods, validIDs } from '../lib/methods'
+import { standards, validIDs } from '..'
 
-// Draw the methods table
+// Draw the standards table
 
 const header = [
   {
@@ -29,7 +29,7 @@ const header = [
 var rows = []
 
 for (let i = 0; i < validIDs.length; i++) {
-  rows.push([validIDs[i], methods[validIDs[i] as typeof validIDs].name, methods[validIDs[i] as typeof validIDs].passes, methods[validIDs[i] as typeof validIDs].description])
+  rows.push([validIDs[i], standards[validIDs[i] as typeof validIDs].name, standards[validIDs[i] as typeof validIDs].passes, standards[validIDs[i] as typeof validIDs].description])
 }
 
 var t1 = Table(header, rows, {

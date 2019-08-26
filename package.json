@@ -6,6 +6,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "start": "node bin/run",
+    "start-dev": "node bin/run-dev",
     "build": "npm run build-ts && npm run lint",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
@@ -34,7 +35,8 @@
     "standard": "^12.0.1",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.3"
   },
   "author": "Oganexon @oganexon",
   "bugs": "https://github.com/oganexon/secure-rm/issues",
@@ -53,7 +55,8 @@
     "yarn": false
   },
   "bin": {
-    "secure-rm": "./bin/run"
+    "secure-rm": "./bin/run",
+    "secure-rm-dev": "./bin/run-dev"
   },
   "files": [
     "/dist",

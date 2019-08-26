@@ -5,7 +5,7 @@ describe('Invalid IDs throw:', () => {
   for (let i = 0; i < values.length; i++) {
     test('ID: ' + values[i], () => {
       expect(() => {
-        srm('./testfile', { method: values[i] }, (err) => {
+        srm('./testfile', { standard: values[i] }, (err) => {
           if (err) throw err
         })
       }).toThrow(/not a valid ID/)

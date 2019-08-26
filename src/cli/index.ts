@@ -3,11 +3,11 @@ import * as Parser from '@oclif/parser'
 import path from 'path'
 import glob from 'glob'
 import chalk from 'chalk'
-import { validIDs, methods } from '../lib/methods'
+import { validIDs, standards } from '..'
 import check from './check'
 import table from './table'
 
-type Method = keyof typeof methods
+type Standard = keyof typeof standards
 
 // Custom flag
 const customFlag = (opts = {}, action: () => void) => {
@@ -26,8 +26,8 @@ Completely erases files by making recovery impossible.
 For extra documentation, go to https://www.npmjs.com/package/secure-rm
 `
   static examples = [
-    '$ mycommand --force',
-    '$ mycommand --help',
+    '$ secure-rm ./folder/*.js ./file.js -s gutmann -f',
+    '$ secure-rm /d/code -m',
   ]
 
   static flags = {
@@ -35,12 +35,12 @@ For extra documentation, go to https://www.npmjs.com/package/secure-rm
     version: flags.version({ char: 'v' }),
     // add --help flag to show CLI version
     help: flags.help({ char: 'h' }),
-    method: flags.option({
-      char: 'm',
-      description: 'select the erasure method',
+    standard: flags.option({
+      char: 's',
+      description: 'select the erasure standard',
       default: 'secure',
-      parse: (input): Method => {
-        if (validIDs.includes(input)) return input as Method
+      parse: (input): Standard => {
+        if (validIDs.includes(input)) return input as Standard
         else {
           console.log(chalk.bold.yellow(`'${input}' is not a valid ID. \nList of valid IDs: ${validIDs}`))
           return 'secure'
@@ -58,8 +58,9 @@ For extra documentation, go to https://www.npmjs.com/package/secure-rm
       }
     }),
     force: flags.boolean({ char: 'f', description: 'avoid checks' }),
+    mute: flags.boolean({ char: 'm', description: 'mutes the cli to the bare minimum' }),
     globbing: flags.boolean({ description: 'allow or not file globbing', default: true, allowNo: true }),
-    table: customFlag({ char: 't', description: 'show the methods table' }, table)
+    table: customFlag({ char: 't', description: 'show the standards table' }, table)
   }
 
   static args = [{ name: 'path', required: true }]

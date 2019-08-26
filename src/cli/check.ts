@@ -1,13 +1,15 @@
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-import log from './log'
-import { methods, eventEmitter  } from '../lib/methods'
+import { standards, event } from '..'
 import srm from '..'
 
+let log: any
+
 interface Flags {
-  method: keyof typeof methods | undefined
+  standard: keyof typeof standards | undefined
   retries: number | undefined
   force: boolean
+  mute: boolean
   globbing: boolean
   version: void
   help: void
@@ -15,9 +17,10 @@ interface Flags {
 }
 
 export default function check(paths: string[], flags: Flags) {
-  console.log(chalk.bold.yellow('Method: ' + methods[flags.method as keyof typeof methods].name + '\n'))
+  log = require('./log')(flags.mute)
+  console.log(chalk.bold.yellow('Method: ' + standards[flags.standard as keyof typeof standards].name + '\n'))
 
-  if (flags.force) remove(paths, flags.method as keyof typeof methods, flags.retries)
+  if (flags.force) remove(paths, flags.standard as keyof typeof standards, flags.retries)
   // Ask for confirmation
   else {
     inquirer.prompt([
@@ -35,31 +38,31 @@ export default function check(paths: string[], flags: Flags) {
     ])
       .then(answers => {
         if (answers.choices.length === 0) console.log(chalk.bold.yellow('No file or directory selected.'))
-        else remove(answers.choices, flags.method as keyof typeof methods, flags.retries)
+        else remove(answers.choices, flags.standard as keyof typeof standards, flags.retries)
       })
   }
 }
 
 let errorsRecord: { [key: string]: string[]} = {}
 
-eventEmitter.on('error', (file, err) => {
+event.on('error', (file, err) => {
   errorsRecord[err] = errorsRecord[err] || []
   errorsRecord[err].push(file)
 })
 
-function remove(paths: string[], methodID: keyof typeof methods, retries: number | undefined) {
+function remove(paths: string[], standardID: keyof typeof standards, retries: number | undefined) {
   let progress = 0
   for (let i = paths.length - 1; i >= 0; i--) {
     // Record time
     const start = process.hrtime()
 
-    srm(paths[i], { method: methodID, maxBusyTries: retries }, (err: NodeJS.ErrnoException | null, path: string) => {
+    srm(paths[i], { standard: standardID, maxBusyTries: retries }, (err: NodeJS.ErrnoException | null, path: string) => {
       if (err) log.error(chalk.red.bold('Deletion of ') + chalk.red(paths[i]) + chalk.red.bold(` failed in ${duration(start)}:\n`) + chalk.red(err.toString()))
       else log.info(chalk.cyan(path) + chalk.cyan.bold(` deleted in ${duration(start)}.`))
       progress++
       if (progress === paths.length) {
         if (Object.keys(errorsRecord).length !== 0) {
-          log.info(chalk.cyan('Process ended with errors:\n'))
+          log.error(chalk.cyan('Process ended with errors:\n'))
           for (let err in errorsRecord) {
             log(chalk.cyan.bold(err) + chalk.cyan('\n    ' + errorsRecord[err].reduce((accumulator: string, currentValue: string) => `${accumulator}\n    ${currentValue}`)))
           }

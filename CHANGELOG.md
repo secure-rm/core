@@ -14,12 +14,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-08-26
+
 ### Added
 - End message when the process is finished.
 - Types definitions.
+- Mute argument in cli.
+- New badges in readme.
+- Travis Continuous Integration.
 
 ### Changed
 - All JavaScript files have been converted to TypeScript files.
+- 'Method' is now 'standard' in the cli and in the lib.
+- Custom standard has changed. See the doc.
+
+### Soon deprecated
+- CLI will be ported in its own package.
 
 ## [1.1.1] - 2019-08-20
 

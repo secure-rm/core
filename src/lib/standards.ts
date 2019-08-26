@@ -28,20 +28,20 @@ function eventError(err: NodeJS.ErrnoException, file: string): void {
 
 type Callback = (err: NodeJS.ErrnoException | null) => void
 
-interface ArgsUnlinkMethod {
-  name: string
-  passes: number
-  description: string
+interface ArgsUnlinkStandard {
+  name?: string
+  passes?: number
+  description?: string
   method: (file: string, callback: Callback) => void
 }
 
-class UnlinkMethod {
+class UnlinkStandard {
   readonly name: string
   readonly passes: number
   readonly description: string
   // FIXME method type is any
   readonly method: any
-  constructor({ name, passes, description, method }: ArgsUnlinkMethod) {
+  constructor({ name = "Standard #", passes = 1, description = "no description", method }: ArgsUnlinkStandard) {
     this.name = name
     this.passes = passes
     this.description = description
@@ -52,9 +52,9 @@ class UnlinkMethod {
   }
 }
 
-// Object listing every methods
-const methods = {
-  'randomData': new UnlinkMethod({
+// Object listing every standards
+const standards = {
+  'randomData': new UnlinkStandard({
     name: 'Pseudorandom data',
     passes: 1,
     description: `Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"
@@ -72,7 +72,7 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
     }
     
   }),
-  'randomByte': new UnlinkMethod({
+  'randomByte': new UnlinkStandard({
     name: 'Pseudorandom byte',
     passes: 1,
     description: 'Overwriting with a random byte.',
@@ -87,7 +87,7 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
         })
     }
   }),
-  'zeroes': new UnlinkMethod({
+  'zeroes': new UnlinkStandard({
     name: 'Zeroes',
     passes: 1,
     description: 'Overwriting with zeroes.',
@@ -102,7 +102,7 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
         })
     }
   }),
-  'ones': new UnlinkMethod( {
+  'ones': new UnlinkStandard( {
     name: 'Ones',
     passes: 1,
     description: 'Overwriting with ones.',
@@ -117,8 +117,8 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
         })
     }
   }),
-  'secure': new UnlinkMethod( {
-    name: '**Secure-rm method**',
+  'secure': new UnlinkStandard( {
+    name: '**Secure-rm standard**',
     passes: 3,
     description:
       `Pass 1: Overwriting with random data;
@@ -137,7 +137,7 @@ Pass 3: Truncating between 25% and 75% of the file.`,
         })
     }
   }),
-  'GOST_R50739-95': new UnlinkMethod({
+  'GOST_R50739-95': new UnlinkStandard({
     name: 'Russian State Standard GOST R50739-95',
     passes: 2,
     description:
@@ -155,7 +155,7 @@ Pass 2: Overwriting with random data.`,
         })
     }
   }),
-  'HMG_IS5': new UnlinkMethod({
+  'HMG_IS5': new UnlinkStandard({
     name: 'British HMG Infosec Standard 5',
     passes: 3,
     description:
@@ -179,7 +179,7 @@ Pass 3: Overwriting with random data as well as verifying the writing of this da
         })
     }
   }),
-  'AR380-19': new UnlinkMethod({
+  'AR380-19': new UnlinkStandard({
     name: 'US Army AR380-19',
     passes: 3,
     description:
@@ -199,7 +199,7 @@ Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writi
         })
     }
   }),
-  'VSITR': new UnlinkMethod({
+  'VSITR': new UnlinkStandard({
     name: 'Standard of the Federal Office for Information Security (BSI-VSITR)',
     passes: 7,
     description:
@@ -225,7 +225,7 @@ Pass 7: Overwriting with a random data as well as review the writing of this cha
         })
     }
   }),
-  'schneier': new UnlinkMethod( {
+  'schneier': new UnlinkStandard( {
     name: 'Bruce Schneier Algorithm',
     passes: 7,
     description:
@@ -245,7 +245,7 @@ Pass 3-7: Overwriting with random data.`,
         })
     }
   }),
-  'pfitzner': new UnlinkMethod({
+  'pfitzner': new UnlinkStandard({
     name: 'Pfitzner Method',
     passes: 33,
     description:
@@ -261,7 +261,7 @@ Pass 3-7: Overwriting with random data.`,
         })
     }
   }),
-  'gutmann': new UnlinkMethod({
+  'gutmann': new UnlinkStandard({
     name: 'Peter Gutmann Algorithm',
     passes: 35,
     description:
@@ -291,7 +291,7 @@ Pass 32-35: Overwriting with random data.`,
         })
     }
   })/*
-  T: new UnlinkMethod({
+  T: new UnlinkStandard({
     name: 'Template',
     passes: 3,
     description:
@@ -309,7 +309,7 @@ Pass 32-35: Overwriting with random data.`,
   }), */
 }
 
-// List of valid methods IDs
-const validIDs = <unknown>Object.keys(methods) as keyof typeof methods
+// List of valid standards IDs
+const validIDs = <unknown>Object.keys(standards) as keyof typeof standards
 
-export { methods, eventEmitter, validIDs }
+export { standards, eventEmitter, validIDs, UnlinkStandard }
