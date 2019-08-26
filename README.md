@@ -6,13 +6,15 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/v/secure-rm.svg?style=for-the-badge" alt="Version"></a>
-  <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/dw/secure-rm.svg?style=for-the-badge" alt="Downloads/week"></a>
-  <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg?style=for-the-badge" alt="License: MIT"></a>
+  <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/v/secure-rm.svg?style=flat-square" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/dw/secure-rm.svg?style=flat-square" alt="Downloads/week"></a>
+  <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg?style=flat-square" alt="License: MIT"></a>
 </p>
 <p align="center">
-  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/master.svg?style=for-the-badge&label=master%20build" alt="Build status: master"></a>
-  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=for-the-badge&label=development%20build" alt="Build status: develop"></a>
+  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/master.svg?style=flat-square&label=master%20build" alt="Build status: master"></a>
+  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=flat-square&label=dev%20build" alt="Build status: develop"></a>
+  <a href="https://coveralls.io/github/oganexon/secure-rm"><img src="https://img.shields.io/coveralls/github/oganexon/secure-rm?style=flat-square" alt="Coverage"></a>
+  
 </p>
 
 ## ❓ Why
@@ -259,15 +261,15 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
 ## 🏗 Contributing
 
 <p align="center">
-  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg?style=for-the-badge&logo=jest" alt="Tested with Jest"></a>
-  <a href="https://www.npmjs.com"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=for-the-badge&logo=npm" alt="Dependencies"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/secure-rm?style=for-the-badge" alt="Node version"></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/language-typescript-blue?style=for-the-badge" alt="language"></a>
+  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg?style=flat-square&logo=jest" alt="Tested with Jest"></a>
+  <a href="https://www.npmjs.com"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=flat-square&logo=npm" alt="Dependencies"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/secure-rm?style=flat-square" alt="Node version"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/language-typescript-blue?style=flat-square" alt="language"></a>
 </p>
 <p align="center">
-  <img src="https://img.shields.io/github/contributors/oganexon/secure-rm?style=for-the-badge" alt="Contributors">
-  <img src="https://img.shields.io/github/last-commit/oganexon/secure-rm/develop?style=for-the-badge" alt="Last commit">
-  <img src="https://img.shields.io/npm/collaborators/secure-rm?style=for-the-badge" alt="npm collaborators">
+  <img src="https://img.shields.io/github/contributors/oganexon/secure-rm?style=flat-square" alt="Contributors">
+  <img src="https://img.shields.io/github/last-commit/oganexon/secure-rm/develop?style=flat-square" alt="Last commit">
+  <img src="https://img.shields.io/npm/collaborators/secure-rm?style=flat-square" alt="npm collaborators">
 </p>
 
 See [contributing guidelines](/CONTRIBUTING.md)
