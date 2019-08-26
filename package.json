@@ -1,30 +1,42 @@
 {
   "name": "secure-rm",
-  "version": "1.1.1",
+  "version": "1.2.0-4",
   "description": "Completely erases files by making recovery impossible.",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "start": "node bin/run",
+    "start-dev": "node bin/run-dev",
+    "build": "npm run build-ts && npm run lint",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "test": "jest --coverage --verbose",
+    "watch-test": "npm run test -- --watchAll",
     "release": "np",
-    "style": "standard --verbose --env jest",
-    "dev-setup": "npm install -g standard jest np",
-    "test": "jest",
-    "readme": "node tools/readme-helper"
+    "style": "standard --verbose --env jest"
   },
   "dependencies": {
     "@oclif/command": "^1.5.18",
     "@oclif/parser": "^3.8.4",
+    "@types/rimraf": "^2.0.2",
     "chalk": "^2.4.2",
     "glob": "^7.1.4",
-    "inquirer": "^6.5.0",
+    "inquirer": "^6.5.2",
     "ololog": "^1.1.146",
     "rimraf": "^2.6.3",
+    "tslib": "^1.10.0",
     "tty-table": "^2.7.3"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.18",
     "jest": "^24.8.0",
     "np": "^5.0.3",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.3"
   },
   "author": "Oganexon @oganexon",
   "bugs": "https://github.com/oganexon/secure-rm/issues",
@@ -46,8 +58,8 @@
     "secure-rm": "./bin/run"
   },
   "files": [
-    "/bin",
-    "/lib"
+    "/dist",
+    "/bin"
   ],
   "keywords": [
     "privacy",

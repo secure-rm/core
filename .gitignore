@@ -4,5 +4,6 @@
 /dist
 /tmp
 /yarn.lock
+/coverage
 node_modules
 README.html
