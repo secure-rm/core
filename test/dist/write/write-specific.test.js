@@ -24,9 +24,8 @@ describe('Specific write functions are correct:', () => {
       .then(() => write.init(fileName))
       .then(({ fileSize }) => write.truncate(fileName, fileSize))
       .then(({ fileSize }) => {
-        expect(fileSize)
-          .toBeGreaterThanOrEqual(25)
-          .toBeLessThanOrEqual(75)
+        expect(fileSize).toBeGreaterThanOrEqual(25)
+        expect(fileSize).toBeLessThanOrEqual(75)
         done()
       })
       .catch((err) => { throw err })
