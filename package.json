@@ -55,8 +55,7 @@
     "yarn": false
   },
   "bin": {
-    "secure-rm": "./bin/run",
-    "secure-rm-dev": "./bin/run-dev"
+    "secure-rm": "./bin/run"
   },
   "files": [
     "/dist",
