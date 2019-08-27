@@ -33,20 +33,8 @@ To install this package, just run: (Node and npm required)
 npm install secure-rm
 ```
 
-Looking for a **command line interface**? Visit [secure-rm-cli](https://www.npmjs.com/package/secure-rm-cli).
-
-Or the _command-line version_: **🚨 Deprecated 🚨**
-
-```shell
-npm install secure-rm -g
-```
-
-Move over `secure-rm-cli`:
-
-```shell
-npm install secure-rm-cli -g
-```
-
+Looking for a **command line interface**? See:
+<a href="https://www.npmjs.com/package/secure-rm-cli"><img src="https://img.shields.io/badge/-secure--rm--cli-blueviolet?style=flat-square" alt="secure-rm-cli"></a>.
 
 Secure-rm will retry 3 times if an error occur to ensure the task succeeded.
 
@@ -73,14 +61,6 @@ const srm = require('secure-rm')
 srm('./folder/*.js')
   .then((path) => console.log(`Successfully removed ${path} !`))
   .catch((err) => {throw err})
-```
-
-### Command line version **🚨 Deprecated 🚨**
-**(soon deprecated, will be ported to secure-rm-cli)**
-
-If you want to delete files on the fly, just use the command line tool:
-```shell
-secure-rm ./folder/*.js
 ```
 
 ## 📚 Usage
@@ -150,56 +130,37 @@ srm.event.on('warn', (file, err) => console.log('Warning ' + err + file))
 srm.event.on('error', (file, err) => console.log('Error ' + err + file))
 ```
 
-### Command line tool **🚨 Deprecated 🚨**
-```shell
-secure-rm <PATHS> [OPTIONS]
+### The `srm` Object
+
+When you import the library, you can do this in two different ways:
+```javascript
+const srm = require('secure-rm')
 ```
-- `PATHS`:
-  - one or multiple paths (e.g. `D:\data /d/data ./data/file.js ../../data`)
-  - supports [glob patterns](https://www.npmjs.com/package/glob#glob-primer) (e.g. `./*.js ./**/* @(pattern|pat*|pat?erN)`)
-- `OPTIONS` (flags):
-  - `-f, --force`: avoid checks if you want to use it in a shell or bash file;
-  - `-h, --help`: show CLI help, see below;
-  - `-s, --standard`: numerical ID of the standard, default is 0. See them detailed below;
-  - `-r, --retries`: max retries if an error occur;
-  - `-t, --table `: show the standards table. See them detailed below;
-  - `-v, --version `: show CLI version;
-  - `--no-globbing `: disable file globbing.
-
-Example:
-```shell
-secure-rm ./folder/*.js ./file.js -s gutmann -f
+And then get the properties:
+```javascript
+srm.event
+srm.write
+srm.validIDs
+...
 ```
-You can invoke the built-in help with `secure-rm -h`:
-
-<!--AUTO GENERATED HELP START-->
-```shell
-CLI help:
-
-USAGE
-  $ secure-rm PATH
-
-OPTIONS
-  -f, --force              avoid checks
-  -h, --help               show CLI help
-  -m, --mute               mutes the cli to the bare minimum
-  -r, --retries=retries    [default: 3] max retries if error
-  -s, --standard=standard  [default: secure] select the erasure standard
-  -t, --table              show the standards table
-  -v, --version            show CLI version
-  --[no-]globbing          allow or not file globbing
-
-DESCRIPTION
-  Completely erases files by making recovery impossible.
-  For extra documentation, go to https://www.npmjs.com/package/secure-rm
-
-EXAMPLES
-  $ secure-rm ./folder/*.js ./file.js -s gutmann -f
-  $ secure-rm /d/code -m
+Or you can import each property:
+```javascript
+import srm, { event, write, standard, validIDs, UnlinkStandard } from 'secure-rm'
+// Or
+const { event, write, standards, validIDs, UnlinkStandard } = require('secure-rm')
 ```
-<!--AUTO GENERATED HELP END-->
 
-### Standards
+It is structured as follows:
+
+`srm` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) :
+The main function, as described [above](#-usage).
+- `event` [\<events.EventEmitter\>](https://nodejs.org/dist/latest-v12.x/docs/api/events.html) : event object to follow the process, as described [above](#-events);
+- `write` [Object\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) : the object containing writing funtions, see [write.js](./lib/write.js);
+- `standard` [Object\<UnlinkStandard\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) : the object containing the standards;
+- `validIDs` [Array\<String\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#String_type) : array containing valid text IDs of standards;
+- `UnlinkStandard` [\<UnlinkStandard\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) : the class to create new standards.
+
+## Standards
 
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
