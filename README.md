@@ -33,6 +33,8 @@ To install this package, just run: (Node and npm required)
 npm install secure-rm
 ```
 
+Looking for a **command line interface**? Visit [secure-rm-cli](https://www.npmjs.com/package/secure-rm-cli).
+
 Or the _command-line version_: **🚨 Deprecated 🚨**
 
 ```shell
