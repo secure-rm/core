@@ -1,6 +1,6 @@
-import { unlink, Options, Callback} from './lib/secure-rm'
-import { validIDs, standards, UnlinkStandard } from './lib/standards'
-import { write, eventEmitter } from './lib/write'
+import { unlink, Options, Callback} from './secure-rm'
+import { validIDs, standards, UnlinkStandard } from './standards'
+import { write, eventEmitter } from './write'
 
 interface SecureRm {
   (path: string, options?: Options | Callback, callback?: Callback): typeof unlink;

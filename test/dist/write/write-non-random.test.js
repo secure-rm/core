@@ -1,7 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 const uuidv4 = require('uuid/v4')
-const { write } = require('../../../dist/lib/write')
+const { write } = require('../../../dist/write')
 const expected = require('./write-non-random-expectation.js')
 
 const readFile = util.promisify(fs.readFile)

@@ -2,6 +2,7 @@ import inquirer from 'inquirer'
 import chalk from 'chalk'
 import { standards, event } from '..'
 import srm from '..'
+require('./deprecated')
 
 let log: any
 

@@ -1,9 +1,7 @@
-*-debug.log
-*-error.log
+*.log
 /.nyc_output
 /dist
 /tmp
 /yarn.lock
 /coverage
 node_modules
-README.html
