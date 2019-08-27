@@ -1,3 +1,5 @@
+name: Travis CI
+
 language : node_js
 
 node_js:

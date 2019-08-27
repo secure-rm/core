@@ -14,6 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2019-08-27
+
+### Added
+- Code coverage.
+
+### Deprecated
+- The CLI is deprecated, it moved over `secure-rm-cli`.
+
 ## [2.0.0] - 2019-08-26
 
 ### Added

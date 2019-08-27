@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./assets/secure-rm.png" alt="Secure-rm">
+  <img src="./assets/secure-rm.png" alt="secure-rm">
   <br>
   Completely erases files by making recovery impossible.
   <br>
@@ -27,17 +27,24 @@ Permanent data erasure goes beyond basic file deletion commands, which:
 
 ## 📦 Install
 
-You can use this package in two different ways, the _npm module version_:
+To install this package, just run: (Node and npm required)
 
 ```shell
-npm install secure-rm --save
+npm install secure-rm
 ```
 
-Or the _command-line version_: **(soon deprecated, will be ported to secure-rm-cli)**
+Or the _command-line version_: **🚨 Deprecated 🚨**
 
 ```shell
 npm install secure-rm -g
 ```
+
+Move over `secure-rm-cli`:
+
+```shell
+npm install secure-rm-cli -g
+```
+
 
 Secure-rm will retry 3 times if an error occur to ensure the task succeeded.
 
@@ -66,7 +73,7 @@ srm('./folder/*.js')
   .catch((err) => {throw err})
 ```
 
-### Command line version
+### Command line version **🚨 Deprecated 🚨**
 **(soon deprecated, will be ported to secure-rm-cli)**
 
 If you want to delete files on the fly, just use the command line tool:
@@ -75,8 +82,6 @@ secure-rm ./folder/*.js
 ```
 
 ## 📚 Usage
-
-### npm module 
 
 **`rm(path[, options] [, callback])`**
 
@@ -92,7 +97,7 @@ secure-rm ./folder/*.js
 - `callback` [\<Function\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) (if missing, return a promise):
   - returns `err` [\<Error\>](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) when finished.
 
-#### Examples:
+### Examples:
 ```javascript
 const options = {
   standard: 'gutmann',
@@ -127,7 +132,7 @@ srm('./*', options)
 
 If you want to make your own cutom standard, see [write.js](./lib/write.js) file for more details.
 
-#### Events
+### Events
 When running, secure-rm emits events to let you know the progression of the deletion.
 
 You can indeed intercept error and ending events for _each_ file.
@@ -143,7 +148,7 @@ srm.event.on('warn', (file, err) => console.log('Warning ' + err + file))
 srm.event.on('error', (file, err) => console.log('Error ' + err + file))
 ```
 
-### Command line tool
+### Command line tool **🚨 Deprecated 🚨**
 ```shell
 secure-rm <PATHS> [OPTIONS]
 ```
@@ -194,7 +199,6 @@ EXAMPLES
 
 ### Standards
 
-<!--AUTO GENERATED METHODS TABLE START-->
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
  randomData | Pseudorandom data | 1 | Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"<br>and "New Zealand Information and Communications Technology Standard NZSIT 402" <br>Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
@@ -209,9 +213,8 @@ ID | Name | Passes | Description
  schneier | Bruce Schneier Algorithm | 7 | Pass 1: Overwriting with zeros;<br>Pass 2: Overwriting with ones;<br>Pass 3-7: Overwriting with random data.
  pfitzner | Pfitzner Method | 33 | Pass 1-33: Overwriting with random data.
  gutmann | Peter Gutmann Algorithm | 35 | Pass 1-4: Overwriting with random data;<br>Pass 5: Overwriting with 0x55;<br>Pass 6: Overwriting with 0xAA;<br>Pass 7-9: Overwriting with 0x92 0x49 0x24, then cycling through the bytes;<br>Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;<br>Pass 26-28: Same as 7-9;<br>Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;<br>Pass 32-35: Overwriting with random data.
-<!--AUTO GENERATED METHODS TABLE END-->
 
-Note: Node ensures that the file is correctly written, checking the writing in these algorithms is unnecessary.
+Note: Node ensures that the file is correctly written, checking the writing in these algorithms is unnecessary. (Report this if I'm wrong)
 
 ## 🚩 Troubleshooting / Common issues
 
@@ -242,9 +245,9 @@ If you really need to delete millions of file in one time, split the task (e.g. 
 
 ### Using Windows:
 
-Be sure to use `secure-rm ".\path\file"` with doublequotes since back-slashes will always be interpreted as escape characters, not path separators.
+Be sure to use `".\path\file"` with doublequotes since back-slashes will always be interpreted as escape characters, not path separators.
 
-Another solution is to double the back-slashes like: `secure-rm .\\path\\file`
+Another solution is to double the back-slashes like: `.\\path\\file`
 
 Or if you can, use forward slashes!
 
@@ -255,7 +258,6 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
 ## 📌 TODO
 
 - [ ] Implement more tests
-- [x] TypeScript
 - [ ] Support of 64bit files
 
 ## 🏗 Contributing
@@ -264,7 +266,7 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
   <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg?style=flat-square&logo=jest" alt="Tested with Jest"></a>
   <a href="https://www.npmjs.com"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=flat-square&logo=npm" alt="Dependencies"></a>
   <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/secure-rm?style=flat-square" alt="Node version"></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/language-typescript-blue?style=flat-square" alt="language"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/github/languages/top/oganexon/secure-rm?style=flat-square" alt="language"></a>
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/contributors/oganexon/secure-rm?style=flat-square" alt="Contributors">
