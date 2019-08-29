@@ -14,6 +14,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2019-08-29
+
+### Added
+- Dependabot.
+
+### Removed
+- CLI support. See [secure-rm-cli](https://www.npmjs.com/package/secure-rm-cli)
+- Unused packages.
+
 ## [2.0.1] - 2019-08-27
 
 ### Added
