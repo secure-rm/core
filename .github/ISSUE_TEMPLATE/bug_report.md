@@ -7,13 +7,6 @@ assignees: ''
 
 ---
 
-**Origin of the bug**
-
-Please delete options that are not relevant.
-- [ ] npm module version
-- [ ] command-line version
-- [ ] both
-
 **Describe the bug**
 
 A clear and concise description of what the bug is.
