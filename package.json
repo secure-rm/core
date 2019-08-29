@@ -15,7 +15,6 @@
     "style": "standard --verbose --env jest"
   },
   "dependencies": {
-    "glob": "^7.1.4",
     "rimraf": "^3.0.0",
     "tslib": "^1.10.0"
   },
