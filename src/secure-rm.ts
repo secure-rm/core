@@ -31,7 +31,7 @@ export function unlink(path: string, options?: Options | Callback, callback?: Ca
     options = { standard: 'secure' }
   }
   // Define standard if none is provided
-  if (typeof (options as Options).standard === undefined) (options as Options).standard = 'secure'
+  if ((options as Options).standard === undefined) (options as Options).standard = 'secure'
 
   if (callback) unlinkCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
   else return unlinkPromise(path, options as ParsedOptions)
