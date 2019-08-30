@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.3] - 2019-08-30
+
+### Fixed
+- Default standard when none is provided. (Tests are now a priority)
+
 ## [3.0.2] - 2019-08-30
 
 ### Fixed
