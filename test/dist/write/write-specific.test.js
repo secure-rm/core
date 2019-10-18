@@ -9,17 +9,17 @@ const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 const unlink = util.promisify(fs.unlink)
 
-let uuidList = []
+const uuidList = []
 
 function getUUID () {
-  let fileName = uuidv4()
+  const fileName = uuidv4()
   uuidList.push(fileName)
   return fileName
 }
 
 describe('Specific write functions are correct:', () => {
   it('Truncate between 25% and 75% of the file', done => {
-    let fileName = getUUID()
+    const fileName = getUUID()
     writeFile(fileName, Buffer.from(Buffer.alloc(100, crypto.randomBytes(100))))
       .then(() => write.init(fileName))
       .then(({ fileSize }) => write.truncate(fileName, fileSize))
@@ -32,7 +32,7 @@ describe('Specific write functions are correct:', () => {
   })
 
   it('Rename the file with a string of length 9', done => {
-    let fileName = uuidv4()
+    const fileName = uuidv4()
     writeFile(fileName, Buffer.from(Buffer.alloc(100, crypto.randomBytes(100))))
       .then(() => write.init(fileName))
       .then(({ file }) => write.rename(file, 100))
@@ -47,7 +47,7 @@ describe('Specific write functions are correct:', () => {
   })
 
   it('Write a random byte along the file', done => {
-    let fileName = getUUID()
+    const fileName = getUUID()
     writeFile(fileName, Buffer.from(Buffer.alloc(100, crypto.randomBytes(100))))
       .then(() => write.init(fileName))
       .then(() => write.randomByte(fileName, 100))

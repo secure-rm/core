@@ -8,10 +8,10 @@ const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
 const unlink = util.promisify(fs.unlink)
 
-let uuidList = []
+const uuidList = []
 
 function getUUID () {
-  let fileName = uuidv4()
+  const fileName = uuidv4()
   uuidList.push(fileName)
   return fileName
 }
@@ -19,7 +19,7 @@ function getUUID () {
 describe('Non-random write functions are correct:', () => {
   for (let i = 0; i < expected.length; i++) {
     it(expected[i].description, done => {
-      let fileName = getUUID()
+      const fileName = getUUID()
       writeFile(fileName, Buffer.from([0x05, 0xfa, 0x6a, 0x63, 0xe0, 0x2e, 0xea, 0x92, 0x65, 0xf9]))
         .then(() => write.init(fileName))
         .then(() => {

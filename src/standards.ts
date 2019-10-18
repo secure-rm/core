@@ -2,14 +2,14 @@ import util from 'util'
 import { write, eventEmitter } from './write'
 
 // Emit event with better message error
-function eventError(err: NodeJS.ErrnoException, file: string): void {
+function eventError (err: NodeJS.ErrnoException, file: string): void {
   if (err) {
     switch (err.code) {
       case 'EMFILE':
         eventEmitter.emit('warn', file, `Too many open files, cannot ${err.syscall || 'access'}: `)
         break
       case 'ENOENT':
-        eventEmitter.emit('warn', file, `This file no longer exists: `)
+        eventEmitter.emit('warn', file, 'This file no longer exists: ')
         break
       case 'EPERM':
         eventEmitter.emit('error', file, `Operation not permitted on this file (${err.syscall}): `)
@@ -41,7 +41,7 @@ class UnlinkStandard {
   readonly description: string
   // FIXME method type is any
   readonly method: any
-  constructor({ name = "Standard #", passes = 1, description = "no description", method }: ArgsUnlinkStandard) {
+  constructor ({ name = 'Standard #', passes = 1, description = 'no description', method }: ArgsUnlinkStandard) {
     this.name = name
     this.passes = passes
     this.description = description
@@ -54,7 +54,7 @@ class UnlinkStandard {
 
 // Object listing every standards
 const standards = {
-  'randomData': new UnlinkStandard({
+  randomData: new UnlinkStandard({
     name: 'Pseudorandom data',
     passes: 1,
     description: `Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"
@@ -70,9 +70,9 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
           callback(err)
         })
     }
-    
+
   }),
-  'randomByte': new UnlinkStandard({
+  randomByte: new UnlinkStandard({
     name: 'Pseudorandom byte',
     passes: 1,
     description: 'Overwriting with a random byte.',
@@ -87,7 +87,7 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
         })
     }
   }),
-  'zeroes': new UnlinkStandard({
+  zeroes: new UnlinkStandard({
     name: 'Zeroes',
     passes: 1,
     description: 'Overwriting with zeroes.',
@@ -102,7 +102,7 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
         })
     }
   }),
-  'ones': new UnlinkStandard( {
+  ones: new UnlinkStandard({
     name: 'Ones',
     passes: 1,
     description: 'Overwriting with ones.',
@@ -117,7 +117,7 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
         })
     }
   }),
-  'secure': new UnlinkStandard( {
+  secure: new UnlinkStandard({
     name: '**Secure-rm standard**',
     passes: 3,
     description:
@@ -155,7 +155,7 @@ Pass 2: Overwriting with random data.`,
         })
     }
   }),
-  'HMG_IS5': new UnlinkStandard({
+  HMG_IS5: new UnlinkStandard({
     name: 'British HMG Infosec Standard 5',
     passes: 3,
     description:
@@ -199,7 +199,7 @@ Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writi
         })
     }
   }),
-  'VSITR': new UnlinkStandard({
+  VSITR: new UnlinkStandard({
     name: 'Standard of the Federal Office for Information Security (BSI-VSITR)',
     passes: 7,
     description:
@@ -225,7 +225,7 @@ Pass 7: Overwriting with a random data as well as review the writing of this cha
         })
     }
   }),
-  'schneier': new UnlinkStandard( {
+  schneier: new UnlinkStandard({
     name: 'Bruce Schneier Algorithm',
     passes: 7,
     description:
@@ -245,11 +245,11 @@ Pass 3-7: Overwriting with random data.`,
         })
     }
   }),
-  'pfitzner': new UnlinkStandard({
+  pfitzner: new UnlinkStandard({
     name: 'Pfitzner Method',
     passes: 33,
     description:
-      `Pass 1-33: Overwriting with random data.`,
+      'Pass 1-33: Overwriting with random data.',
     method: function (file: string, callback: Callback) {
       write.init(file)
         .then(({ file, fileSize }) => write.random(file, fileSize, 33))
@@ -261,7 +261,7 @@ Pass 3-7: Overwriting with random data.`,
         })
     }
   }),
-  'gutmann': new UnlinkStandard({
+  gutmann: new UnlinkStandard({
     name: 'Peter Gutmann Algorithm',
     passes: 35,
     description:

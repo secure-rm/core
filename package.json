@@ -8,25 +8,27 @@
     "build": "npm run build-ts && npm run lint",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "lint": "tsc --noEmit && standard \"**/*.{js,ts}\" --fix --env jest",
     "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test": "jest --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
-    "style": "standard --verbose --env jest"
+    "prepack": "rimraf dist && npm run build"
   },
   "dependencies": {
-    "rimraf": "^3.0.0",
-    "tslib": "^1.10.0"
+    "tslib": "^1.10.0",
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {
-    "@types/rimraf": "^2.0.2",
     "@types/jest": "^24.0.18",
+    "@types/rimraf": "^2.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
     "coveralls": "^3.0.6",
     "jest": "^24.8.0",
     "standard": "^14.1.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3",
+    "typescript": "^3.6.2",
     "uuid": "^3.3.3"
   },
   "author": "Oganexon @oganexon",
@@ -57,5 +59,11 @@
     "overwrite",
     "glob"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "standard": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint/eslint-plugin"
+    ]
+  }
 }

@@ -24,7 +24,7 @@ export function unlink(path: string, options: Options): Promise<string>
 export function unlink(path: string, callback: Callback): void
 export function unlink(path: string, options: Options, callback: Callback): void
 
-export function unlink(path: string, options?: Options | Callback, callback?: Callback) {
+export function unlink (path: string, options?: Options | Callback, callback?: Callback) {
   // Parse if callback is provided
   if (callback === undefined && typeof options === 'function') {
     callback = options
@@ -41,7 +41,7 @@ export function unlink(path: string, options?: Options | Callback, callback?: Ca
 // (module).exports = secureRm
 
 // Callback version
-function unlinkCallback(path: string, options: ParsedOptions, callback: Callback): void {
+function unlinkCallback (path: string, options: ParsedOptions, callback: Callback): void {
   if (options.customStandard) {
     rimraf(path, {
       unlink: options.customStandard,
@@ -60,7 +60,7 @@ function unlinkCallback(path: string, options: ParsedOptions, callback: Callback
 }
 
 // Promise version
-function unlinkPromise(path: string, options: ParsedOptions): Promise<string> {
+function unlinkPromise (path: string, options: ParsedOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     if (options.customStandard) {
       rimraf(path, {

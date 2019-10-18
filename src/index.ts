@@ -1,4 +1,4 @@
-import { unlink, Options, Callback} from './secure-rm'
+import { unlink, Options, Callback } from './secure-rm'
 import { validIDs, standards, UnlinkStandard } from './standards'
 import { write, eventEmitter } from './write'
 
@@ -12,7 +12,7 @@ interface SecureRm {
   default: SecureRm;
 }
 
-let secureRmExport = <unknown>unlink as SecureRm
+const secureRmExport = <unknown>unlink as SecureRm
 secureRmExport.event = eventEmitter
 secureRmExport.write = write
 secureRmExport.standards = standards
