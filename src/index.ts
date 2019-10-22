@@ -1,4 +1,4 @@
-import { unlink, Options, Callback } from './secure-rm'
+import { unlink, Options, Callback } from './secure-rm'// eslint-disable-line no-unused-vars
 import { validIDs, standards, UnlinkStandard } from './standards'
 import { write, eventEmitter } from './write'
 
