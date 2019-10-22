@@ -9,8 +9,7 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
-    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "test": "jest --coverage --verbose",
+    "test": "jest --verbose --coverage --coverageReporters=lcov --coverageDirectory=./coverage",
     "watch-test": "npm run test -- --watchAll",
     "prepack": "rimraf dist && npm run build"
   },
@@ -23,7 +22,6 @@
     "@types/rimraf": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
-    "coveralls": "^3.0.6",
     "jest": "^24.8.0",
     "standard": "^14.1.0",
     "ts-jest": "^24.0.2",
