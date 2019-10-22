@@ -17,22 +17,36 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node_version }}
-    
-    - name: Installing & Linting
-      run: npm install
+
+    - name: CI
+      run: |
+        npm install
+        npm run lint
+        npm run build
+        npm test
       env:
         CI: true
-    
-    - name: Linting
-      run: npm run lint
-
-    - name: Building
-      run: npm run build
-    
-    - name: Testing
-      run: npm test
     
     - name: Coverage
       uses: codecov/codecov-action@v1.0.3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
+    
+    # - name: Installing & Linting
+    #   run: npm install
+    #   env:
+    #     CI: true
+    
+    # - name: Linting
+    #   run: npm run lint
+
+    # - name: Building
+    #   run: npm run build
+    
+    # - name: Testing
+    #   run: npm test
+    
+    # - name: Coverage
+    #   uses: codecov/codecov-action@v1.0.3
+    #   with:
+    #     token: ${{secrets.CODECOV_TOKEN}}
