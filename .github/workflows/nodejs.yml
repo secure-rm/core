@@ -40,7 +40,7 @@ jobs:
   coverage:
     name: Code coverage
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@master
     
@@ -50,7 +50,10 @@ jobs:
         node-version: 12
 
     - name: Generate coverage report
-      run: npm run coverage
+      run: |
+        npm install
+        npm run build
+        npm run coverage
 
     - name: Upload coverage to Codecov  
       uses: codecov/codecov-action@v1.0.3
