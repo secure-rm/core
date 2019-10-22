@@ -8,7 +8,7 @@
     "build": "npm run build-ts && npm run lint",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "lint": "tsc --noEmit && standard \"**/*.{js,ts}\" --fix --env jest",
+    "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
     "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "test": "jest --coverage --verbose",
     "watch-test": "npm run test -- --watchAll",
