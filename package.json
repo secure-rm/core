@@ -9,7 +9,7 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
-    "coverage": "jest --coverage --coverageReporters=lcov --coverageDirectory=./coverage",
+    "coverage": "jest --coverage --coverageDirectory=./coverage",
     "test": "jest --verbose",
     "watch-test": "npm run test -- --watchAll",
     "prepack": "rimraf dist && npm run build"

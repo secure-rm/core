@@ -31,11 +31,6 @@ jobs:
     
     - name: Testing
       run: npm test
-    
-    - name: Coverage
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
 
   coverage:
     name: Code coverage
