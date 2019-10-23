@@ -5,14 +5,15 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "npm run build-ts && npm run lint",
+    "build": "npm run lint && npm run build-ts",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
     "coverage": "jest --coverage --coverageDirectory=./coverage",
     "test": "jest --verbose",
     "watch-test": "npm run test -- --watchAll",
-    "prepack": "rimraf dist && npm run build"
+    "clean": "rimraf dist coverage node_modules",
+    "prepack": "npm run clean && npm run build"
   },
   "dependencies": {
     "tslib": "^1.10.0",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
+    "@types/node": "^12.11.5",
     "@types/rimraf": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",

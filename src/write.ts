@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import events from 'events'
 import crypto from 'crypto'
-// import { kMaxLength } from 'buffer' // BUG kMaxLength undefined in typescript
+import { kMaxLength } from 'buffer'
 
 const eventEmitter = new events.EventEmitter()
 
@@ -27,7 +27,7 @@ const write = {
     return new Promise((resolve, reject) => {
       fs.stat(file, (err, stats) => {
         if (err) reject(err)
-        else if (stats.size <= /* kMaxLength */ (2 ** 31) - 1) {
+        else if (stats.size <= kMaxLength ) {
           eventEmitter.emit('start', file)
           resolve({ file, fileSize: stats.size })
         } else {

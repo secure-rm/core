@@ -11,15 +11,15 @@
   <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg?style=flat-square" alt="License: MIT"></a>
 </p>
 <p align="center">
-  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/master.svg?style=flat-square&label=master%20build" alt="Build status: master"></a>
-  <a href="https://travis-ci.org/oganexon/secure-rm"><img src="https://img.shields.io/travis/oganexon/secure-rm/develop.svg?style=flat-square&label=dev%20build" alt="Build status: develop"></a>
-  <a href="https://coveralls.io/github/oganexon/secure-rm"><img src="https://img.shields.io/coveralls/github/oganexon/secure-rm?style=flat-square" alt="Coverage"></a>
+  <a href="https://actions-badge.atrox.dev/secure-rm/core/goto?ref=master"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fsecure-rm%2Fcore%2Fbadge%3Fref%3Dmaster&style=flat-square&label=master%20build" alt="Build Status: master"/></a>
+  <a href="https://actions-badge.atrox.dev/secure-rm/core/goto?ref=develop"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fsecure-rm%2Fcore%2Fbadge%3Fref%3Ddevelop&style=flat-square&label=dev%20build" alt="Build Status: develop" /></a>
+  <a href="https://codecov.io/gh/secure-rm/core"><img src="https://img.shields.io/codecov/c/github/secure-rm/core?style=flat-square" alt="Code coverage"></a>
   
 </p>
 
 ## ❓ Why
 
-When you delete a file using the `rm` command or `fs.unlink` in node, it only remove direct pointers to the data disk sectors and make the data recovery possible with common software tools.
+When you delete a file using the `rm` command or `fs.unlink` in node, it only removes direct pointers to the data disk sectors and make the data recovery possible with common software tools.
 
 Permanent data erasure goes beyond basic file deletion commands, which:
 1. Allow for selection of a specific standard, based on unique needs, and
@@ -111,7 +111,7 @@ srm('./*', options)
   .catch((err) => {throw err})
 ```
 
-If you want to make your own cutom standard, see [write.js](./lib/write.js) file for more details.
+If you want to make your own custom standard, see [write.js](./lib/write.js) file for more details.
 
 ### Events
 When running, secure-rm emits events to let you know the progression of the deletion.
@@ -163,7 +163,7 @@ The main function, as described [above](#-usage).
 
 ID | Name | Passes | Description
 -- | ---- | ------ | -----------
- randomData | Pseudorandom data | 1 | Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"<br>and "New Zealand Information and Communications Technology Standard NZSIT 402" <br>Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
+ randomData | Pseudorandom data | 1 | Also known as "Australian Information Security Manual Standard ISM 6.2.92"<br>and "New Zealand Information and Communications Technology Standard NZSIT 402" <br>Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)
  randomByte | Pseudorandom byte | 1 | Overwriting with a random byte.
  zeroes | Zeroes | 1 | Overwriting with zeroes.
  ones | Ones | 1 | Overwriting with ones.
@@ -180,7 +180,7 @@ Note: Node ensures that the file is correctly written, checking the writing in t
 
 ## 🚩 Troubleshooting / Common issues
 
-Should works on OS X, Linux (almost, see below), and Windows. (See build status)
+Should work on OS X, Linux (almost, see below), and Windows. (See build status)
 
 ### File systems
 
@@ -199,7 +199,7 @@ journaled file systems.
 
 ### "WARN Too many open files, cannot ...:"
 
-Don't worry, you've just submited too much file for Node.
+Don't worry, you've just submitted too much file for Node.
 The tool will retry 3 times to ensure the task succeeded.
 While you don't get an error, the tool can handle this issue.
 
@@ -207,7 +207,7 @@ If you really need to delete millions of file in one time, split the task (e.g. 
 
 ### Using Windows:
 
-Be sure to use `".\path\file"` with doublequotes since back-slashes will always be interpreted as escape characters, not path separators.
+Be sure to use `".\path\file"` with double quotes since back-slashes will always be interpreted as escape characters, not path separators.
 
 Another solution is to double the back-slashes like: `.\\path\\file`
 
