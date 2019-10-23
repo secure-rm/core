@@ -27,7 +27,7 @@ const write = {
     return new Promise((resolve, reject) => {
       fs.stat(file, (err, stats) => {
         if (err) reject(err)
-        else if (stats.size <= kMaxLength ) {
+        else if (stats.size <= kMaxLength) {
           eventEmitter.emit('start', file)
           resolve({ file, fileSize: stats.size })
         } else {

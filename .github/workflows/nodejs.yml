@@ -18,7 +18,7 @@ jobs:
       with:
         node-version: ${{ matrix.node_version }}
     
-    - name: Installing & Linting
+    - name: Installing
       run: npm install
       env:
         CI: true
