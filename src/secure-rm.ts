@@ -54,7 +54,7 @@ function unlinkCallback (path: string, options: ParsedOptions, callback: Callbac
       unlink: options.customStandard.unlinkStandard,
       rmdir: options.customStandard.rmdirStandard,
       maxBusyTries: options.maxBusyTries || 3,
-      emfileWait: options.emfileWait || 1000,
+      emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
       disableGlob: options.glob === false ? true : options.disableGlob || false,
       glob: options.glob || defaultGlobOpts
     }, (err: NodeJS.ErrnoException) => callback(err, path))
@@ -63,7 +63,7 @@ function unlinkCallback (path: string, options: ParsedOptions, callback: Callbac
       unlink: standards[options.standard].unlinkStandard,
       rmdir: standards[options.standard].rmdirStandard,
       maxBusyTries: options.maxBusyTries || 3,
-      emfileWait: options.emfileWait || 1000,
+      emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
       disableGlob: options.glob === false ? true : options.disableGlob || false,
       glob: options.glob || defaultGlobOpts
     }, (err: NodeJS.ErrnoException) => callback(err, path))
@@ -80,7 +80,7 @@ function unlinkPromise (path: string, options: ParsedOptions): Promise<string> {
         unlink: options.customStandard.unlinkStandard,
         rmdir: options.customStandard.rmdirStandard,
         maxBusyTries: options.maxBusyTries || 3,
-        emfileWait: options.emfileWait || 1000,
+        emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
         disableGlob: options.glob === false ? true : options.disableGlob || false,
         glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
@@ -92,7 +92,7 @@ function unlinkPromise (path: string, options: ParsedOptions): Promise<string> {
         unlink: standards[options.standard].unlinkStandard,
         rmdir: standards[options.standard].rmdirStandard,
         maxBusyTries: options.maxBusyTries || 3,
-        emfileWait: options.emfileWait || 1000,
+        emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
         disableGlob: options.glob === false ? true : options.disableGlob || false,
         glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
