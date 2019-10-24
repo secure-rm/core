@@ -1,19 +1,21 @@
-import fs from 'fs'
 import rimraf from 'rimraf'
-import { standards, validIDs } from './standards'
+import glob from 'glob'// eslint-disable-line no-unused-vars
+import { standards, validIDs, Standard } from './standards' // eslint-disable-line no-unused-vars
 
-export interface Options {
-  standard?: string
-  customStandard?: typeof fs.unlink
+interface Opts {
+  customStandard?: Standard
   maxBusyTries?: number
+  emfileWait?: number
   disableGlob?: boolean
+  glob?: glob.IOptions | false
 }
 
-export interface ParsedOptions {
+export interface Options extends Opts {
+  standard?: string
+}
+
+export interface ParsedOptions extends Opts {
   standard: keyof typeof standards
-  customStandard?: typeof fs.unlink
-  maxBusyTries?: number
-  disableGlob?: boolean
 }
 
 export type Callback = (err: NodeJS.ErrnoException | null, path: string) => void
@@ -40,19 +42,30 @@ export function unlink (path: string, options?: Options | Callback, callback?: C
 
 // (module).exports = secureRm
 
+const defaultGlobOpts = {
+  nosort: true,
+  silent: true
+}
+
 // Callback version
 function unlinkCallback (path: string, options: ParsedOptions, callback: Callback): void {
   if (options.customStandard) {
     rimraf(path, {
-      unlink: options.customStandard,
+      unlink: options.customStandard.unlinkStandard,
+      rmdir: options.customStandard.rmdirStandard,
       maxBusyTries: options.maxBusyTries || 3,
-      disableGlob: options.disableGlob || false
+      emfileWait: options.emfileWait || 1000,
+      disableGlob: options.glob === false ? true : options.disableGlob || false,
+      glob: options.glob || defaultGlobOpts
     }, (err: NodeJS.ErrnoException) => callback(err, path))
   } else if (validIDs.includes(options.standard)) {
     rimraf(path, {
-      unlink: standards[options.standard].method,
+      unlink: standards[options.standard].unlinkStandard,
+      rmdir: standards[options.standard].rmdirStandard,
       maxBusyTries: options.maxBusyTries || 3,
-      disableGlob: options.disableGlob || false
+      emfileWait: options.emfileWait || 1000,
+      disableGlob: options.glob === false ? true : options.disableGlob || false,
+      glob: options.glob || defaultGlobOpts
     }, (err: NodeJS.ErrnoException) => callback(err, path))
   } else {
     callback(new Error(`'${options.standard}' is not a valid ID. \nList of valid IDs: ${validIDs}`), path)
@@ -64,18 +77,24 @@ function unlinkPromise (path: string, options: ParsedOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     if (options.customStandard) {
       rimraf(path, {
-        unlink: options.customStandard,
+        unlink: options.customStandard.unlinkStandard,
+        rmdir: options.customStandard.rmdirStandard,
         maxBusyTries: options.maxBusyTries || 3,
-        disableGlob: options.disableGlob || false
+        emfileWait: options.emfileWait || 1000,
+        disableGlob: options.glob === false ? true : options.disableGlob || false,
+        glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
         if (err) reject(err)
         else resolve(path)
       })
     } else if (validIDs.includes(options.standard)) {
       rimraf(path, {
-        unlink: standards[options.standard].method,
+        unlink: standards[options.standard].unlinkStandard,
+        rmdir: standards[options.standard].rmdirStandard,
         maxBusyTries: options.maxBusyTries || 3,
-        disableGlob: options.disableGlob || false
+        emfileWait: options.emfileWait || 1000,
+        disableGlob: options.glob === false ? true : options.disableGlob || false,
+        glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
         if (err) reject(err)
         else resolve(path)
