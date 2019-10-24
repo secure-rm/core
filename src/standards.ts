@@ -89,10 +89,10 @@ Pass 3: Truncating between 25% and 75% of the file.`,
       .random()
       .rename()
       .truncate()
-      .unlink(),
+      .unlink()/* ,
     rmdirStandard: new RmDir()
       .rename()
-      .rmdir()
+      .rmdir() */
   }),
 
   'GOST_R50739-95': new Standard({
@@ -202,7 +202,7 @@ Pass 32-35: Overwriting with random data.`,
       .byteArray([0x92, 0x49, 0x24])
       .byteArray([0x49, 0x24, 0x92])
       .byteArray([0x24, 0x92, 0x49])
-      .forByte({ init: 0x00, condition: i => i < 0xFF, increment: i => i + 0x11 })
+      .forByte({ init: 0x00, condition: i => i < 0xFF, increment: (obj) => {obj.i += 0x11} })
       .byteArray([0x92, 0x49, 0x24])
       .byteArray([0x49, 0x24, 0x92])
       .byteArray([0x24, 0x92, 0x49])

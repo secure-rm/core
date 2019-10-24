@@ -13,7 +13,7 @@ interface FileInfo {
 interface ForInterface {
   init: number
   condition: (i: number) => Boolean
-  increment: (i: number) => number
+  increment: ({i}: {i: number}) => void
 }
 
 type StepFunction = (file: string, fileSize: number) => Promise<FileInfo>
@@ -37,6 +37,11 @@ export default class Unlink {
         })
         this.steps.reduce((prev: Promise<FileInfo>, next: StepFunction) => {
           return prev.then(({ file, fileSize }) => next(file, fileSize))
+            .catch((err: NodeJS.ErrnoException) => {
+              eventError(err, file as string)
+              callback(err)
+              return Promise.resolve({ file: "", fileSize: 0 })
+            })
         }, this.init(file as string))
           .catch((err: NodeJS.ErrnoException) => {
             eventError(err, file as string)
@@ -65,7 +70,8 @@ export default class Unlink {
     this.steps.push(
       function (file: string, fileSize: number) {
         return new Promise((resolve) => {
-          console.log(file)
+          const split = file.split(path.sep)
+          console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
           resolve({ file, fileSize })
         })
       })
@@ -156,12 +162,13 @@ export default class Unlink {
 
   // A for loop
   forByte ({ init, condition, increment }: ForInterface) {
-    for (let i = init; condition(i); increment(i)) {
+    const variable = { i: init}
+    for (; condition(variable.i); increment(variable)) {
       this.steps.push(
         function (file: string, fileSize: number) {
           return new Promise((resolve, reject) => {
-            eventEmitter.emit('verbose', file, `Writing 0x${i.toString(16)} `)
-            fs.writeFile(file, Buffer.alloc(fileSize, i), (err) => {
+            eventEmitter.emit('verbose', file, `Writing 0x${variable.i.toString(16)} `)
+            fs.writeFile(file, Buffer.alloc(fileSize, variable.i), (err) => {
               if (err) reject(err)
               resolve({ file, fileSize })
             })
@@ -254,7 +261,7 @@ export default class Unlink {
             if (err) reject(err)
             else {
               eventEmitter.emit('done', file)
-              resolve()
+              resolve({ file, fileSize })
             }
           })
         })

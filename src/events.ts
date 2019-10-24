@@ -15,6 +15,9 @@ export function eventError (err: NodeJS.ErrnoException, file: string): void {
       case 'EPERM':
         eventEmitter.emit('error', file, `Operation not permitted on this file (${err.syscall}): `)
         break
+      case 'ENOTEMPTY':
+        // Work as intended
+        break
       default:
         if (err.message === '64bit files are not yet supported.') {
           eventEmitter.emit('error', file, '64bit files are not yet supported.')
@@ -26,3 +29,12 @@ export function eventError (err: NodeJS.ErrnoException, file: string): void {
     }
   }
 }
+
+/* eventEmitter.on('start', (file) => console.log('Starting ' + file))
+eventEmitter.on('unlink', (file) => console.log('Unlinking ' + file))
+eventEmitter.on('done', (file) => console.log('Done ' + file))
+
+eventEmitter.on('verbose', (file, info) => console.log(info + file))
+
+eventEmitter.on('warn', (file, err) => console.log(err + file))
+eventEmitter.on('error', (file, err) => console.log(err + file)) */

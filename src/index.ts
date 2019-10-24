@@ -1,11 +1,11 @@
-import { unlink, Options, Callback } from './secure-rm'// eslint-disable-line no-unused-vars
+import { remove, Options, Callback } from './secure-rm'// eslint-disable-line no-unused-vars
 import { validIDs, standards, Standard } from './standards'
 import { eventEmitter } from './events'
 import Unlink from './unlink'
 import RmDir from './rmdir'
 
 interface SecureRm {
-  (path: string, options?: Options | Callback, callback?: Callback): typeof unlink
+  (path: string, options?: Options | Callback, callback?: Callback): typeof remove
   event: typeof eventEmitter
   standards: typeof standards
   validIDs: typeof validIDs
@@ -15,7 +15,7 @@ interface SecureRm {
   default: SecureRm
 }
 
-const secureRmExport = <unknown>unlink as SecureRm
+const secureRmExport = <unknown>remove as SecureRm
 secureRmExport.event = eventEmitter
 secureRmExport.standards = standards
 secureRmExport.validIDs = validIDs

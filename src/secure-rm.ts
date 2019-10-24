@@ -21,12 +21,12 @@ export interface ParsedOptions extends Opts {
 export type Callback = (err: NodeJS.ErrnoException | null, path: string) => void
 
 // Main function when secure-rm is called
-export function unlink(path: string): Promise<string>
-export function unlink(path: string, options: Options): Promise<string>
-export function unlink(path: string, callback: Callback): void
-export function unlink(path: string, options: Options, callback: Callback): void
+export function remove(path: string): Promise<string>
+export function remove(path: string, options: Options): Promise<string>
+export function remove(path: string, callback: Callback): void
+export function remove(path: string, options: Options, callback: Callback): void
 
-export function unlink (path: string, options?: Options | Callback, callback?: Callback) {
+export function remove (path: string, options?: Options | Callback, callback?: Callback) {
   // Parse if callback is provided
   if (callback === undefined && typeof options === 'function') {
     callback = options
@@ -36,8 +36,8 @@ export function unlink (path: string, options?: Options | Callback, callback?: C
   if (options === undefined) options = { standard: 'secure' }
   if ((options as Options).standard === undefined) (options as Options).standard = 'secure'
 
-  if (callback) unlinkCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
-  else return unlinkPromise(path, options as ParsedOptions)
+  if (callback) removeCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, path: string) => callback!(err, path))
+  else return removePromise(path, options as ParsedOptions)
 }
 
 // (module).exports = secureRm
@@ -48,7 +48,8 @@ const defaultGlobOpts = {
 }
 
 // Callback version
-function unlinkCallback (path: string, options: ParsedOptions, callback: Callback): void {
+function removeCallback (path: string, options: ParsedOptions, callback: Callback): void {
+  console.log(standards[options.standard].unlinkStandard, '\n', standards[options.standard].rmdirStandard)
   if (options.customStandard) {
     rimraf(path, {
       unlink: options.customStandard.unlinkStandard,
@@ -73,7 +74,7 @@ function unlinkCallback (path: string, options: ParsedOptions, callback: Callbac
 }
 
 // Promise version
-function unlinkPromise (path: string, options: ParsedOptions): Promise<string> {
+function removePromise (path: string, options: ParsedOptions): Promise<string> {
   return new Promise((resolve, reject) => {
     if (options.customStandard) {
       rimraf(path, {

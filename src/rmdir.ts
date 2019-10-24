@@ -33,6 +33,11 @@ export default class RmDir {
         })
         this.steps.reduce((prev: Promise<string>, next: StepFunction) => {
           return prev.then((p) => next(p))
+            .catch((err: NodeJS.ErrnoException) => {
+              eventError(err, p as string)
+              callback!(err)
+              return Promise.resolve("")
+            })
         }, this.init(p as string))
           .catch((err: NodeJS.ErrnoException) => {
             eventError(err, p as string)
@@ -57,7 +62,8 @@ export default class RmDir {
           if (directoryStack.includes(p)) {
             resolve(p)
           } else {
-            console.log(p)
+            const split = p.split(path.sep)
+            console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
             directoryStack.push(p)
             const err: NodeJS.ErrnoException = new Error('Log error (or is it?)')
             err.code = 'ENOTEMPTY'
@@ -95,7 +101,7 @@ export default class RmDir {
             if (err) reject(err)
             else {
               eventEmitter.emit('done', p)
-              resolve()
+              resolve(p)
             }
           })
         })
