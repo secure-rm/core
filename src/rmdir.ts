@@ -36,7 +36,7 @@ export default class RmDir {
             .catch((err: NodeJS.ErrnoException) => {
               eventError(err, p as string)
               callback!(err)
-              return Promise.resolve("")
+              return Promise.reject(err)
             })
         }, this.init(p as string))
           .catch((err: NodeJS.ErrnoException) => {

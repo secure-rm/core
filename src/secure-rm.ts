@@ -49,13 +49,12 @@ const defaultGlobOpts = {
 
 // Callback version
 function removeCallback (path: string, options: ParsedOptions, callback: Callback): void {
-  console.log(standards[options.standard].unlinkStandard, '\n', standards[options.standard].rmdirStandard)
   if (options.customStandard) {
     rimraf(path, {
       unlink: options.customStandard.unlinkStandard,
       rmdir: options.customStandard.rmdirStandard,
       maxBusyTries: options.maxBusyTries || 3,
-      emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
+      emfileWait: options.emfileWait || 1000,
       disableGlob: options.glob === false ? true : options.disableGlob || false,
       glob: options.glob || defaultGlobOpts
     }, (err: NodeJS.ErrnoException) => callback(err, path))
@@ -64,7 +63,7 @@ function removeCallback (path: string, options: ParsedOptions, callback: Callbac
       unlink: standards[options.standard].unlinkStandard,
       rmdir: standards[options.standard].rmdirStandard,
       maxBusyTries: options.maxBusyTries || 3,
-      emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
+      emfileWait: options.emfileWait || 1000,
       disableGlob: options.glob === false ? true : options.disableGlob || false,
       glob: options.glob || defaultGlobOpts
     }, (err: NodeJS.ErrnoException) => callback(err, path))
@@ -81,7 +80,7 @@ function removePromise (path: string, options: ParsedOptions): Promise<string> {
         unlink: options.customStandard.unlinkStandard,
         rmdir: options.customStandard.rmdirStandard,
         maxBusyTries: options.maxBusyTries || 3,
-        emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
+        emfileWait: options.emfileWait || 1000,
         disableGlob: options.glob === false ? true : options.disableGlob || false,
         glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
@@ -93,7 +92,7 @@ function removePromise (path: string, options: ParsedOptions): Promise<string> {
         unlink: standards[options.standard].unlinkStandard,
         rmdir: standards[options.standard].rmdirStandard,
         maxBusyTries: options.maxBusyTries || 3,
-        emfileWait: <unknown>(options.emfileWait || 1000) as boolean, // HACK while type error
+        emfileWait: options.emfileWait || 1000,
         disableGlob: options.glob === false ? true : options.disableGlob || false,
         glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {

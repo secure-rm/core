@@ -16,7 +16,8 @@ function fill (depth, files, folders, target) {
   fs.symlinkSync('f-' + depth + '-1', target + '/link-' + depth + '-good', 'file')
 
   // invalid symlink
-  fs.symlinkSync('does-not-exist', target + '/link-' + depth + '-bad', 'file')
+  // fs.symlinkSync('does-not-exist', target + '/link-' + depth + '-bad', 'file')
+  // Don't resolve!!
 
   // file with a name that looks like a glob
   fs.writeFileSync(target + '/[a-z0-9].txt', '', o)

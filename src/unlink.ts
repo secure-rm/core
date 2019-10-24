@@ -40,7 +40,7 @@ export default class Unlink {
             .catch((err: NodeJS.ErrnoException) => {
               eventError(err, file as string)
               callback(err)
-              return Promise.resolve({ file: "", fileSize: 0 })
+              return Promise.reject(err)
             })
         }, this.init(file as string))
           .catch((err: NodeJS.ErrnoException) => {
