@@ -11,7 +11,9 @@ const writeFile = util.promisify(fs.writeFile)
 
 try {
   fs.mkdirSync(target)
-} catch {}
+} catch {
+  console.log(target + ' already exists')
+}
 
 describe('Specific unlink functions are correct:', () => {
   it('Truncate between 25% and 75% of the file', done => {

@@ -9,7 +9,9 @@ const writeFile = util.promisify(fs.writeFile)
 
 try {
   fs.mkdirSync(target)
-} catch { }
+} catch {
+  console.log(target + ' already exists')
+}
 
 const expected = [
   {
@@ -29,28 +31,24 @@ const expected = [
   },
   {
     function: 'byte',
-    name: 'byte-0x22',
     description: 'Write a byte: 0x22',
     arg: 0x22,
     expectedValue: Buffer.from([0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22])
   },
   {
     function: 'byte',
-    name: 'byte-0xab',
     description: 'Write a byte: 0xab',
     arg: 0xab,
     expectedValue: Buffer.from([0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab])
   },
   {
     function: 'byteArray',
-    name: 'bytes-array-3',
     description: 'Write bytes array: [0x76, 0x6d, 0x3b]',
     arg: [0x76, 0x6d, 0x3b],
     expectedValue: Buffer.from([0x76, 0x6d, 0x3b, 0x76, 0x6d, 0x3b, 0x76, 0x6d, 0x3b, 0x76])
   },
   {
     function: 'forByte',
-    name: 'incrementByte-0x11-0x00-0xee',
     description: 'Increment by 0x11 from 0x00 to 0xee',
     arg: {
       init: 0x00,
@@ -61,7 +59,6 @@ const expected = [
   },
   {
     function: 'forByte',
-    name: 'incrementByte-0x10-0x00-0x45',
     description: 'Increment by 0x10 from 0x00 to 0x45: should not increment past 0x40',
     arg: {
       init: 0x00,
