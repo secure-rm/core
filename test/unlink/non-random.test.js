@@ -1,4 +1,17 @@
-module.exports = [
+const fs = require('fs')
+const util = require('util')
+const srm = require('../../')
+
+const { target, tools } = require('../tools.js')(__dirname, __filename)
+
+const readFile = util.promisify(fs.readFile)
+const writeFile = util.promisify(fs.writeFile)
+
+try {
+  fs.mkdirSync(target)
+} catch { }
+
+const expected = [
   {
     function: 'zeroes',
     description: 'Write zeroes: 0x00',
@@ -29,37 +42,57 @@ module.exports = [
     expectedValue: Buffer.from([0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab, 0xab])
   },
   {
-    function: 'bytes',
+    function: 'byteArray',
     name: 'bytes-array-3',
     description: 'Write bytes array: [0x76, 0x6d, 0x3b]',
     arg: [0x76, 0x6d, 0x3b],
     expectedValue: Buffer.from([0x76, 0x6d, 0x3b, 0x76, 0x6d, 0x3b, 0x76, 0x6d, 0x3b, 0x76])
   },
   {
-    function: 'bytes',
-    name: 'bytes-array-5',
-    description: 'Write bytes array: [0x64, 0x44, 0x18, 0x2c, 0x4b]',
-    arg: [0x64, 0x44, 0x18, 0x2c, 0x4b],
-    expectedValue: Buffer.from([0x64, 0x44, 0x18, 0x2c, 0x4b, 0x64, 0x44, 0x18, 0x2c, 0x4b])
-  },
-  {
-    function: 'cycleBytes',
-    description: 'Cycle through bytes: [0x4c, 0x13, 0x36]',
-    arg: [0x4c, 0x13, 0x36],
-    expectedValue: Buffer.from([0x36, 0x4c, 0x13, 0x36, 0x4c, 0x13, 0x36, 0x4c, 0x13, 0x36])
-  },
-  {
-    function: 'incrementByte',
+    function: 'forByte',
     name: 'incrementByte-0x11-0x00-0xee',
     description: 'Increment by 0x11 from 0x00 to 0xee',
-    arg: { start: 0x00, end: 0xee, increment: 0x11 },
+    arg: {
+      init: 0x00,
+      condition: i => i < 0xff,
+      increment: i => i + 0x11
+    },
     expectedValue: Buffer.from([0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee, 0xee])
   },
   {
-    function: 'incrementByte',
+    function: 'forByte',
     name: 'incrementByte-0x10-0x00-0x45',
     description: 'Increment by 0x10 from 0x00 to 0x45: should not increment past 0x40',
-    arg: { start: 0x00, end: 0x45, increment: 0x10 },
+    arg: {
+      init: 0x00,
+      condition: i => i < 0x45,
+      increment: i => i + 0x10
+    },
     expectedValue: Buffer.from([0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40])
   }
 ]
+
+describe('Non-random unlink functions are correct:', () => {
+  for (let i = 0; i < expected.length; i++) {
+    it(expected[i].description, done => {
+      const fileName = tools.createPath()
+      writeFile(fileName, Buffer.from([0x05, 0xfa, 0x6a, 0x63, 0xe0, 0x2e, 0xea, 0x92, 0x65, 0xf9]))
+        .then(() => srm(fileName, {
+          customStandard: new srm.Standard({
+            unlinkStandard: new srm.Unlink()[expected[i].function](expected[i].arg)
+              .compile
+          })
+        }))
+        .then(() => readFile(fileName))
+        .then((result) => {
+          expect(result).toStrictEqual(expected[i].expectedValue)
+          done()
+        })
+        .catch((err) => { throw err })
+    })
+  }
+})
+
+afterAll(done => {
+  tools.cleanup(done)
+})

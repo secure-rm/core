@@ -13,7 +13,7 @@ interface FileInfo {
 interface ForInterface {
   init: number
   condition: (i: number) => Boolean
-  increment: ({i}: {i: number}) => void
+  increment: (i: number) => number
 }
 
 type StepFunction = (file: string, fileSize: number) => Promise<FileInfo>
@@ -64,6 +64,11 @@ export default class Unlink {
         }
       })
     })
+  }
+
+  then (fun: StepFunction) {
+    this.steps.push(fun)
+    return this
   }
 
   log () {
@@ -162,18 +167,21 @@ export default class Unlink {
 
   // A for loop
   forByte ({ init, condition, increment }: ForInterface) {
-    const variable = { i: init}
-    for (; condition(variable.i); increment(variable)) {
+    let i = init
+    while (true) {
+      if (!condition(i)) { break }
+      const j = i // Fix the value (the following function could be called after the increment)
       this.steps.push(
         function (file: string, fileSize: number) {
           return new Promise((resolve, reject) => {
-            eventEmitter.emit('verbose', file, `Writing 0x${variable.i.toString(16)} `)
-            fs.writeFile(file, Buffer.alloc(fileSize, variable.i), (err) => {
+            eventEmitter.emit('verbose', file, `Writing 0x${j.toString(16)} `)
+            fs.writeFile(file, Buffer.alloc(fileSize, j), (err) => {
               if (err) reject(err)
               resolve({ file, fileSize })
             })
           })
         })
+      i = increment(i)
     }
     return this
   }

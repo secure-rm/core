@@ -30,11 +30,15 @@ export function eventError (err: NodeJS.ErrnoException, file: string): void {
   }
 }
 
-/* eventEmitter.on('start', (file) => console.log('Starting ' + file))
-eventEmitter.on('unlink', (file) => console.log('Unlinking ' + file))
-eventEmitter.on('done', (file) => console.log('Done ' + file))
+const debug = process.argv.includes('--debug')
 
-eventEmitter.on('verbose', (file, info) => console.log(info + file))
+if (debug) {
+  eventEmitter.on('start', (file) => console.log('Starting ' + file))
+  eventEmitter.on('unlink', (file) => console.log('Unlinking ' + file))
+  eventEmitter.on('done', (file) => console.log('Done ' + file))
 
-eventEmitter.on('warn', (file, err) => console.log(err + file))
-eventEmitter.on('error', (file, err) => console.log(err + file)) */
+  eventEmitter.on('verbose', (file, info) => console.log(info + file))
+
+  eventEmitter.on('warn', (file, err) => console.log(err + file))
+  eventEmitter.on('error', (file, err) => console.log(err + file))
+}

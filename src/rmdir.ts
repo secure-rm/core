@@ -55,6 +55,11 @@ export default class RmDir {
     })
   }
 
+  then (fun: StepFunction) {
+    this.steps.push(fun)
+    return this
+  }
+
   log () {
     this.steps.push(
       function (p: string) {
