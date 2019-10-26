@@ -30,6 +30,8 @@ export function eventError (err: NodeJS.ErrnoException, file: string): void {
   }
 }
 
+export const tree: string[] = []
+
 const debug = process.argv.includes('--debug')
 
 if (debug) {

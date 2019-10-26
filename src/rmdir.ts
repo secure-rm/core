@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import util from 'util'
 import crypto from 'crypto'
-import { eventEmitter, eventError } from './events'
+import { eventEmitter, eventError, tree } from './events'
 
 type StepFunction = (p: string) => Promise<string>
 
@@ -10,8 +10,6 @@ interface FakeLogError {
   (message?: string | undefined): Error
   code: string
 }
-
-const directoryStack: string[] = []
 
 export default class RmDir {
   private steps: Array<StepFunction>
@@ -64,12 +62,12 @@ export default class RmDir {
     this.steps.push(
       function (p: string) {
         return new Promise((resolve, reject) => {
-          if (directoryStack.includes(p)) {
+          if (tree.includes(p)) {
             resolve(p)
           } else {
-            const split = p.split(path.sep)
-            console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
-            directoryStack.push(p)
+            tree.push(p)
+            /* const split = p.split(path.sep)
+            console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1]) */
             const err: NodeJS.ErrnoException = new Error('Log error (or is it?)')
             err.code = 'ENOTEMPTY'
             reject(err)

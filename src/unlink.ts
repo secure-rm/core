@@ -3,7 +3,7 @@ import path from 'path'
 import util from 'util'
 import crypto from 'crypto'
 import { kMaxLength } from 'buffer'
-import { eventEmitter, eventError } from './events'
+import { eventEmitter, eventError, tree } from './events'
 
 interface FileInfo {
   file: string
@@ -66,20 +66,22 @@ export default class Unlink {
     })
   }
 
-  then (fun: StepFunction) {
-    this.steps.push(fun)
-    return this
-  }
-
   log () {
     this.steps.push(
       function (file: string, fileSize: number) {
         return new Promise((resolve) => {
-          const split = file.split(path.sep)
-          console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
+          if (!tree.includes(file))
+            tree.push(file)
+          // const split = file.split(path.sep)
+          // console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
           resolve({ file, fileSize })
         })
       })
+    return this
+  }
+
+  then (fun: StepFunction) {
+    this.steps.push(fun)
     return this
   }
 

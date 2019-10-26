@@ -11,7 +11,7 @@ const writeFile = util.promisify(fs.writeFile)
 
 try {
   fs.mkdirSync(target)
-} catch {
+} catch (err) {
   console.log(target + ' already exists')
 }
 
