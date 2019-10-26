@@ -1,7 +1,12 @@
+import crypto from 'crypto'
 import rimraf from 'rimraf'
 import glob from 'glob'// eslint-disable-line no-unused-vars
 import { standards, validIDs, Standard } from './standards' // eslint-disable-line no-unused-vars
 import { tree } from './events'
+
+function getUUID() {
+  return crypto.randomBytes(60).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
+}
 
 interface Opts {
   customStandard?: Standard
@@ -28,6 +33,7 @@ export function remove(path: string, callback: Callback): void
 export function remove(path: string, options: Options, callback: Callback): void
 
 export function remove (path: string, options?: Options | Callback, callback?: Callback) {
+  const uuid = getUUID()
   // Parse if callback is provided
   if (callback === undefined && typeof options === 'function') {
     callback = options
@@ -37,8 +43,8 @@ export function remove (path: string, options?: Options | Callback, callback?: C
   if (options === undefined) options = { standard: 'secure' }
   if ((options as Options).standard === undefined) (options as Options).standard = 'secure'
 
-  if (callback) removeCallback(path, options as ParsedOptions, (err: NodeJS.ErrnoException | null, tree: string[]) => callback!(err, tree))
-  else return removePromise(path, options as ParsedOptions)
+  if (callback) removeCallback(path, options as ParsedOptions, uuid, (err: NodeJS.ErrnoException | null, goodTree: string[]) => callback!(err, goodTree))
+  else return removePromise(path, options as ParsedOptions, uuid)
 }
 
 // (module).exports = secureRm
@@ -49,56 +55,56 @@ const defaultGlobOpts = {
 }
 
 // Callback version
-function removeCallback (path: string, options: ParsedOptions, callback: Callback): void {
+function removeCallback (path: string, options: ParsedOptions, uuid: string, callback: Callback): void {
   if (options.customStandard) {
     rimraf(path, {
-      unlink: options.customStandard.unlinkStandard,
-      rmdir: options.customStandard.rmdirStandard,
+      unlink: options.customStandard.unlinkStandard(uuid),
+      rmdir: options.customStandard.rmdirStandard(uuid),
       maxBusyTries: options.maxBusyTries || 3,
       emfileWait: options.emfileWait || 1000,
       disableGlob: options.glob === false ? true : options.disableGlob || false,
       glob: options.glob || defaultGlobOpts
-    }, (err: NodeJS.ErrnoException) => callback(err, tree))
+    }, (err: NodeJS.ErrnoException) => callback(err, tree[uuid]))
   } else if (validIDs.includes(options.standard)) {
     rimraf(path, {
-      unlink: standards[options.standard].unlinkStandard,
-      rmdir: standards[options.standard].rmdirStandard,
+      unlink: standards[options.standard].unlinkStandard(uuid),
+      rmdir: standards[options.standard].rmdirStandard(uuid),
       maxBusyTries: options.maxBusyTries || 3,
       emfileWait: options.emfileWait || 1000,
       disableGlob: options.glob === false ? true : options.disableGlob || false,
       glob: options.glob || defaultGlobOpts
-    }, (err: NodeJS.ErrnoException) => callback(err, tree))
+    }, (err: NodeJS.ErrnoException) => callback(err, tree[uuid]))
   } else {
-    callback(new Error(`'${options.standard}' is not a valid ID. \nList of valid IDs: ${validIDs}`), tree)
+    callback(new Error(`'${options.standard}' is not a valid ID. \nList of valid IDs: ${validIDs}`), ['none'])
   }
 }
 
 // Promise version
-function removePromise (path: string, options: ParsedOptions): Promise<string[]> {
+function removePromise (path: string, options: ParsedOptions, uuid: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     if (options.customStandard) {
       rimraf(path, {
-        unlink: options.customStandard.unlinkStandard,
-        rmdir: options.customStandard.rmdirStandard,
+        unlink: options.customStandard.unlinkStandard(uuid),
+        rmdir: options.customStandard.rmdirStandard(uuid),
         maxBusyTries: options.maxBusyTries || 3,
         emfileWait: options.emfileWait || 1000,
         disableGlob: options.glob === false ? true : options.disableGlob || false,
         glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
         if (err) reject(err)
-        else resolve(tree)
+        else resolve(tree[uuid])
       })
     } else if (validIDs.includes(options.standard)) {
       rimraf(path, {
-        unlink: standards[options.standard].unlinkStandard,
-        rmdir: standards[options.standard].rmdirStandard,
+        unlink: standards[options.standard].unlinkStandard(uuid),
+        rmdir: standards[options.standard].rmdirStandard(uuid),
         maxBusyTries: options.maxBusyTries || 3,
         emfileWait: options.emfileWait || 1000,
         disableGlob: options.glob === false ? true : options.disableGlob || false,
         glob: options.glob || defaultGlobOpts
       }, (err: NodeJS.ErrnoException) => {
         if (err) reject(err)
-        else resolve(tree)
+        else resolve(tree[uuid])
       })
     } else {
       reject(new Error(`'${options.standard}' is not a valid ID. \nList of valid IDs: ${validIDs}`))

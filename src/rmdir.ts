@@ -4,7 +4,7 @@ import util from 'util'
 import crypto from 'crypto'
 import { eventEmitter, eventError, tree } from './events'
 
-type StepFunction = (p: string) => Promise<string>
+type StepFunction = (p: string, uuid: string) => Promise<string>
 
 interface FakeLogError {
   (message?: string | undefined): Error
@@ -13,37 +13,35 @@ interface FakeLogError {
 
 export default class RmDir {
   private steps: Array<StepFunction>
-  compile: typeof fs.rmdir
+  compile: (uuid: string) => typeof fs.rmdir
 
   constructor () {
     this.steps = []
-    this.compile = Object.assign(
-      (p: fs.PathLike, options: fs.RmDirAsyncOptions | fs.NoParamCallback | undefined, callback?: fs.NoParamCallback) => {
-        if (callback === undefined && typeof options === 'function') {
-          callback = options
-          options = undefined
-        }
-        this.steps.push(() => {
-          return new Promise((resolve) => {
-            callback!(null)
-            resolve(p as string)
-          })
-        })
-        this.steps.reduce((prev: Promise<string>, next: StepFunction) => {
-          return prev.then((p) => next(p))
-            .catch((err: NodeJS.ErrnoException) => {
+    this.compile = (uuid) => {
+      tree[uuid] = []
+      return Object.assign(
+        (p: fs.PathLike, options: fs.RmDirAsyncOptions | fs.NoParamCallback | undefined, callback?: fs.NoParamCallback) => {
+          if (callback === undefined && typeof options === 'function') {
+            callback = options
+            options = undefined
+          }
+          this.steps.reduce((prev: Promise<string>, next: StepFunction) => {
+            return prev.then((p) => next(p, uuid))
+            /* .catch((err: NodeJS.ErrnoException) => {
               eventError(err, p as string)
               callback!(err)
               return Promise.reject(err)
+            }) */
+          }, this.init(p as string))
+            .then(() => callback!(null))
+            .catch((err: NodeJS.ErrnoException) => {
+              eventError(err, p as string)
+              callback!(err)
             })
-        }, this.init(p as string))
-          .catch((err: NodeJS.ErrnoException) => {
-            eventError(err, p as string)
-            callback!(err)
-          })
-      },
-      { __promisify__: util.promisify(fs.rmdir) } // FIXME
-    )
+        },
+        { __promisify__: util.promisify(fs.rmdir) } // FIXME
+      )
+    }
   }
 
   private init (p: string): Promise<string> {
@@ -60,12 +58,12 @@ export default class RmDir {
 
   log () {
     this.steps.push(
-      function (p: string) {
+      function (p: string, uuid: string) {
         return new Promise((resolve, reject) => {
-          if (tree.includes(p)) {
+          if (tree[uuid].includes(p)) {
             resolve(p)
           } else {
-            tree.push(p)
+            tree[uuid].push(p)
             /* const split = p.split(path.sep)
             console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1]) */
             const err: NodeJS.ErrnoException = new Error('Log error (or is it?)')

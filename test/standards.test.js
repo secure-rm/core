@@ -23,15 +23,22 @@ describe('Each standard ends:', () => {
 })
 
 describe('Preview function', () => {
-  test.skip('Has correct length', done => {
+  test('Has correct length', done => {
+    const folderName1 = tools.createPath()
+    tools.fill(2, 2, 1, folderName1)
+    expect(fs.statSync(folderName1).isDirectory()).toBeTruthy()
+
+    srm(folderName1, { standard: 'preview' }, (err) => {
+      if (err) throw err
+    })
+
     const folderName = tools.createPath()
-    tools.fill(2, 2, 1, folderName)
+    tools.fill(3, 3, 3, folderName)
     expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
 
     srm(folderName, { standard: 'preview' }, (err, tree) => {
       if (err) throw err
-      console.log(tree)
-      // expect(tree).toHaveLength(5)
+      expect(tree).toHaveLength(77)
       done()
     })
   })

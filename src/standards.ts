@@ -6,23 +6,23 @@ interface StandardArgs {
   name?: string
   passes?: number
   description?: string
-  unlinkStandard: typeof fs.unlink
-  rmdirStandard?: typeof fs.rmdir
+  unlinkStandard: (uuid: string) => typeof fs.unlink
+  rmdirStandard?: (uuid: string) => typeof fs.rmdir
 }
 
 export class Standard {
   name: string
   passes: number
   description: string
-  unlinkStandard: typeof fs.unlink
-  rmdirStandard: typeof fs.rmdir
+  unlinkStandard: (uuid: string) => typeof fs.unlink
+  rmdirStandard: (uuid: string) => typeof fs.rmdir
 
   constructor ({ name, passes, description, unlinkStandard, rmdirStandard }: StandardArgs) {
     this.name = name || 'Standard #'
     this.passes = passes || 1
     this.description = description || 'no description'
     this.unlinkStandard = unlinkStandard
-    this.rmdirStandard = rmdirStandard || fs.rmdir
+    this.rmdirStandard = rmdirStandard || function (uuid: string) { return fs.rmdir }
   }
 }
 
@@ -47,7 +47,6 @@ export const standards = {
 and "New Zealand Information and Communications Technology Standard NZSIT 402" 
 Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)`,
     unlinkStandard: new Unlink()
-      // .log()
       .random()
       .unlink()
   }),
@@ -57,7 +56,6 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
     passes: 1,
     description: 'Overwriting with a random byte.',
     unlinkStandard: new Unlink()
-      // .log()
       .randomByte()
       .unlink()
   }),
@@ -67,7 +65,6 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
     passes: 1,
     description: 'Overwriting with zeroes.',
     unlinkStandard: new Unlink()
-      // .log()
       .zeroes()
       .unlink()
   }),
@@ -77,7 +74,6 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
     passes: 1,
     description: 'Overwriting with ones.',
     unlinkStandard: new Unlink()
-      // .log()
       .ones()
       .unlink()
   }),
@@ -90,7 +86,6 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
 Pass 2: Renaming the file with random data;
 Pass 3: Truncating between 25% and 75% of the file.`,
     unlinkStandard: new Unlink()
-      // .log()
       .random()
       .rename()
       .truncate()
@@ -107,7 +102,6 @@ Pass 3: Truncating between 25% and 75% of the file.`,
       `Pass 1: Overwriting with zeroes;
 Pass 2: Overwriting with random data.`,
     unlinkStandard: new Unlink()
-      // .log()
       .zeroes()
       .random()
       .unlink()
@@ -125,7 +119,6 @@ Pass 1: Overwriting with zeroes;
 Pass 2: Overwriting with ones;
 Pass 3: Overwriting with random data as well as verifying the writing of this data.`,
     unlinkStandard: new Unlink()
-      // .log()
       .zeroes()
       .ones()
       .random()
@@ -140,7 +133,6 @@ Pass 3: Overwriting with random data as well as verifying the writing of this da
 Pass 2: Overwriting with a random byte;
 Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.`,
     unlinkStandard: new Unlink()
-      // .log()
       .random()
       .randomByte()
       .complementary()
@@ -157,7 +149,6 @@ Pass 2: Overwriting with ones;
 Pass 3-6: Same as 1-2;
 Pass 7: Overwriting with a random data as well as review the writing of this character.`,
     unlinkStandard: new Unlink()
-      // .log()
       .zeroes()
       .ones()
       .zeroes()
@@ -176,7 +167,6 @@ Pass 7: Overwriting with a random data as well as review the writing of this cha
 Pass 2: Overwriting with ones;
 Pass 3-7: Overwriting with random data.`,
     unlinkStandard: new Unlink()
-      // .log()
       .zeroes()
       .ones()
       .random(5)
@@ -189,7 +179,6 @@ Pass 3-7: Overwriting with random data.`,
     description:
       'Pass 1-33: Overwriting with random data.',
     unlinkStandard: new Unlink()
-      // .log()
       .random(33)
       .unlink()
   }),
@@ -207,7 +196,6 @@ Pass 26-28: Same as 7-9;
 Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;
 Pass 32-35: Overwriting with random data.`,
     unlinkStandard: new Unlink()
-      // .log()
       .random(4)
       .byte(0x55)
       .byte(0xAA)

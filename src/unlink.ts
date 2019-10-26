@@ -16,40 +16,38 @@ interface ForInterface {
   increment: (i: number) => number
 }
 
-type StepFunction = (file: string, fileSize: number) => Promise<FileInfo>
+type StepFunction = (file: string, fileSize: number, uuid: string) => Promise<FileInfo>
 
 // Function to offset an array
 // const offset = (arr: number[], offset: number) => [...arr.slice(offset), ...arr.slice(0, offset)]
 
 export default class Unlink {
   private steps: Array<StepFunction>
-  compile: typeof fs.unlink
+  compile: (token: string) => typeof fs.unlink
 
   constructor () {
     this.steps = []
-    this.compile = Object.assign(
-      (file: fs.PathLike, callback: (err: NodeJS.ErrnoException | null) => void) => {
-        this.steps.push((file: string, fileSize: number) => {
-          return new Promise((resolve) => {
-            callback(null)
-            resolve({ file, fileSize })
-          })
-        })
-        this.steps.reduce((prev: Promise<FileInfo>, next: StepFunction) => {
-          return prev.then(({ file, fileSize }) => next(file, fileSize))
-            .catch((err: NodeJS.ErrnoException) => {
+    this.compile = (uuid) => {
+      tree[uuid] = []
+      return Object.assign(
+        (file: fs.PathLike, callback: (err: NodeJS.ErrnoException | null) => void) => {
+          this.steps.reduce((prev: Promise<FileInfo>, next: StepFunction) => {
+            return prev.then(({ file, fileSize }) => next(file, fileSize, uuid))
+            /* .catch((err: NodeJS.ErrnoException) => {
               eventError(err, file as string)
               callback(err)
               return Promise.reject(err)
+            }) */
+          }, this.init(file as string))
+            .then(() => callback(null))
+            .catch((err: NodeJS.ErrnoException) => {
+              eventError(err, file as string)
+              callback(err)
             })
-        }, this.init(file as string))
-          .catch((err: NodeJS.ErrnoException) => {
-            eventError(err, file as string)
-            callback(err)
-          })
-      },
-      { __promisify__: util.promisify(fs.unlink) } // FIXME
-    )
+        },
+        { __promisify__: util.promisify(fs.unlink) } // FIXME
+      )
+    }
   }
 
   private init (file: string): Promise<FileInfo> {
@@ -68,10 +66,10 @@ export default class Unlink {
 
   log () {
     this.steps.push(
-      function (file: string, fileSize: number) {
+      function (file: string, fileSize: number, uuid: string) {
         return new Promise((resolve) => {
-          if (!tree.includes(file))
-            tree.push(file)
+          if (!tree[uuid].includes(file))
+            tree[uuid].push(file)
           // const split = file.split(path.sep)
           // console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
           resolve({ file, fileSize })
