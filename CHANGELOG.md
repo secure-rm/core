@@ -12,10 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security -->
 
-## [Unreleased]
+<!-- ## [Unreleased] -->
+
+## [4.0.0] - 2019-10-27
 
 ### Added
 - Custom directory removal.
+- More tests.
+- Wiki.
+- Preview standard.
 
 ### Changed
 - Repository location.
