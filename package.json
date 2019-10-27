@@ -16,7 +16,6 @@
     "prepack": "npm run clean && npm run build"
   },
   "dependencies": {
-    "glob": "^7.1.5",
     "rimraf": "^3.0.0",
     "tslib": "^1.10.0"
   },
@@ -34,11 +33,11 @@
     "uuid": "^3.3.3"
   },
   "author": "Oganexon @oganexon",
-  "bugs": "https://github.com/oganexon/secure-rm/issues",
-  "homepage": "https://github.com/oganexon/secure-rm#readme",
+  "bugs": "https://github.com/secure-rm/core/issues",
+  "homepage": "https://www.secure-rm.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oganexon/secure-rm.git"
+    "url": "git+https://github.com/secure-rm/core.git"
   },
   "engines": {
     "node": ">=8.0.0"

@@ -36,7 +36,6 @@ const debug = process.argv.includes('--debug')
 
 if (debug) {
   eventEmitter.on('start', (file) => console.log('Starting ' + file))
-  eventEmitter.on('unlink', (file) => console.log('Unlinking ' + file))
   eventEmitter.on('done', (file) => console.log('Done ' + file))
 
   eventEmitter.on('verbose', (file, info) => console.log(info + file))

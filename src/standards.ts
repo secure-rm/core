@@ -31,7 +31,7 @@ export const standards = {
   preview: new Standard({
     name: 'Preview',
     passes: 1,
-    description: 'Display targeted files.',
+    description: 'Returns targeted files without deleting them.',
     unlinkStandard: new Unlink()
       .log()
       .compile,
@@ -44,7 +44,7 @@ export const standards = {
     name: 'Pseudorandom data',
     passes: 1,
     description: `Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"
-and "New Zealand Information and Communications Technology Standard NZSIT 402" 
+and "New Zealand Information and Communications Technology Standard NZSIT 402".
 Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)`,
     unlinkStandard: new Unlink()
       .random()

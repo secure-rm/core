@@ -97,7 +97,7 @@ export default class RmDir {
     this.steps.push(
       function (p: string) {
         return new Promise((resolve, reject) => {
-          eventEmitter.emit('remove', p)
+          eventEmitter.emit('verbose', p, 'Removing')
           fs.rmdir(p, (err) => {
             if (err) reject(err)
             else {

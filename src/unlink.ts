@@ -264,7 +264,7 @@ export default class Unlink {
     this.steps.push(
       function (file: string, fileSize: number) {
         return new Promise((resolve, reject) => {
-          eventEmitter.emit('unlink', file)
+          eventEmitter.emit('verbose', file, 'Unlinking ')
           fs.unlink(file, (err) => {
             if (err) reject(err)
             else {
