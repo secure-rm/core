@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./assets/secure-rm-min.png" alt="secure-rm">
+  <img src="./assets/secure-rm.png" alt="secure-rm">
   <br>
   Completely erases files by making recovery impossible.
   <br>
@@ -61,7 +61,7 @@ srm('./folder/*.js')
 
 ## 📚 Usage
 
-Visit the [wiki]((https://github.com/secure-rm/core/wiki)) to discover all the possibilities secure-rm offers!
+[Visit the wiki](https://github.com/secure-rm/core/wiki) to discover all the possibilities secure-rm offers!
 
 - Choose a standard,
 - Customize your standard,

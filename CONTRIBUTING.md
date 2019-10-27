@@ -10,7 +10,6 @@
   <img src="https://img.shields.io/npm/collaborators/secure-rm?style=for-the-badge" alt="npm collaborators">
 </p>
 
-
 # Contributing / Developing
 
 Contributions are welcome. Fork this repository and issue a pull request with your changes.
@@ -25,31 +24,21 @@ You'll need to clone the repository and install the required packages.
 Just execute these commands:
 
 ```shell
-git clone https://github.com/oganexon/secure-rm.git
+git clone https://github.com/secure-rm/core.git
 cd ./secure-rm/
 npm install
 ```
-To invoke the command line tool, run:
-```shell
-npm start -- [ARGS]
-```
 
-If you want to install all the tools, juste run:
-```shell
-npm run dev-setup
-```
-
-<!--### Deploying / Publishing
-give instructions on how to build and release a new version
-In case there's some step you have to take that publishes this project to a
-server, this is the right time to state it.
+### Building
 
 ```shell
-packagemanager deploy your-project -s server.com -u username -p password
+npm run build
 ```
 
-And again you'd need to tell what the previous code actually does.
--->
+If you want to start compilation in watch mode:
+```shell
+npm run watch-ts
+```
 
 ### Versioning
 
@@ -75,3 +64,8 @@ You can install a [plugin](https://standardjs.com/awesome.html#editor-plugins) f
 ### Pull request
 
 Please follow the [pull request template](./github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
+
+### Deploying / Publishing
+
+Submit a pull request after running `npm run build` to ensure it runs correctly.
+The package is automatically published to npm when a new release is published on github.
