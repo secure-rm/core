@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Completely erases files by making recovery impossible.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,8 +12,8 @@
     "coverage": "jest --coverage --coverageDirectory=./coverage",
     "test": "jest --verbose",
     "watch-test": "npm run test -- --watchAll",
-    "clean": "rimraf dist coverage node_modules",
-    "prepack": "npm i && npm run clean && npm run build"
+    "clean": "rimraf dist coverage",
+    "prepack": "npm run clean && npm run build"
   },
   "dependencies": {
     "rimraf": "^3.0.0",
