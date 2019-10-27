@@ -28,8 +28,7 @@ export interface ParsedOptions extends Opts {
 export type Callback = (err: NodeJS.ErrnoException | null, tree: string[]) => void
 
 // Main function when secure-rm is called
-export function remove(path: string): Promise<string[]>
-export function remove(path: string, options: Options): Promise<string[]>
+export function remove(path: string, options?: Options): Promise<string[]>
 export function remove(path: string, callback: Callback): void
 export function remove(path: string, options: Options, callback: Callback): void
 
