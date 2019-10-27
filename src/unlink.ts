@@ -68,8 +68,7 @@ export default class Unlink {
     this.steps.push(
       function (file: string, fileSize: number, uuid: string) {
         return new Promise((resolve) => {
-          if (!tree[uuid].includes(file))
-            tree[uuid].push(file)
+          if (!tree[uuid].includes(file)) { tree[uuid].push(file) }
           // const split = file.split(path.sep)
           // console.log('┃ '.repeat(split.length - 1) + '┠─' + split[split.length - 1])
           resolve({ file, fileSize })
