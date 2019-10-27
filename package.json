@@ -12,7 +12,7 @@
     "coverage": "jest --coverage --coverageDirectory=./coverage",
     "test": "jest --verbose",
     "watch-test": "npm run test -- --watchAll",
-    "clean": "rimraf dist coverage node_modules",
+    "clean": "rimraf dist coverage",
     "prepack": "npm run clean && npm run build"
   },
   "dependencies": {

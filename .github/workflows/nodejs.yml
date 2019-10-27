@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node_version }}
     
     - name: Installing
-      run: npm install
+      run: npm ci
       env:
         CI: true
     
@@ -46,7 +46,7 @@ jobs:
 
     - name: Generate coverage report
       run: |
-        npm install
+        npm ci
         npm run build
         npm run coverage
 
