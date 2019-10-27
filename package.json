@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Completely erases files by making recovery impossible.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
