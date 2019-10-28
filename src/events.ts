@@ -7,23 +7,23 @@ export function eventError (err: NodeJS.ErrnoException, file: string): void {
   if (err) {
     switch (err.code) {
       case 'EMFILE':
-        eventEmitter.emit('warn', file, `Too many open files, cannot ${err.syscall || 'access'}: `)
+        eventEmitter.emit('notice', file, `Too many open files, cannot ${err.syscall || 'access'}: `)
         break
       case 'ENOENT':
-        eventEmitter.emit('warn', file, 'This file no longer exists: ')
+        eventEmitter.emit('notice', file, 'This file no longer exists: ')
         break
       case 'EPERM':
-        eventEmitter.emit('error', file, `Operation not permitted on this file (${err.syscall}): `)
+        eventEmitter.emit('warn', file, `Operation not permitted on this file (${err.syscall}): `)
         break
       case 'ENOTEMPTY':
         // Work as intended
         break
       default:
         if (err.message === '64bit files are not yet supported.') {
-          eventEmitter.emit('error', file, '64bit files are not yet supported.')
+          eventEmitter.emit('warn', file, '64bit files are not yet supported.')
         } else {
-          console.log(err)
-          throw err
+          eventEmitter.emit('error', file, err)
+          // throw err
         }
       // break
     }
@@ -35,11 +35,9 @@ export const tree: { [key: string]: string[] } = {}
 const debug = process.argv.includes('--debug')
 
 if (debug) {
-  eventEmitter.on('start', (file) => console.log('Starting ' + file))
-  eventEmitter.on('done', (file) => console.log('Done ' + file))
-
-  eventEmitter.on('verbose', (file, info) => console.log(info + file))
-
-  eventEmitter.on('warn', (file, err) => console.log(err + file))
-  eventEmitter.on('error', (file, err) => console.log(err + file))
+  eventEmitter.on('debug', (file, message) => console.log('\x1b[38;2;128;0;128m Debug \x1b[39m' + message + file))
+  eventEmitter.on('info', (file, message) => console.log('\x1b[38;2;0;0;255m Info \x1b[39m' + message + file))
+  eventEmitter.on('notice', (file, message) => console.log('\x1b[38;2;0;255;255m Notice \x1b[39m' + message + file))
+  eventEmitter.on('warn', (file, message) => console.log('\x1b[38;2;255;255;0m Warn \x1b[39m' + message + file))
+  eventEmitter.on('error', (file, message) => console.log('\x1b[38;2;255;0;0m Error \x1b[39m' + message + file))
 }
