@@ -94,15 +94,15 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
 ## 🏗 Contributing
 
 <p align="center">
-  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg?style=flat-square&logo=jest" alt="Tested with Jest"></a>
-  <a href="https://www.npmjs.com"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=flat-square&logo=npm" alt="Dependencies"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/secure-rm?style=flat-square" alt="Node version"></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/github/languages/top/oganexon/secure-rm?style=flat-square" alt="language"></a>
+  <a href="https://libraries.io/npm/secure-rm"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=flat-square&logo=npm" alt="Dependencies"></a>
+  <img src="https://img.shields.io/github/contributors/secure-rm/core?style=flat-square" alt="Contributors">
+  <img src="https://img.shields.io/github/last-commit/secure-rm/core/develop?style=flat-square" alt="Last commit">
+  <img src="https://img.shields.io/npm/collaborators/secure-rm?style=flat-square" alt="npm collaborators">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/github/contributors/oganexon/secure-rm?style=flat-square" alt="Contributors">
-  <img src="https://img.shields.io/github/last-commit/oganexon/secure-rm/develop?style=flat-square" alt="Last commit">
-  <img src="https://img.shields.io/npm/collaborators/secure-rm?style=flat-square" alt="npm collaborators">
+  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/-jest-99424f?style=flat-square&logo=jest" alt="Tested with Jest"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/-node-gray?style=flat-square&logo=node.js" alt="Node version"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-typescript-blue?style=flat-square&logo=typescript" alt="language"></a>
 </p>
 
 See [contributing guidelines](/CONTRIBUTING.md)

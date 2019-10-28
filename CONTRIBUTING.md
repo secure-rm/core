@@ -1,13 +1,13 @@
 <p align="center">
-  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg?style=for-the-badge&logo=jest" alt="Tested with Jest"></a>
-  <a href="https://www.npmjs.com"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=for-the-badge&logo=npm" alt="Dependencies"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/secure-rm?style=for-the-badge" alt="Node version"></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/language-typescript-blue?style=for-the-badge" alt="language"></a>
+  <a href="https://libraries.io/npm/secure-rm"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=for-the-badge&logo=npm" alt="Dependencies"></a>
+  <img src="https://img.shields.io/github/contributors/secure-rm/core?style=for-the-badge" alt="Contributors">
+  <img src="https://img.shields.io/github/last-commit/secure-rm/core/develop?style=for-the-badge" alt="Last commit">
+  <img src="https://img.shields.io/npm/collaborators/secure-rm?style=for-the-badge" alt="npm collaborators">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/github/contributors/oganexon/secure-rm?style=for-the-badge" alt="Contributors">
-  <img src="https://img.shields.io/github/last-commit/oganexon/secure-rm/develop?style=for-the-badge" alt="Last commit">
-  <img src="https://img.shields.io/npm/collaborators/secure-rm?style=for-the-badge" alt="npm collaborators">
+  <a href="https://jestjs.io"><img src="https://img.shields.io/badge/-jest-99424f?style=for-the-badge&logo=jest" alt="Tested with Jest"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/-node-gray?style=for-the-badge&logo=node.js" alt="Node version"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/-typescript-blue?style=for-the-badge&logo=typescript" alt="language"></a>
 </p>
 
 # Contributing / Developing
@@ -49,7 +49,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 This project uses the framework [Jest](https://jestjs.io/). Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 
-Simply run `jest` to run the tests.
+Simply run `npm test` to run the tests.
 
 There are not enough tests, you can add more.
 
@@ -63,7 +63,8 @@ You can install a [plugin](https://standardjs.com/awesome.html#editor-plugins) f
 
 ### Pull request
 
-Please follow the [pull request template](./github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
+Please PR to the `develop` branch!
+Then follow the [pull request template](.github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
 
 ### Deploying / Publishing
 
