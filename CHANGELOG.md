@@ -14,6 +14,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## [Unreleased] -->
 
+## [4.1.0] - 2019-10-29
+
+### Changed
+
+- Events are now:
+  - 'debug'
+  - 'info'
+  - 'notice'
+  - 'warn'
+  - 'error'
+
+### Fixed
+
+- Npm auto publisher bug.
+
 ## [4.0.1] - 2019-10-27
 
 ### Added
