@@ -68,7 +68,7 @@ srm('./folder/*.js')
 - Respond to events,
 - etc.
 
-### Example:
+### Examples:
 ```javascript
 const options = {
   standard: 'gutmann',
@@ -76,10 +76,16 @@ const options = {
   disableGlob: true
 }
 
-srm('./data/file*.js', options, (err) => {
+srm('./data/*.js', options, (err) => {
   if (err) throw err
   console.log('Files successfully deleted !')
 })
+
+srm('./trash/dir/', { standard: 'preview' }, (err, fileTree) => {
+  if (err) throw err
+  console.log('Files that would be deleted:' + fileTree)
+})
+
 ```
 
 ## 📜 Changelog / History
