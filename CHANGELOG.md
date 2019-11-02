@@ -12,7 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security -->
 
-<!-- ## [Unreleased] -->
+## [Unreleased]
+
+### Changed
+
+- `secure` standard now also rename folders.
+
+### Fixed
+
+- Unhandled errors.
 
 ## [4.1.0] - 2019-10-29
 

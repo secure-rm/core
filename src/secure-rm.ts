@@ -18,7 +18,7 @@ interface Opts {
 }
 
 export interface Options extends Opts {
-  standard?: string
+  standard?: keyof typeof standards
 }
 
 export interface ParsedOptions extends Opts {
@@ -46,8 +46,6 @@ export function remove (path: string, options?: Options | Callback, callback?: C
   if (callback) removeCallback(path, options as ParsedOptions, uuid, (err: NodeJS.ErrnoException | null, goodTree: string[]) => callback!(err, goodTree))
   else return removePromise(path, options as ParsedOptions, uuid)
 }
-
-// (module).exports = secureRm
 
 const defaultGlobOpts = {
   nosort: true,

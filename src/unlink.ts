@@ -18,9 +18,6 @@ interface ForInterface {
 
 type StepFunction = (file: string, fileSize: number, uuid: string) => Promise<FileInfo>
 
-// Function to offset an array
-// const offset = (arr: number[], offset: number) => [...arr.slice(offset), ...arr.slice(0, offset)]
-
 export default class Unlink {
   private steps: Array<StepFunction>
   compile: (token: string) => typeof fs.unlink
@@ -33,16 +30,20 @@ export default class Unlink {
         (file: fs.PathLike, callback: (err: NodeJS.ErrnoException | null) => void) => {
           this.steps.reduce((prev: Promise<FileInfo>, next: StepFunction) => {
             return prev.then(({ file, fileSize }) => next(file, fileSize, uuid))
-            /* .catch((err: NodeJS.ErrnoException) => {
-              eventError(err, file as string)
-              callback(err)
-              return Promise.reject(err)
-            }) */
+            .catch((err: NodeJS.ErrnoException) => {
+              if (err.message !== 'handledPromise') {
+                eventError(err, file as string)
+                callback(err)
+              }
+              return Promise.reject(new Error('handledPromise'))
+            })
           }, this.init(file as string))
             .then(() => callback(null))
             .catch((err: NodeJS.ErrnoException) => {
-              eventError(err, file as string)
-              callback(err)
+              if (err.message !== 'handledPromise') {
+                eventError(err, file as string)
+                callback(err)
+              }
             })
         },
         { __promisify__: util.promisify(fs.unlink) } // FIXME

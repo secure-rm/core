@@ -89,10 +89,10 @@ Pass 3: Truncating between 25% and 75% of the file.`,
       .random()
       .rename()
       .truncate()
-      .unlink()/* ,
+      .unlink(),
     rmdirStandard: new RmDir()
       .rename()
-      .rmdir() */
+      .rmdir()
   }),
 
   'GOST_R50739-95': new Standard({

@@ -6,16 +6,11 @@ import { eventEmitter, eventError, tree } from './events'
 
 type StepFunction = (p: string, uuid: string) => Promise<string>
 
-interface FakeLogError {
-  (message?: string | undefined): Error
-  code: string
-}
-
 export default class RmDir {
   private steps: Array<StepFunction>
   compile: (uuid: string) => typeof fs.rmdir
 
-  constructor () {
+  constructor() {
     this.steps = []
     this.compile = (uuid) => {
       tree[uuid] = []
@@ -27,16 +22,20 @@ export default class RmDir {
           }
           this.steps.reduce((prev: Promise<string>, next: StepFunction) => {
             return prev.then((p) => next(p, uuid))
-            /* .catch((err: NodeJS.ErrnoException) => {
-              eventError(err, p as string)
-              callback!(err)
-              return Promise.reject(err)
-            }) */
+            .catch((err: NodeJS.ErrnoException) => {
+              if (err.message !== 'handledPromise') {
+                eventError(err, p as string)
+                callback!(err)
+              }
+              return Promise.reject(new Error('handledPromise'))
+            })
           }, this.init(p as string))
             .then(() => callback!(null))
             .catch((err: NodeJS.ErrnoException) => {
-              eventError(err, p as string)
-              callback!(err)
+              if (err.message !== 'handledPromise') {
+                eventError(err, p as string)
+                callback!(err)
+              }
             })
         },
         { __promisify__: util.promisify(fs.rmdir) } // FIXME
@@ -44,19 +43,19 @@ export default class RmDir {
     }
   }
 
-  private init (p: string): Promise<string> {
+  private init(p: string): Promise<string> {
     return new Promise((resolve) => {
       eventEmitter.emit('start', p)
       resolve(p)
     })
   }
 
-  then (fun: StepFunction) {
+  then(fun: StepFunction) {
     this.steps.push(fun)
     return this
   }
 
-  log () {
+  log() {
     this.steps.push(
       function (p: string, uuid: string) {
         return new Promise((resolve, reject) => {
@@ -76,16 +75,26 @@ export default class RmDir {
   }
 
   // Rename to random string
-  rename () {
+  rename() {
     this.steps.push(
       function (p: string) {
         return new Promise((resolve, reject) => {
-          const newName = crypto.randomBytes(9).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
-          const newPath = path.join(path.dirname(p), newName)
-          eventEmitter.emit('verbose', p, `Renaming to ${newName} `)
-          fs.rename(p, newPath, (err) => {
+          fs.readdir(p, (err, files) => {
             if (err) reject(err)
-            else resolve(newPath)
+            if (!files.length) {
+              // directory appears to be empty
+              const newName = crypto.randomBytes(9).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
+              const newPath = path.join(path.dirname(p), newName)
+              eventEmitter.emit('verbose', p, `Renaming to ${newName} `)
+              fs.rename(p, newPath, (err) => {
+                if (err) reject(err)
+                else resolve(newPath)
+              })
+            } else {
+              fs.rmdir(p, (err) => {
+                reject(err)
+              })
+            }
           })
         })
       })
@@ -93,7 +102,7 @@ export default class RmDir {
   }
 
   // End function: remove the directory
-  rmdir () {
+  rmdir() {
     this.steps.push(
       function (p: string) {
         return new Promise((resolve, reject) => {
