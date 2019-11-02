@@ -63,10 +63,12 @@ srm('./folder/*.js')
 
 [Visit the wiki](https://github.com/secure-rm/core/wiki) to discover all the possibilities secure-rm offers!
 
-- Choose a standard,
-- Customize your standard,
-- Respond to events,
-- etc.
+- 📚 [Choose a standard](https://github.com/secure-rm/core/wiki/Standards)
+- ⚙️ [Customize your standard](https://github.com/secure-rm/core/wiki/Custom-Standard)
+- 📗 [Unlink Methods](https://github.com/secure-rm/core/wiki/Unlink-Methods)
+- 📙 [RmDir Methods](https://github.com/secure-rm/core/wiki/RmDir-Methods)
+- ✨ [Respond to events](https://github.com/secure-rm/core/wiki/Events)
+- 🚩 [Troubleshooting - Common issues](https://github.com/secure-rm/core/wiki/Troubleshooting---Common-issues)
 
 ### Examples:
 ```javascript
