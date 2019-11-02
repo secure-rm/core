@@ -3,6 +3,8 @@ const srm = require('..')
 
 const { tools } = require('./tools.js')(__dirname, __filename)
 
+test.todo('Predictable errors')
+
 describe('Invalid IDs throw:', () => {
   const values = [-1, '1', 10e5, 'string', 'SECURE', ['secure']]
   for (let i = 0; i < values.length; i++) {
