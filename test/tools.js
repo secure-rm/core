@@ -10,10 +10,12 @@ let target
 
 function init (__dirname, __filename) {
   target = path.resolve(__dirname, `./target-${path.basename(__filename).replace(/(.*)(\.test\.js)/, '$1')}`)
-  return {
-    tools: { fill, cleanup, createPath },
-    target
+  try {
+    fs.mkdirSync(target)
+  } catch (err) {
+    console.log(target + ' already exists')
   }
+  return { fill, cleanup, createPath }
 }
 
 function fill (depth, files, folders, target) {

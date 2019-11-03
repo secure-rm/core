@@ -2,16 +2,10 @@ const fs = require('fs')
 const util = require('util')
 const srm = require('../../')
 
-const { target, tools } = require('../tools.js')(__dirname, __filename)
+const tools = require('../tools.js')(__dirname, __filename)
 
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
-
-try {
-  fs.mkdirSync(target)
-} catch (err) {
-  console.log(target + ' already exists')
-}
 
 const expected = [
   {

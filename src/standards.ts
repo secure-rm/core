@@ -6,7 +6,7 @@ interface StandardArgs {
   name?: string
   passes?: number
   description?: string
-  unlinkStandard: (uuid: string) => typeof fs.unlink
+  unlinkStandard?: (uuid: string) => typeof fs.unlink
   rmdirStandard?: (uuid: string) => typeof fs.rmdir
 }
 
@@ -21,7 +21,7 @@ export class Standard {
     this.name = name || 'Standard #'
     this.passes = passes || 1
     this.description = description || 'no description'
-    this.unlinkStandard = unlinkStandard
+    this.unlinkStandard = unlinkStandard || function(uuid: string) { return fs.unlink }
     this.rmdirStandard = rmdirStandard || function (uuid: string) { return fs.rmdir }
   }
 }

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const srm = require('..')
 
-const { tools } = require('./tools.js')(__dirname, __filename)
+const tools = require('./tools.js')(__dirname, __filename)
 
 const ids = JSON.parse(JSON.stringify(srm.validIDs))
 ids.splice(ids.indexOf('preview'), 1)

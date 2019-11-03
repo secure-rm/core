@@ -4,16 +4,10 @@ const util = require('util')
 const crypto = require('crypto')
 const srm = require('../../')
 
-const { target, tools } = require('../tools.js')(__dirname, __filename)
+const tools = require('../tools.js')(__dirname, __filename)
 
 const readFile = util.promisify(fs.readFile)
 const writeFile = util.promisify(fs.writeFile)
-
-try {
-  fs.mkdirSync(target)
-} catch (err) {
-  console.log(target + ' already exists')
-}
 
 describe('Specific unlink functions are correct:', () => {
   it('Truncate between 25% and 75% of the file', done => {

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const srm = require('..')
 
-const { tools } = require('./tools.js')(__dirname, __filename)
+const tools = require('./tools.js')(__dirname, __filename)
 
 test.todo('Predictable errors')
 
