@@ -5,12 +5,12 @@ import crypto from 'crypto'
 import { kMaxLength } from 'buffer'
 import { eventEmitter, eventError, tree } from './events'
 
-interface FileInfo {
+type FileInfo = {
   file: string
   fileSize: number
 }
 
-interface ForInterface {
+type ForLoop = {
   init: number
   condition: (i: number) => Boolean
   increment: (i: number) => number
@@ -18,25 +18,39 @@ interface ForInterface {
 
 type StepFunction = (file: string, fileSize: number, uuid: string) => Promise<FileInfo>
 
+/**
+ * @classdesc The class to create unlink standards.
+ *
+ * @exports Unlink
+ * @constructor
+ */
 export default class Unlink {
   private steps: Array<StepFunction>
-  compile: (token: string) => typeof fs.unlink
+
+  /**
+    * Use this if you want to compile the standard without unlink.
+    * Useful for preview and testing uses.
+    * Used in unlink().
+    * @param {string} uuid - Unique identifier used internally.
+    * @return {fs.unlink} The compiled unlink standard.
+    */
+  compile: (uuid: string) => typeof fs.unlink
 
   constructor () {
     this.steps = []
-    this.compile = (uuid) => {
+    this.compile = (uuid: string) => {
       tree[uuid] = []
       return Object.assign(
         (file: fs.PathLike, callback: (err: NodeJS.ErrnoException | null) => void) => {
           this.steps.reduce((prev: Promise<FileInfo>, next: StepFunction) => {
             return prev.then(({ file, fileSize }) => next(file, fileSize, uuid))
-            .catch((err: NodeJS.ErrnoException) => {
-              if (err.message !== 'handledPromise') {
-                eventError(err, file as string)
-                callback(err)
-              }
-              return Promise.reject(new Error('handledPromise'))
-            })
+              .catch((err: NodeJS.ErrnoException) => {
+                if (err.message !== 'handledPromise') {
+                  eventError(err, file as string)
+                  callback(err)
+                }
+                return Promise.reject(new Error('handledPromise'))
+              })
           }, this.init(file as string))
             .then(() => callback(null))
             .catch((err: NodeJS.ErrnoException) => {
@@ -65,6 +79,11 @@ export default class Unlink {
     })
   }
 
+  /**
+  * Help to construct the tree of erased files.
+  * Used in preview standard.
+  * @return {Unlink} The unlink Class.
+  */
   log () {
     this.steps.push(
       function (file: string, fileSize: number, uuid: string) {
@@ -81,11 +100,21 @@ export default class Unlink {
     return this
   }
 
+  /**
+  * Your custom function to apply on the file.
+  * @param {StepFunction} fun - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
   then (fun: StepFunction) {
     this.steps.push(fun)
     return this
   }
 
+  /**
+  * Write cryptographically strong pseudo-random data.
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
   random (passes: number = 1) {
     this.steps = this.steps.concat(
       Array(passes).fill(
@@ -105,7 +134,12 @@ export default class Unlink {
     return this
   }
 
-  zeroes (passes: number = 1) {
+  /**
+  * Write zeros on the whole file.
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
+  zeros (passes: number = 1) {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -120,6 +154,21 @@ export default class Unlink {
     return this
   }
 
+  /**
+  * Write ones on the whole file.
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  * @deprecated
+  */
+  zeroes (passes: number = 1) {
+    return this.zeros(passes)
+  }
+
+  /**
+  * Write ones on the whole file.
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
   ones (passes: number = 1) {
     this.steps = this.steps.concat(
       Array(passes).fill(
@@ -135,7 +184,12 @@ export default class Unlink {
     return this
   }
 
-  // Write one byte on the whole file
+  /**
+  * Write one byte on the whole file.
+  * @param {number} data - A byte: must be between `0x00` and `0xFF` (Hexadecimal)
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
   byte (data: number, passes: number = 1) {
     this.steps = this.steps.concat(
       Array(passes).fill(
@@ -151,7 +205,12 @@ export default class Unlink {
     return this
   }
 
-  // Write an array of bytes on the whole file
+  /**
+  * Write an array of bytes on the whole file.
+  * @param {number[]} dataArray - The array containing the bytes.
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
   byteArray (dataArray: number[], passes: number = 1) {
     this.steps = this.steps.concat(
       Array(passes).fill(
@@ -168,12 +227,19 @@ export default class Unlink {
     return this
   }
 
-  // A for loop
-  forByte ({ init, condition, increment }: ForInterface) {
+  /**
+  * A for loop, write the value of the variable at each iteration.
+  * @param {Object} forLoop - A destructuring parameter.
+    * @param {number} forLoop.init - Initialize the counter variable.
+    * @param {ForLoop.condition} forLoop.condition - An expression to be evaluated before each loop iteration.
+    * @param {ForLoop.increment} forLoop.increment - The increment of the counter variable after each loop iteration.
+  * @return {Unlink} The unlink Class.
+  */
+  forByte ({ init, condition, increment }: ForLoop) {
     let i = init
     while (true) {
       if (!condition(i)) { break }
-      const j = i // Fix the value (the following function could be called after the increment)
+      const j = i // Sets the value (the following function could be called after the increment)
       this.steps.push(
         function (file: string, fileSize: number) {
           return new Promise((resolve, reject) => {
@@ -189,7 +255,12 @@ export default class Unlink {
     return this
   }
 
-  randomByte (passes: number = 1) {
+  /**
+  * Write one cryptographically strong pseudo-random byte on the whole file.
+  * @param {number} [passes = 1] - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  */
+  randomByte (passes: number = 1): Unlink {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -204,7 +275,10 @@ export default class Unlink {
     return this
   }
 
-  // Write the binary complement
+  /**
+   * Write the binary complement of the file.
+   * @return {Unlink} The unlink Class.
+   */
   complementary () {
     this.steps.push(
       function (file: string, fileSize: number) {
@@ -229,7 +303,10 @@ export default class Unlink {
     return this
   }
 
-  // Rename to random string
+  /**
+   * Rename the file to a random string of length 12.
+   * @return {Unlink} The unlink Class.
+   */
   rename () {
     this.steps.push(
       function (file: string, fileSize: number) {
@@ -246,8 +323,11 @@ export default class Unlink {
     return this
   }
 
-  // Truncate to between 25% and 75% of the file size
-  truncate () {
+  /**
+   * Truncate to between 25% and 75% of the file size.
+   * @return {Unlink} The unlink Class.
+   */
+  truncate (): Unlink {
     this.steps.push(
       function (file: string, fileSize: number) {
         return new Promise((resolve, reject) => {
@@ -262,7 +342,11 @@ export default class Unlink {
     return this
   }
 
-  // End function: unlink the file pointer
+  /**
+   * The last function to be executed: unlink the file pointer.
+   * Required, invalid standard if omitted.
+   * @return {fs.unlink} The compiled unlink standard.
+   */
   unlink () {
     this.steps.push(
       function (file: string, fileSize: number) {

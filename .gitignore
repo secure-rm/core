@@ -2,6 +2,7 @@
 /.nyc_output
 /dist
 /tmp
+/docs
 /yarn.lock
 /coverage
 /node_modules

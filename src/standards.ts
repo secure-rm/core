@@ -21,7 +21,7 @@ export class Standard {
     this.name = name || 'Standard #'
     this.passes = passes || 1
     this.description = description || 'no description'
-    this.unlinkStandard = unlinkStandard || function(uuid: string) { return fs.unlink }
+    this.unlinkStandard = unlinkStandard || function (uuid: string) { return fs.unlink }
     this.rmdirStandard = rmdirStandard || function (uuid: string) { return fs.rmdir }
   }
 }
@@ -60,12 +60,21 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
       .unlink()
   }),
 
-  zeroes: new Standard({
-    name: 'Zeroes',
+  zeros: new Standard({
+    name: 'Zeros',
     passes: 1,
-    description: 'Overwriting with zeroes.',
+    description: 'Overwriting with zeros.',
     unlinkStandard: new Unlink()
-      .zeroes()
+      .zeros()
+      .unlink()
+  }),
+
+  zeroes: new Standard({
+    name: 'Zeros',
+    passes: 1,
+    description: 'Overwriting with zeros. (Deprecated)',
+    unlinkStandard: new Unlink()
+      .zeros()
       .unlink()
   }),
 
