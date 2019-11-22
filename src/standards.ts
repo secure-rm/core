@@ -10,6 +10,61 @@ interface StandardArgs {
   rmdirStandard?: (uuid: string) => typeof fs.rmdir
 }
 
+/**
+ * The main class to create standards.
+ * You have the possibility to create your own standard by chaining differents methods.
+ * You can even add your own function with `then`.
+ * @param {Object} standard - A destructuring parameter.
+  * @param {string} standard.name - The standard name.
+  * @param {number} standard.passes - The number of times a file is written.
+  * @param {string} standard.description - The standard description.
+  * @param {string} standard.unlinkStandard - The unlink standard attached.
+  * @param {string} standard.rmdirStandard - The rmdir standard attached.
+ * @example
+ * const options = {
+    customStandard: new srm.Standard({
+      unlinkStandard: new srm.Unlink()
+        .log()
+        .random()
+        .then(function (file, fileSize) {
+          return new Promise((resolve, reject) => {
+            if (file === 'test.js')
+              reject(new Error())
+            else
+              resolve({ file, fileSize })
+          })
+        })
+        .ones()
+        .unlink()
+      rmdirStandard: new srm.rmdirStandard()
+        .log()
+        .rmDir()
+    })
+  }
+
+  srm('./*', options (err, fileTree) => {
+    if (err) throw err
+    console.log(`Successfully removed ${fileTree} !`)
+  })
+ * @description
+ * Another possibility is to add your standard to the `srm.standards` object to retrieve it at any time and add additional properties:
+ * @example
+ * srm.standards.myStandardName = new Standard({
+    name: 'My Standard Name',
+    passes: 3,
+    description: 'My standard description!',
+    unlinkStandard: new Unlink()
+      .log()
+      .random()
+      .rename()
+      .ones()
+      .unlink(),
+    rmdirStandard: new RmDir()
+      .log()
+      .rmDir()
+  })
+ * @class
+ */
 export class Standard {
   name: string
   passes: number
@@ -26,7 +81,11 @@ export class Standard {
   }
 }
 
-// Object listing every standards
+/**
+ * Object listing every standards.
+ * Secure-rm has many standards to safely delete your files.
+ * Find the one that meets your needs.
+ */
 export const standards = {
   preview: new Standard({
     name: 'Preview',
@@ -69,6 +128,9 @@ Your data is overwritten with cryptographically strong pseudo-random data. (The 
       .unlink()
   }),
 
+  /**
+   * @deprecated
+   */
   zeroes: new Standard({
     name: 'Zeros',
     passes: 1,

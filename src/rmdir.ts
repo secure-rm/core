@@ -6,8 +6,26 @@ import { eventEmitter, eventError, tree } from './events'
 
 type StepFunction = (p: string, uuid: string) => Promise<string>
 
+/**
+ * The RmDir class helps you create your own custom unlink method.
+ * Unless you know what you're doing, always end with `.rmDir()`.
+ * Invoke it and chain the methods:
+ * @example
+ * new srm.RmDir()
+    .random()
+    .rmDir()
+ * @class
+ */
 export default class RmDir {
   private steps: Array<StepFunction>
+
+  /**
+    * Use this if you want to compile the standard without unlink.
+    * Useful for preview and testing uses.
+    * Used in `rmdir()`.
+    * @param {string} uuid - Unique identifier used internally.
+    * @return {fs.rmdir} The compiled rmDir standard.
+    */
   compile: (uuid: string) => typeof fs.rmdir
 
   constructor () {
@@ -25,7 +43,7 @@ export default class RmDir {
               .catch((err: NodeJS.ErrnoException) => {
                 if (err.message !== 'handledPromise') {
                   eventError(err, p as string)
-                callback!(err)
+                  callback!(err)
                 }
                 return Promise.reject(new Error('handledPromise'))
               })
@@ -50,11 +68,32 @@ export default class RmDir {
     })
   }
 
+  /**
+  * Your custom function to apply on the directory.
+  * @param {StepFunction} fun - The number of times the function is executed.
+  * @return {RmDir} The rmDir Class.
+  * @example
+  * new srm.Unlink()
+    .then(function (p) {
+      return new Promise((resolve, reject) => {
+        if (p === '/d/code/')
+          reject(new Error())
+        else
+          resolve(p)
+      })
+    })
+    .unlink()
+  */
   then (fun: StepFunction) {
     this.steps.push(fun)
     return this
   }
 
+  /**
+  * Help to construct the tree of erased directories.
+  * Used in the preview standard.
+  * @return {RmDir} The rmDir Class.
+  */
   log () {
     this.steps.push(
       function (p: string, uuid: string) {
@@ -74,7 +113,10 @@ export default class RmDir {
     return this
   }
 
-  // Rename to random string
+  /**
+  * Rename the directory to a random string of length 12.
+  * @return {RmDir} The rmDir Class.
+  */
   rename () {
     this.steps.push(
       function (p: string) {
@@ -101,7 +143,11 @@ export default class RmDir {
     return this
   }
 
-  // End function: remove the directory
+  /**
+  * The last function to be executed: remove the directory.
+  * Required, invalid standard if omitted.
+  * @return {fs.rmdir} The compiled rmDir standard.
+  */
   rmdir () {
     this.steps.push(
       function (p: string) {

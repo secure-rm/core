@@ -19,10 +19,14 @@ type ForLoop = {
 type StepFunction = (file: string, fileSize: number, uuid: string) => Promise<FileInfo>
 
 /**
- * @classdesc The class to create unlink standards.
- *
- * @exports Unlink
- * @constructor
+ * The Unlink class helps you create your own custom unlink method.
+ * Unless you know what you're doing, always end with `.unlink()`.
+ * Invoke it and chain the methods:
+ * @example
+ * new srm.Unlink()
+    .random()
+    .unlink()
+ * @class
  */
 export default class Unlink {
   private steps: Array<StepFunction>
@@ -30,7 +34,7 @@ export default class Unlink {
   /**
     * Use this if you want to compile the standard without unlink.
     * Useful for preview and testing uses.
-    * Used in unlink().
+    * Used in `unlink()`.
     * @param {string} uuid - Unique identifier used internally.
     * @return {fs.unlink} The compiled unlink standard.
     */
@@ -80,11 +84,32 @@ export default class Unlink {
   }
 
   /**
+  * Your custom function to apply on the file.
+  * @param {StepFunction} fun - The number of times the function is executed.
+  * @return {Unlink} The unlink Class.
+  * @example
+  * new srm.Unlink()
+    .then(function (file, fileSize) {
+      return new Promise((resolve, reject) => {
+        if (file === 'test.js')
+          reject(new Error())
+        else
+          resolve({ file, fileSize })
+      })
+    })
+    .unlink()
+  */
+  then (fun: StepFunction): Unlink {
+    this.steps.push(fun)
+    return this
+  }
+
+  /**
   * Help to construct the tree of erased files.
-  * Used in preview standard.
+  * Used in the preview standard.
   * @return {Unlink} The unlink Class.
   */
-  log () {
+  log (): Unlink {
     this.steps.push(
       function (file: string, fileSize: number, uuid: string) {
         return new Promise((resolve) => {
@@ -101,21 +126,11 @@ export default class Unlink {
   }
 
   /**
-  * Your custom function to apply on the file.
-  * @param {StepFunction} fun - The number of times the function is executed.
-  * @return {Unlink} The unlink Class.
-  */
-  then (fun: StepFunction) {
-    this.steps.push(fun)
-    return this
-  }
-
-  /**
   * Write cryptographically strong pseudo-random data.
   * @param {number} [passes = 1] - The number of times the function is executed.
   * @return {Unlink} The unlink Class.
   */
-  random (passes: number = 1) {
+  random (passes: number = 1): Unlink {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -139,7 +154,7 @@ export default class Unlink {
   * @param {number} [passes = 1] - The number of times the function is executed.
   * @return {Unlink} The unlink Class.
   */
-  zeros (passes: number = 1) {
+  zeros (passes: number = 1): Unlink {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -160,7 +175,7 @@ export default class Unlink {
   * @return {Unlink} The unlink Class.
   * @deprecated
   */
-  zeroes (passes: number = 1) {
+  zeroes (passes: number = 1): Unlink {
     return this.zeros(passes)
   }
 
@@ -169,7 +184,7 @@ export default class Unlink {
   * @param {number} [passes = 1] - The number of times the function is executed.
   * @return {Unlink} The unlink Class.
   */
-  ones (passes: number = 1) {
+  ones (passes: number = 1): Unlink {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -189,8 +204,12 @@ export default class Unlink {
   * @param {number} data - A byte: must be between `0x00` and `0xFF` (Hexadecimal)
   * @param {number} [passes = 1] - The number of times the function is executed.
   * @return {Unlink} The unlink Class.
+  * @example
+  * new Unlink()
+    .byte(0x55)
+    .unlink()
   */
-  byte (data: number, passes: number = 1) {
+  byte (data: number, passes: number = 1): Unlink {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -210,8 +229,12 @@ export default class Unlink {
   * @param {number[]} dataArray - The array containing the bytes.
   * @param {number} [passes = 1] - The number of times the function is executed.
   * @return {Unlink} The unlink Class.
+  * @example
+  * new Unlink()
+    .byteArray([0x92, 0x49, 0x24])
+    .unlink()
   */
-  byteArray (dataArray: number[], passes: number = 1) {
+  byteArray (dataArray: number[], passes: number = 1): Unlink {
     this.steps = this.steps.concat(
       Array(passes).fill(
         function (file: string, fileSize: number) {
@@ -231,11 +254,19 @@ export default class Unlink {
   * A for loop, write the value of the variable at each iteration.
   * @param {Object} forLoop - A destructuring parameter.
     * @param {number} forLoop.init - Initialize the counter variable.
-    * @param {ForLoop.condition} forLoop.condition - An expression to be evaluated before each loop iteration.
-    * @param {ForLoop.increment} forLoop.increment - The increment of the counter variable after each loop iteration.
+    * @param {function} forLoop.condition - An expression to be evaluated before each loop iteration.
+    * @param {function} forLoop.increment - The increment of the counter variable after each loop iteration.
   * @return {Unlink} The unlink Class.
+  * @example
+  * new Unlink()
+    .forByte({
+      init: 0x00,
+      condition: i => i < 0xFF,
+      increment: i => i + 0x11
+    })
+    .unlink()
   */
-  forByte ({ init, condition, increment }: ForLoop) {
+  forByte ({ init, condition, increment }: ForLoop): Unlink {
     let i = init
     while (true) {
       if (!condition(i)) { break }
@@ -279,7 +310,7 @@ export default class Unlink {
    * Write the binary complement of the file.
    * @return {Unlink} The unlink Class.
    */
-  complementary () {
+  complementary (): Unlink {
     this.steps.push(
       function (file: string, fileSize: number) {
         return new Promise((resolve, reject) => {
@@ -307,7 +338,7 @@ export default class Unlink {
    * Rename the file to a random string of length 12.
    * @return {Unlink} The unlink Class.
    */
-  rename () {
+  rename (): Unlink {
     this.steps.push(
       function (file: string, fileSize: number) {
         return new Promise((resolve, reject) => {

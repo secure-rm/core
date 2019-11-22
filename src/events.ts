@@ -41,3 +41,10 @@ if (debug) {
   eventEmitter.on('warn', (file, message) => console.log('\x1b[38;2;255;255;0m Warn \x1b[39m' + message + file))
   eventEmitter.on('error', (file, message) => console.log('\x1b[38;2;255;0;0m Error \x1b[39m' + message + file))
 }
+
+/**
+ * Debug event.
+ *
+ * @event eventEmitter#debug
+ * @type {string} message - Debug message.
+ */
