@@ -12,16 +12,4 @@ export const standards = {
   }
 }
 
-async function initWriteExtended (file: string, data: number, size: number) {
-  const fd = await fs.open(file, 'w')
-  return writeExtended(fd, data, size, 0)
-}
 
-async function writeExtended (fd: number, data: number, size: number, pos: number): Promise<void> {
-  if (size - pos <= kMaxLength) {
-    await fs.write(fd, Buffer.alloc(size, data), pos)
-    return fs.close(fd)
-  }
-  await fs.write(fd, Buffer.alloc(kMaxLength, data), pos)
-  return writeExtended(fd, data, size, pos + kMaxLength)
-}
