@@ -1,5 +1,4 @@
 import fs from 'fs-extra'
-import fs_ from 'fs'
 import { kMaxLength } from 'buffer'
 import glob from 'glob'
 
@@ -10,20 +9,35 @@ interface Options {
   },
   maxBusyTries?: number,
   emfileWait?: number,
-  /** @default false */
   disableGlob?: boolean,
   glob?: glob.IOptions | false
 }
 
-type Callback = (err: NodeJS.ErrnoException | null) => void
+type Callback = (err: NodeJS.ErrnoException | null, res: any) => void
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
-type RemovePromise = ReturnType<typeof remove_>
-type RemoveCallback = ThenArg<ReturnType<typeof remove_>>
+type ReturnPromise = ReturnType<typeof remove_>
+type ReturnCallback = ThenArg<ReturnType<typeof remove_>>
 
 const defaultGlobOpts = {
   dot: true,
   nosort: true,
   silent: true
+}
+
+export function remove (path: string, options?: Options): ReturnPromise
+export function remove (path: string, callback: Callback): ReturnCallback
+export function remove (path: string, options: Options, callback: Callback): ReturnCallback
+
+export function remove (path: string, options?: Options | Callback, callback?: Callback): ReturnPromise | ReturnCallback {
+  if (callback === undefined && typeof options === 'function') {
+    callback = options
+    options = undefined
+  }
+  if (callback) {
+    remove_(path, options as Options)
+      .then(result => callback!(null, result))
+      .catch(err => callback!(err, null))
+  } else return remove_(path, options as Options)
 }
 
 async function remove_ (path: string, options?: Options) {
@@ -32,16 +46,6 @@ async function remove_ (path: string, options?: Options) {
     ...options?.standard,
     glob: options?.glob || defaultGlobOpts
   })
-}
-
-export function remove (path: string, options?: Options): RemovePromise
-export function remove (path: string, callback: Callback): RemoveCallback
-export function remove (path: string, options: Options, callback: Callback): RemoveCallback
-
-export function remove (...args: any[]): RemovePromise | RemoveCallback {
-  const callback = args[args.length - 1]
-  if (typeof callback !== 'function') return remove_.apply(null, args)
-  else remove_.apply(null, args.slice(0, -1)).then(result => callback(null, result), callback)
 }
 
 var myFs = {
@@ -55,14 +59,14 @@ var myFs = {
 
 async function initWriteExtended (file: string, data: number, size: number) {
   const fd = await fs.open(file, 'w')
-  return await writeExtended(fd, data, size, 0)
+  return writeExtended(fd, data, size, 0)
 }
 
 async function writeExtended (fd: number, data: number, size: number, pos: number): Promise<void> {
   if (size - pos <= kMaxLength) {
     await fs.write(fd, Buffer.alloc(size, data), pos)
-    return await fs.close(fd)
+    return fs.close(fd)
   }
   await fs.write(fd, Buffer.alloc(kMaxLength, data), pos)
-  return await writeExtended(fd, data, size, pos + kMaxLength)
+  return writeExtended(fd, data, size, pos + kMaxLength)
 }
