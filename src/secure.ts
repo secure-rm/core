@@ -1,5 +1,7 @@
 import fs from 'fs-extra'
+import fs_ from 'fs'
 import { kMaxLength } from 'buffer'
+import glob from 'glob'
 
 interface Options {
   standard?: {
@@ -8,18 +10,38 @@ interface Options {
   },
   maxBusyTries?: number,
   emfileWait?: number,
-  disableGlob?: boolean
+  /** @default false */
+  disableGlob?: boolean,
+  glob?: glob.IOptions | false
 }
 
-async function remove (path: string, options: Options) {
+type Callback = (err: NodeJS.ErrnoException | null) => void
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
+type RemovePromise = ReturnType<typeof remove_>
+type RemoveCallback = ThenArg<ReturnType<typeof remove_>>
+
+const defaultGlobOpts = {
+  dot: true,
+  nosort: true,
+  silent: true
+}
+
+async function remove_ (path: string, options?: Options) {
   await fs.remove(path, {
+    ...options,
     ...options?.standard,
-    glob: {
-      dot: true,
-      nosort: true,
-      silent: true
-    }
+    glob: options?.glob || defaultGlobOpts
   })
+}
+
+export function remove (path: string, options?: Options): RemovePromise
+export function remove (path: string, callback: Callback): RemoveCallback
+export function remove (path: string, options: Options, callback: Callback): RemoveCallback
+
+export function remove (...args: any[]): RemovePromise | RemoveCallback {
+  const callback = args[args.length - 1]
+  if (typeof callback !== 'function') return remove_.apply(null, args)
+  else remove_.apply(null, args.slice(0, -1)).then(result => callback(null, result), callback)
 }
 
 var myFs = {

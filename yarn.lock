@@ -41,6 +41,11 @@
     "@types/glob" "*"
     "@types/node" "*"
 
+"@types/universalify@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/universalify/-/universalify-1.0.0.tgz#0fecec0da49839da8b705ddc714600c480ea3dee"
+  integrity sha512-Cqm/s2DU7YxTcTtQZkfG7kyOULQKsl0Mpd3dKAm0CbSStcRsQdy1nctCBGCmyNvxWUEYReqWkBIUvNHBN/Ja6w==
+
 at-least-node@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
