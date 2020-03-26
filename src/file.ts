@@ -4,51 +4,71 @@ import util from 'util'
 import crypto from 'crypto'
 import { kMaxLength } from 'buffer'
 
+export async function init (file: string) {
+  const fileSize = (await fs.stat(file)).size
+  const fd = await fs.open(file, 'r+')
+  return { fd, fileSize }
+}
+
+export async function end ({ fd }: FileData) {
+  await fs.close(fd)
+}
+
 export async function random ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
   for (let i = 0; i < passes; i++) {
-    writeExtended(fd, fileSize, 0, async bufferSize => randomBytes(bufferSize))
+    await writeExtended(fd, fileSize, 0, async bufferSize => randomBytes(bufferSize))
   }
 }
 
 export async function zeros ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
   for (let i = 0; i < passes; i++) {
-    writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, 0b00000000))
+    await writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, 0b00000000))
   }
 }
 
 export async function ones ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
   for (let i = 0; i < passes; i++) {
-    writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, 0b11111111))
+    await writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, 0b11111111))
   }
 }
 
 export async function byte ({ fd, fileSize }: FileData, { passes = 1, data }: ByteOptions) {
   for (let i = 0; i < passes; i++) {
-    writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, data))
+    await writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, data))
   }
 }
 
 export async function byteArray ({ fd, fileSize }: FileData, { passes = 1, data }: ByteArrayOptions) {
   const dataConverted = Buffer.from(data)
   for (let i = 0; i < passes; i++) {
-    writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, dataConverted))
+    await writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, dataConverted))
   }
 }
 
 export async function forByte ({ fd, fileSize }: FileData, { initial, condition, increment }: ForByteOptions) {
   for (let i = initial; condition(i); i = increment(i)) {
-    writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, i))
+    await writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, i))
   }
 }
 
 export async function randomByte ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
   const data = (await randomBytes(1))[0]
   for (let i = 0; i < passes; i++) {
-    writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, data))
+    await writeExtended(fd, fileSize, 0, async bufferSize => Buffer.alloc(bufferSize, data))
   }
 }
 
-// complementary
+export async function complementary ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
+  for (let i = 0; i < passes; i++) {
+    await writeExtended(fd, fileSize, 0, async (bufferSize, pos) => {
+      const data = (await fs.read(fd, Buffer.alloc(bufferSize), 0, bufferSize, pos)).buffer
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = ~data[i]
+      }
+      return data
+    })
+  }
+}
 
 export async function rename (fileName: string, { passes = 1 }: Options = {}) {
   for (let i = 0; i < passes; i++) {
@@ -69,36 +89,22 @@ export async function truncate ({ fd, fileSize }: FileData, { passes = 1 }: Opti
 }
 
 export async function resetTimestamps ({ fd }: FileData) {
-  return futimes(fd, new Date(0), new Date(0))
+  await futimes(fd, new Date(0), new Date(0))
 }
 
 export async function randomTimestamps ({ fd }: FileData, { date1 = new Date(0), date2 = new Date() }: RandomTimestampsOptions = {}) {
   const date = new Date(randomValueBetween(date2.getTime(),date1.getTime()))
-  return futimes(fd, date, date)
+  await futimes(fd, date, date)
 }
 
-export async function unlink (fileName: string) {
-  await fs.unlink(fileName)
-}
-
-export async function init (file: string) {
-  const size = (await fs.stat(file)).size
-  const fd = await fs.open(file, 'w')
-  return { fd, size }
-}
-
-export async function end ({ fd }: FileData) {
-  await fs.close(fd)
-}
-
-export async function writeExtended (fd: number, size: number, pos: number, getBuffer: (bufferSize: number) => Promise<Buffer>): Promise<void> {
+export async function writeExtended (fd: number, size: number, pos: number, getBuffer: (bufferSize: number, pos: number) => Promise<Buffer>): Promise<void> {
   if (size - pos <= kMaxLength) {
-    const data = await getBuffer(size)
-    await fs.write(fd, data, pos)
+    const data = await getBuffer(size, pos)
+    await fs.write(fd, data, 0, size, pos)
     return Promise.resolve()
   }
-  const data = await getBuffer(kMaxLength)
-  await fs.write(fd, data, pos)
+  const data = await getBuffer(kMaxLength, pos)
+  await fs.write(fd, data, 0, kMaxLength, pos)
   return writeExtended(fd, size, pos + kMaxLength, getBuffer)
 }
 

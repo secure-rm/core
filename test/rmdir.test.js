@@ -7,7 +7,7 @@ const tools = require('./tools.js')(__dirname, __filename)
 
 const mkdir = util.promisify(fs.mkdir)
 
-test('Rename the file with a string of length 12', done => {
+test.skip('Rename the file with a string of length 12', done => {
   const folderName = tools.createPath()
   mkdir(folderName)
     .then(() => srm(folderName, {
@@ -27,6 +27,6 @@ test('Rename the file with a string of length 12', done => {
     .catch((err) => { throw err })
 })
 
-afterAll(done => {
+/* afterAll(done => {
   tools.cleanup(done)
-})
+}) */

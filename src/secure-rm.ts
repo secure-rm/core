@@ -32,6 +32,7 @@ export function remove (path: string, options?: Options | Callback, callback?: C
 }
 
 async function remove_ (path: string, options?: Options) {
+  // @ts-ignore
   await fs.remove(path, {
     ...options,
     ...options?.standard

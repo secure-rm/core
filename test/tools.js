@@ -1,8 +1,7 @@
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
 const mkdirp = require('mkdirp')
-const rimraf = require('rimraf')
-const uuidv4 = require('uuid/v4')
+const crypto = require('crypto')
 
 module.exports = init
 
@@ -13,7 +12,7 @@ function init (__dirname, __filename) {
   try {
     fs.mkdirSync(target)
   } catch (err) {
-    console.log(target + ' already exists')
+    console.info(target + ' already exists')
   }
   return { fill, cleanup, createPath }
 }
@@ -47,12 +46,9 @@ function fill (depth, files, folders, target) {
 }
 
 function createPath () {
-  return path.resolve(target, uuidv4())
+  return path.resolve(target, crypto.randomBytes(18).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a'))
 }
 
-function cleanup (done) {
-  rimraf(target, (err) => {
-    if (err) throw err
-    done()
-  })
+async function cleanup () {
+  await fs.remove(target)
 }

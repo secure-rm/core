@@ -5,7 +5,7 @@ const tools = require('./tools.js')(__dirname, __filename)
 
 test.todo('Predictable errors')
 
-describe('Invalid IDs throw:', () => {
+describe.skip('Invalid IDs throw:', () => {
   const values = [-1, '1', 10e5, 'string', 'SECURE', ['secure']]
   for (let i = 0; i < values.length; i++) {
     test('ID: ' + values[i], () => {
@@ -18,7 +18,7 @@ describe('Invalid IDs throw:', () => {
   }
 })
 
-describe('Every syntax allowed:', () => {
+describe.skip('Every syntax allowed:', () => {
   test('Callback without options', done => {
     const folderName = tools.createPath()
     tools.fill(2, 2, 1, folderName)
@@ -80,7 +80,7 @@ describe('Every syntax allowed:', () => {
   })
 })
 
-test('Custom Standard', done => {
+test.skip('Custom Standard', done => {
   const folderName = tools.createPath()
   tools.fill(2, 2, 1, folderName)
   expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
@@ -111,7 +111,7 @@ test('Custom Standard', done => {
   })
 })
 
-test('Bulk task', done => {
+test.skip('Bulk task', done => {
   const folderName = tools.createPath()
   tools.fill(5, 5, 2, folderName)
   expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
@@ -123,6 +123,6 @@ test('Bulk task', done => {
   })
 })
 
-afterAll(done => {
+/* afterAll(done => {
   tools.cleanup(done)
-})
+}) */

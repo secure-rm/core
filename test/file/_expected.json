@@ -1,0 +1,43 @@
+{
+  "unit1": [
+    {
+      "function": "zeros",
+      "description": "Write zeroes: 0x00",
+      "result": [0,0,0,0,0,0,0,0,0,0]
+    },
+    {
+      "function": "ones",
+      "description": "Write ones: 0xff",
+      "result": [255,255,255,255,255,255,255,255,255,255]
+    },
+    {
+      "function": "complementary",
+      "description": "Write binary complement",
+      "result": [250,5,149,156,31,209,21,109,154,6]
+    },
+    {
+      "function": "byte",
+      "description": "Write a byte: 0x22",
+      "options": {
+        "data": 34
+      },
+      "result": [34,34,34,34,34,34,34,34,34,34]
+    },
+    {
+      "function": "byte",
+      "description": "Write a byte: 0xab",
+      "options": {
+        "data": 171
+      },
+      "result": [171,171,171,171,171,171,171,171,171,171]
+    },
+    {
+      "function": "byteArray",
+      "description": "Write bytes array: [0x76, 0x6d, 0x3b]",
+      "options": {
+        "data": [118,109,59]
+      },
+      "result": [118,109,59,118,109,59,118,109,59,118]
+    }
+  ]
+}
