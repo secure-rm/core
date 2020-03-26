@@ -5,16 +5,17 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "npm run lint && npm run build-ts",
+    "build": "yarn lint && yarn build-ts",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
-    "coverage": "jest --coverage --coverageDirectory=./coverage",
     "test": "jest --verbose",
-    "watch-test": "npm run test -- --watchAll",
+    "coverage": "jest --coverage --coverageDirectory=./coverage",
+    "watch-test": "jest --verbose --watchAll",
     "clean": "rimraf dist coverage",
     "prepack": "npm run clean && npm run build",
-    "generate-docs": "build && jsdoc -c jsdoc.json"
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "dependencies": {
     "fs-extra": "^9.0.0",
@@ -28,23 +29,9 @@
     "@typescript-eslint/parser": "^2.25.0",
     "eslint": "^6.8.0",
     "jest": "^25.1.0",
+    "shipjs": "^0.18.0",
     "standard": "^14.3.3",
     "typescript": "^3.8.3"
-  },
-  "devDependenciess": {
-    "@types/jest": "^24.0.19",
-    "@types/node": "^12.11.7",
-    "@types/rimraf": "^2.0.3",
-    "@typescript-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^2.5.0",
-    "docdash": "^1.1.1",
-    "jest": "^24.9.0",
-    "jsdoc": "^3.6.3",
-    "standard": "^14.3.1",
-    "ts-jest": "^24.1.0",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.7.2",
-    "uuid": "^3.3.3"
   },
   "author": "Oganexon @oganexon",
   "bugs": "https://github.com/secure-rm/core/issues",
@@ -54,11 +41,10 @@
     "url": "git+https://github.com/secure-rm/core.git"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "files": [
-    "/dist",
-    "/bin"
+    "/dist"
   ],
   "keywords": [
     "privacy",
