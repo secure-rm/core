@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const srm = require('../../')
 
-const tools = require('../tools.js')(__dirname, __filename)
+const tools = require('../tools')(__dirname, __filename)
 
 const unit = [].concat(
   require('./_expected.js').unit1,

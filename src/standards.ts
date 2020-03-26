@@ -187,6 +187,7 @@ export const standards = {
         await file.byteArray(fileData, { data: [0xB6, 0xDB, 0x6D] })
         await file.byteArray(fileData, { data: [0xDB, 0x6D, 0xB6] })
         await file.random(fileData, { passes: 4 })
+        await file.end(fileData)
         await fs.unlink(path)
       }
       // @ts-ignore

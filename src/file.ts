@@ -92,15 +92,15 @@ export async function resetTimestamps ({ fd }: FileData) {
   await futimes(fd, new Date(0), new Date(0))
 }
 
-export async function randomTimestamps ({ fd }: FileData, { date1 = new Date(0), date2 = new Date() }: RandomTimestampsOptions = {}) {
+export async function changeTimestamps ({ fd }: FileData, { date1 = new Date(0), date2 = new Date() }: RandomTimestampsOptions = {}) {
   const date = new Date(randomValueBetween(date2.getTime(),date1.getTime()))
   await futimes(fd, date, date)
 }
 
 export async function writeExtended (fd: number, size: number, pos: number, getBuffer: (bufferSize: number, pos: number) => Promise<Buffer>): Promise<void> {
   if (size - pos <= kMaxLength) {
-    const data = await getBuffer(size, pos)
-    await fs.write(fd, data, 0, size, pos)
+    const data = await getBuffer(size - pos, pos)
+    await fs.write(fd, data, 0, size - pos, pos)
     return Promise.resolve()
   }
   const data = await getBuffer(kMaxLength, pos)
