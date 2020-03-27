@@ -76,7 +76,7 @@ export async function rename ({ fd, fileName }: FileData) {
   const newName = crypto.randomBytes(9).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
   const newPath = path.join(path.dirname(fileName), newName)
   await fs.rename(fileName, newPath)
-  return await init(newPath)
+  return init(newPath)
 }
 
 export async function truncate ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
