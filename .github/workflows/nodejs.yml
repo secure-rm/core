@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         node_version: ['10', '12', '13']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macOS-latest, [self-hosted, linux, x86]]
 
     steps:
     - uses: actions/checkout@v1
