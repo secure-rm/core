@@ -9,17 +9,17 @@ jobs:
     strategy:
       matrix:
         node_version: ['10', '12', '13']
-        os: [ubuntu-latest, windows-latest, macOS-latest, [self-hosted, linux, x86]]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node_version }}
     
     - name: Installing
-      run: yarn install
+      run: yarn install --frozen-lockfile
       env:
         CI: true
     
@@ -46,7 +46,7 @@ jobs:
 
     - name: Generate coverage report
       run: |
-        yarn install
+        yarn install --frozen-lockfile
         yarn build
         yarn coverage
 
