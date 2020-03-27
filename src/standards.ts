@@ -11,7 +11,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -23,7 +23,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -35,7 +35,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -47,7 +47,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -62,7 +62,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     },
     rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
@@ -70,7 +70,7 @@ export const standards = {
         await fs.rmdir(path)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -83,7 +83,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
   HMG_IS5: {
@@ -96,7 +96,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -110,7 +110,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -128,7 +128,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -142,7 +142,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -154,7 +154,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   },
 
@@ -179,7 +179,7 @@ export const standards = {
         await file.end(fileData)
       }
       // @ts-ignore
-      remove().then(_=> cb(null)).catch(cb)
+      remove().then(_ => cb(null)).catch(cb)
     }
   }
 }
