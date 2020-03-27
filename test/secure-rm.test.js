@@ -62,7 +62,7 @@ it('Accept custom standard', async () => {
     standard: {
       unlink: function (path, cb) {
         const remove = async () => {
-          const fileData = await srm.fileMethods.init(path)
+          let fileData = await srm.fileMethods.init(path)
           await srm.fileMethods.byte(fileData, { data: 0x56 })
           await srm.fileMethods.byteArray(fileData, { data: [0x23, 0x15] })
           await srm.fileMethods.changeTimestamps(fileData)
@@ -75,12 +75,11 @@ it('Accept custom standard', async () => {
           await srm.fileMethods.ones(fileData)
           await srm.fileMethods.random(fileData)
           await srm.fileMethods.randomByte(fileData)
-          path = await srm.fileMethods.rename(path)
+          fileData = await srm.fileMethods.rename(fileData)
           await srm.fileMethods.resetTimestamps(fileData)
           await srm.fileMethods.truncate(fileData)
           await srm.fileMethods.zeros(fileData)
           await srm.fileMethods.end(fileData)
-          await fs.unlink(path)
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)

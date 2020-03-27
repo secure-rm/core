@@ -7,11 +7,12 @@ import { kMaxLength } from 'buffer'
 export async function init (file: string) {
   const fileSize = (await fs.stat(file)).size
   const fd = await fs.open(file, 'r+')
-  return { fd, fileSize }
+  return { fd, fileSize, fileName: file }
 }
 
-export async function end ({ fd }: FileData) {
+export async function end ({ fd, fileName }: FileData) {
   await fs.close(fd)
+  await fs.unlink(fileName)
 }
 
 export async function random ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
@@ -70,14 +71,12 @@ export async function complementary ({ fd, fileSize }: FileData, { passes = 1 }:
   }
 }
 
-export async function rename (fileName: string, { passes = 1 }: Options = {}) {
-  for (let i = 0; i < passes; i++) {
-    const newName = crypto.randomBytes(9).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
-    const newPath = path.join(path.dirname(fileName), newName)
-    await fs.rename(fileName, newPath)
-    fileName = newPath
-  }
-  return fileName
+export async function rename ({ fd, fileName }: FileData) {
+  await fs.close(fd)
+  const newName = crypto.randomBytes(9).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a')
+  const newPath = path.join(path.dirname(fileName), newName)
+  await fs.rename(fileName, newPath)
+  return await init(newPath)
 }
 
 export async function truncate ({ fd, fileSize }: FileData, { passes = 1 }: Options = {}) {
@@ -117,7 +116,8 @@ const futimes = util.promisify(fs.futimes)
 
 interface FileData {
   fd: number
-  fileSize: number
+  fileSize: number,
+  fileName: string
 }
 
 interface Options {

@@ -16,7 +16,7 @@ describe('Non-random file functions are correct:', () => {
       await fs.writeFile(fileName, Buffer.from([0x05, 0xfa, 0x6a, 0x63, 0xe0, 0x2e, 0xea, 0x92, 0x65, 0xf9]))
       const fileData = await srm.fileMethods.init(fileName)
       await srm.fileMethods[current.function](fileData, current.options)
-      await srm.fileMethods.end(fileData)
+      await fs.close(fileData.fd)
       const result = await fs.readFile(fileName)
       expect(result).toStrictEqual(Buffer.from(current.result))
     })

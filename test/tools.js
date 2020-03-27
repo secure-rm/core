@@ -2,7 +2,6 @@ const fs = require('fs-extra')
 const path = require('path')
 const mkdirp = require('mkdirp')
 const crypto = require('crypto')
-const os = require('os')
 
 module.exports = init
 
@@ -27,14 +26,11 @@ function fill (depth, files, folders, target) {
     fs.writeFileSync(target + '/f-' + depth + '-' + f, '', o)
   }
 
-  // Issues on Windows!!
-  if (os.platform() !== 'win32') {
-    // valid symlink
-    fs.symlinkSync('f-' + depth + '-1', target + '/link-' + depth + '-good', 'file')
+  // valid symlink
+  // fs.symlinkSync('f-' + depth + '-1', target + '/link-' + depth + '-good', 'file')
 
-    // invalid symlink
-    fs.symlinkSync('does-not-exist', target + '/link-' + depth + '-bad', 'file')
-  }
+  // invalid symlink
+  // fs.symlinkSync('does-not-exist', target + '/link-' + depth + '-bad', 'file')
 
   // file with a name that looks like a glob
   fs.writeFileSync(target + '/[a-z0-9].txt', '', o)

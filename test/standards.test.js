@@ -8,7 +8,7 @@ describe('Each standard ends:', () => {
     const standard = srm.standards[key]
     it('ID: ' + key, async () => {
       const folderName = tools.createPath()
-      tools.fill(2, 1, 1, folderName)
+      tools.fill(2, 2, 1, folderName)
       expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
       await srm.remove(folderName, { standard })
       expect(() => fs.statSync(folderName)).toThrow()

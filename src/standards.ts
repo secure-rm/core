@@ -9,7 +9,6 @@ export const standards = {
         const fileData = await file.init(path)
         await file.random(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -22,7 +21,6 @@ export const standards = {
         const fileData = await file.init(path)
         await file.randomByte(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -35,7 +33,6 @@ export const standards = {
         const fileData = await file.init(path)
         await file.zeros(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -48,7 +45,6 @@ export const standards = {
         const fileData = await file.init(path)
         await file.ones(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -58,13 +54,12 @@ export const standards = {
   secure: {
     unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
-        const fileData = await file.init(path)
+        let fileData = await file.init(path)
         await file.random(fileData)
-        path = await file.rename(path)
+        fileData = await file.rename(fileData)
         await file.truncate(fileData)
         await file.resetTimestamps(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -86,7 +81,6 @@ export const standards = {
         await file.zeros(fileData)
         await file.random(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -100,7 +94,6 @@ export const standards = {
         await file.ones(fileData)
         await file.random(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -115,7 +108,6 @@ export const standards = {
         await file.randomByte(fileData)
         await file.complementary(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -134,7 +126,6 @@ export const standards = {
         await file.ones(fileData)
         await file.random(fileData)
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -149,7 +140,6 @@ export const standards = {
         await file.ones(fileData)
         await file.random(fileData, { passes: 5 })
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -162,7 +152,6 @@ export const standards = {
         const fileData = await file.init(path)
         await file.random(fileData, { passes: 33 })
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
@@ -188,7 +177,6 @@ export const standards = {
         await file.byteArray(fileData, { data: [0xDB, 0x6D, 0xB6] })
         await file.random(fileData, { passes: 4 })
         await file.end(fileData)
-        await fs.unlink(path)
       }
       // @ts-ignore
       remove().then(_=> cb(null)).catch(cb)
