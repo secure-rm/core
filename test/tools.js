@@ -11,16 +11,13 @@ function init (__dirname, __filename) {
   target = path.resolve(__dirname, `./target-${path.basename(__filename).replace(/(.*)(\.test\.js)/, '$1')}`)
   try {
     fs.mkdirSync(target)
-  } catch (err) {
-    console.info(target + ' already exists')
-  }
+  } catch (err) {}
   return { fill, cleanup, createPath }
 }
 
 function fill (depth, files, folders, target) {
   mkdirp.sync(target)
-  let o = { flag: 'wx' }
-  if (process.version.match(/^v0\.8/)) { o = 'utf8' }
+  const o = { flag: 'wx' }
 
   for (let f = files; f > 0; f--) {
     fs.writeFileSync(target + '/f-' + depth + '-' + f, '', o)

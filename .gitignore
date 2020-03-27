@@ -5,3 +5,4 @@
 /docs
 /coverage
 **/node_modules
+git-ignore*
