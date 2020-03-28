@@ -3,6 +3,23 @@ import * as file from './file'
 import * as dir from './dir'
 
 export const standards = {
+  mark: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        await file.markFile(path)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    },
+    rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        await dir.markFolder(path)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
+
   randomData: {
     unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {

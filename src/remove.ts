@@ -1,4 +1,5 @@
 import fs from 'fs-extra'
+import { standards } from './standards'
 
 interface Options {
   standard?: {
@@ -20,7 +21,12 @@ export function remove (path: string, options: Options, callback: Callback): Ret
 export function remove (path: string, options?: Options | Callback, callback?: Callback): ReturnPromise | ReturnCallback {
   if (callback === undefined && typeof options === 'function') {
     callback = options
-    options = undefined
+    // @ts-ignore
+    options = { standard: standards.secure }
+  }
+  if (options === undefined) {
+    // @ts-ignore
+    options = { standard: standards.secure }
   }
   if (callback) {
     remove_(path, options as Options)

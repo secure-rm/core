@@ -5,6 +5,7 @@ const tools = require('./tools')(__dirname, __filename)
 
 describe('Each standard ends:', () => {
   for (const key in srm.standards) {
+    if (key === 'mark') continue
     const standard = srm.standards[key]
     it('ID: ' + key, async () => {
       const folderName = tools.createPath()
