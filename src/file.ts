@@ -33,6 +33,7 @@ export async function end ({ fd, fileName, fileSize }: FileData) {
  * @param fileName The file that will be processed.
  */
 export async function markFile (fileName: string) {
+  eventEmitter.emit('info', fileName, 'File marked')
   eventEmitter.emit('mark', fileName)
 }
 

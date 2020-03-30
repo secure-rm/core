@@ -3,6 +3,8 @@ import path from 'path'
 import crypto from 'crypto'
 import { eventEmitter } from './events'
 
+const folderSet = new Set()
+
 /**
   * Rename the directory to a random string of length 12.
   * @param folderName The folder that will be processed.
@@ -27,12 +29,12 @@ export async function rename (folderName: string) {
  * @param folderName The folder that will be processed.
  */
 export async function markFolder (folderName: string) {
-  const files = await fs.readdir(folderName)
-  if (files.length) {
-    // will throw error
-    await fs.rmdir(folderName)
-    throw new Error('If this message appears, something went wrong')
-  } else {
+  if (folderSet.has(folderName)) {
+    folderSet.delete(folderName)
+    eventEmitter.emit('info', folderName, 'Folder marked')
     eventEmitter.emit('mark', folderName)
+  } else {
+    folderSet.add(folderName)
+    await fs.rmdir(folderName)
   }
 }
