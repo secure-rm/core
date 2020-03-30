@@ -117,4 +117,6 @@ See [contributing guidelines](/CONTRIBUTING.md)
 
 ### Licensing
 
+Icon library by <a href="https://icons8.com/">Icons8</a>.
+
 This project is under [MIT License](/LICENSE).
