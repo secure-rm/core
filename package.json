@@ -33,7 +33,7 @@
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.7.2",
-    "uuid": "^3.3.3"
+    "uuid": "^7.0.3"
   },
   "author": "Oganexon @oganexon",
   "bugs": "https://github.com/secure-rm/core/issues",
