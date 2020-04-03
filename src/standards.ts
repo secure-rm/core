@@ -1,4 +1,3 @@
-import fs from 'fs-extra'
 import * as file from './file'
 import * as dir from './dir'
 
@@ -84,7 +83,7 @@ export const standards = {
     rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
         path = await dir.rename(path)
-        await fs.rmdir(path)
+        await dir.end(path)
       }
       // @ts-ignore
       remove().then(_ => cb(null)).catch(cb)

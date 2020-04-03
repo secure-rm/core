@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import { standards } from './standards'
+import { eventEmitter } from './events'
 
 interface Options {
   standard?: {
@@ -43,4 +44,5 @@ async function remove_ (path: string, options?: Options) {
     ...options,
     ...options?.standard
   })
+  eventEmitter.emit('done', path)
 }
