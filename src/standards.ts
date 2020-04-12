@@ -1,289 +1,201 @@
-import fs from 'fs'
-import Unlink from './unlink'
-import RmDir from './rmdir'
+import * as file from './file'
+import * as dir from './dir'
 
-interface StandardArgs {
-  name?: string
-  passes?: number
-  description?: string
-  unlinkStandard?: (uuid: string) => typeof fs.unlink
-  rmdirStandard?: (uuid: string) => typeof fs.rmdir
-}
-
-/**
- * The main class to create standards.
- * You have the possibility to create your own standard by chaining differents methods.
- * You can even add your own function with `then`.
- * @param {Object} standard - A destructuring parameter.
-  * @param {string} standard.name - The standard name.
-  * @param {number} standard.passes - The number of times a file is written.
-  * @param {string} standard.description - The standard description.
-  * @param {string} standard.unlinkStandard - The unlink standard attached.
-  * @param {string} standard.rmdirStandard - The rmdir standard attached.
- * @example
- * const options = {
-    customStandard: new srm.Standard({
-      unlinkStandard: new srm.Unlink()
-        .log()
-        .random()
-        .then(function (file, fileSize) {
-          return new Promise((resolve, reject) => {
-            if (file === 'test.js')
-              reject(new Error())
-            else
-              resolve({ file, fileSize })
-          })
-        })
-        .ones()
-        .unlink()
-      rmdirStandard: new srm.rmdirStandard()
-        .log()
-        .rmDir()
-    })
-  }
-
-  srm('./*', options (err, fileTree) => {
-    if (err) throw err
-    console.log(`Successfully removed ${fileTree} !`)
-  })
- * @description
- * Another possibility is to add your standard to the `srm.standards` object to retrieve it at any time and add additional properties:
- * @example
- * srm.standards.myStandardName = new Standard({
-    name: 'My Standard Name',
-    passes: 3,
-    description: 'My standard description!',
-    unlinkStandard: new Unlink()
-      .log()
-      .random()
-      .rename()
-      .ones()
-      .unlink(),
-    rmdirStandard: new RmDir()
-      .log()
-      .rmDir()
-  })
- * @class
- */
-export class Standard {
-  name: string
-  passes: number
-  description: string
-  unlinkStandard: (uuid: string) => typeof fs.unlink
-  rmdirStandard: (uuid: string) => typeof fs.rmdir
-
-  constructor ({ name, passes, description, unlinkStandard, rmdirStandard }: StandardArgs) {
-    this.name = name || 'Standard #'
-    this.passes = passes || 1
-    this.description = description || 'no description'
-    this.unlinkStandard = unlinkStandard || function (uuid: string) { return fs.unlink }
-    this.rmdirStandard = rmdirStandard || function (uuid: string) { return fs.rmdir }
-  }
-}
-
-/**
- * Object listing every standards.
- * Secure-rm has many standards to safely delete your files.
- * Find the one that meets your needs.
- */
 export const standards = {
-  preview: new Standard({
-    name: 'Preview',
-    passes: 1,
-    description: 'Returns targeted files without deleting them.',
-    unlinkStandard: new Unlink()
-      .log()
-      .compile,
-    rmdirStandard: new RmDir()
-      .log()
-      .compile
-  }),
+  mark: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        await file.markFile(path)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    },
+    rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        await dir.markFolder(path)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  randomData: new Standard({
-    name: 'Pseudorandom data',
-    passes: 1,
-    description: `Also kwown as "Australian Information Security Manual Standard ISM 6.2.92"
-and "New Zealand Information and Communications Technology Standard NZSIT 402".
-Your data is overwritten with cryptographically strong pseudo-random data. (The data is indistinguishable from random noise.)`,
-    unlinkStandard: new Unlink()
-      .random()
-      .unlink()
-  }),
+  randomData: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.random(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  randomByte: new Standard({
-    name: 'Pseudorandom byte',
-    passes: 1,
-    description: 'Overwriting with a random byte.',
-    unlinkStandard: new Unlink()
-      .randomByte()
-      .unlink()
-  }),
+  randomByte: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.randomByte(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  zeros: new Standard({
-    name: 'Zeros',
-    passes: 1,
-    description: 'Overwriting with zeros.',
-    unlinkStandard: new Unlink()
-      .zeros()
-      .unlink()
-  }),
+  zeros: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.zeros(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  /**
-   * @deprecated
-   */
-  zeroes: new Standard({
-    name: 'Zeros',
-    passes: 1,
-    description: 'Overwriting with zeros. (Deprecated)',
-    unlinkStandard: new Unlink()
-      .zeros()
-      .unlink()
-  }),
+  ones: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.ones(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  ones: new Standard({
-    name: 'Ones',
-    passes: 1,
-    description: 'Overwriting with ones.',
-    unlinkStandard: new Unlink()
-      .ones()
-      .unlink()
-  }),
+  secure: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        let fileData = await file.init(path)
+        await file.random(fileData)
+        fileData = await file.rename(fileData)
+        await file.truncate(fileData)
+        await file.resetTimestamps(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    },
+    rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        path = await dir.rename(path)
+        await dir.end(path)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  secure: new Standard({
-    name: '**Secure-rm standard**',
-    passes: 3,
-    description:
-      `Pass 1: Overwriting with random data;
-Pass 2: Renaming the file with random data;
-Pass 3: Truncating between 25% and 75% of the file.`,
-    unlinkStandard: new Unlink()
-      .random()
-      .rename()
-      .truncate()
-      .unlink(),
-    rmdirStandard: new RmDir()
-      .rename()
-      .rmdir()
-  }),
+  'GOST_R50739-95': {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.zeros(fileData)
+        await file.random(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
+  HMG_IS5: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.zeros(fileData)
+        await file.ones(fileData)
+        await file.random(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  'GOST_R50739-95': new Standard({
-    name: 'Russian State Standard GOST R50739-95',
-    passes: 2,
-    description:
-      `Pass 1: Overwriting with zeroes;
-Pass 2: Overwriting with random data.`,
-    unlinkStandard: new Unlink()
-      .zeroes()
-      .random()
-      .unlink()
-  }),
+  'AR380-19': {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.random(fileData)
+        await file.randomByte(fileData)
+        await file.complementary(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  HMG_IS5: new Standard({
-    name: 'British HMG Infosec Standard 5',
-    passes: 3,
-    description:
-      `Also known as "Air Force System Security Instructions AFSSI-5020",
-"Standard of the American Department of Defense (DoD 5220.22 M)"
-"National Computer Security Center NCSC-TG-025 Standard"
-and "Navy Staff Office Publication NAVSO P-5239-26"
-Pass 1: Overwriting with zeroes;
-Pass 2: Overwriting with ones;
-Pass 3: Overwriting with random data as well as verifying the writing of this data.`,
-    unlinkStandard: new Unlink()
-      .zeroes()
-      .ones()
-      .random()
-      .unlink()
-  }),
+  VSITR: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.zeros(fileData)
+        await file.ones(fileData)
+        await file.zeros(fileData)
+        await file.ones(fileData)
+        await file.zeros(fileData)
+        await file.ones(fileData)
+        await file.random(fileData)
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  'AR380-19': new Standard({
-    name: 'US Army AR380-19',
-    passes: 3,
-    description:
-      `Pass 1: Overwriting with random data;
-Pass 2: Overwriting with a random byte;
-Pass 3: Overwriting with the complement of the 2nd pass, and verifying the writing.`,
-    unlinkStandard: new Unlink()
-      .random()
-      .randomByte()
-      .complementary()
-      .unlink()
-  }),
+  schneier: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.zeros(fileData)
+        await file.ones(fileData)
+        await file.random(fileData, { passes: 5 })
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  VSITR: new Standard({
-    name: 'Standard of the Federal Office for Information Security (BSI-VSITR)',
-    passes: 7,
-    description:
-      `Also known as "Royal Canadian Mounted Police TSSIT OPS-II"
-Pass 1: Overwriting with zeroes;
-Pass 2: Overwriting with ones;
-Pass 3-6: Same as 1-2;
-Pass 7: Overwriting with a random data as well as review the writing of this character.`,
-    unlinkStandard: new Unlink()
-      .zeroes()
-      .ones()
-      .zeroes()
-      .ones()
-      .zeroes()
-      .ones()
-      .random()
-      .unlink()
-  }),
+  pfitzner: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.random(fileData, { passes: 33 })
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
 
-  schneier: new Standard({
-    name: 'Bruce Schneier Algorithm',
-    passes: 7,
-    description:
-      `Pass 1: Overwriting with zeros;
-Pass 2: Overwriting with ones;
-Pass 3-7: Overwriting with random data.`,
-    unlinkStandard: new Unlink()
-      .zeroes()
-      .ones()
-      .random(5)
-      .unlink()
-  }),
-
-  pfitzner: new Standard({
-    name: 'Pfitzner Method',
-    passes: 33,
-    description:
-      'Pass 1-33: Overwriting with random data.',
-    unlinkStandard: new Unlink()
-      .random(33)
-      .unlink()
-  }),
-
-  gutmann: new Standard({
-    name: 'Peter Gutmann Algorithm',
-    passes: 35,
-    description:
-      `Pass 1-4: Overwriting with random data;
-Pass 5: Overwriting with 0x55;
-Pass 6: Overwriting with 0xAA;
-Pass 7-9: Overwriting with 0x92 0x49 0x24, then cycling through the bytes;
-Pass 10-25: Overwriting with 0x00, incremented by 1 at each pass, until 0xFF;
-Pass 26-28: Same as 7-9;
-Pass 29-31: Overwriting with 0x6D 0xB6 0xDB, then cycling through the bytes;
-Pass 32-35: Overwriting with random data.`,
-    unlinkStandard: new Unlink()
-      .random(4)
-      .byte(0x55)
-      .byte(0xAA)
-      .byteArray([0x92, 0x49, 0x24])
-      .byteArray([0x49, 0x24, 0x92])
-      .byteArray([0x24, 0x92, 0x49])
-      .forByte({ init: 0x00, condition: i => i < 0xFF, increment: i => i + 0x11 })
-      .byteArray([0x92, 0x49, 0x24])
-      .byteArray([0x49, 0x24, 0x92])
-      .byteArray([0x24, 0x92, 0x49])
-      .byteArray([0x6D, 0xB6, 0xDB])
-      .byteArray([0xB6, 0xDB, 0x6D])
-      .byteArray([0xDB, 0x6D, 0xB6])
-      .random(4)
-      .unlink()
-  })
+  gutmann: {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.random(fileData, { passes: 4 })
+        await file.byte(fileData, { data: 0x55 })
+        await file.byte(fileData, { data: 0xAA })
+        await file.byteArray(fileData, { data: [0x92, 0x49, 0x24] })
+        await file.byteArray(fileData, { data: [0x49, 0x24, 0x92] })
+        await file.byteArray(fileData, { data: [0x24, 0x92, 0x49] })
+        await file.forByte(fileData, { initial: 0x00, condition: i => i < 0xFF, increment: i => i + 0x11 })
+        await file.byteArray(fileData, { data: [0x92, 0x49, 0x24] })
+        await file.byteArray(fileData, { data: [0x49, 0x24, 0x92] })
+        await file.byteArray(fileData, { data: [0x24, 0x92, 0x49] })
+        await file.byteArray(fileData, { data: [0x6D, 0xB6, 0xDB] })
+        await file.byteArray(fileData, { data: [0xB6, 0xDB, 0x6D] })
+        await file.byteArray(fileData, { data: [0xDB, 0x6D, 0xB6] })
+        await file.random(fileData, { passes: 4 })
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  }
 }
-
-// List of valid standards IDs
-export const validIDs = <unknown>Object.keys(standards) as keyof typeof standards

@@ -8,29 +8,29 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: ['8', '10', '12']
+        node_version: ['10', '12', '13']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node_version }}
     
     - name: Installing
-      run: npm install
+      run: yarn install --frozen-lockfile
       env:
         CI: true
     
     - name: Linting
-      run: npm run lint
+      run: yarn lint
 
     - name: Building
-      run: npm run build
+      run: yarn build
     
     - name: Testing
-      run: npm test
+      run: yarn test
 
   coverage:
     name: Code coverage
@@ -46,9 +46,9 @@ jobs:
 
     - name: Generate coverage report
       run: |
-        npm ci
-        npm run build
-        npm run coverage
+        yarn install --frozen-lockfile
+        yarn build
+        yarn coverage
 
     - name: Upload coverage to Coveralls
       uses: coverallsapp/github-action@master

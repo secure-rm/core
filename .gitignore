@@ -3,6 +3,6 @@
 /dist
 /tmp
 /docs
-/yarn.lock
 /coverage
-/node_modules
+**/node_modules
+git-ignore*

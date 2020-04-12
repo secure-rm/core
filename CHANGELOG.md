@@ -14,6 +14,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## [Unreleased] -->
 
+## [5.0.0 - Unreleased]
+
+### Added
+
+- Support for 64bit files and files of any size.
+- `` function to clear free space on drive.
+- `` function to properly format drive.
+
+### Changed
+
+- `srm` function becomes `srm.remove`
+- Global syntax.
+- `secure` standard changes timestamps.
+- Internal changes:
+  - Functions are async.
+  - Standards syntax.
+
+### Removed
+
+- Preview standard.
+
+### Fixed
+
+- Queues up open and readdir calls, and retries them once something closes if there is an EMFILE error from too many file descriptors.
+
+### Security
+
 ## [4.2.0] - 2019-11-02
 
 ### Changed
