@@ -1,7 +1,7 @@
 <h1 align="center">
-  <img src="./assets/secure-rm.png" alt="secure-rm">
+  <img src="./assets/logo.png" alt="secure-rm">
   <br>
-  Completely erases files by making recovery impossible.
+  Secure-rm : completely erases files by making recovery impossible.
   <br>
 </h1>
 
@@ -11,66 +11,75 @@
   <a href="https://github.com/oganexon/secure-rm/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/secure-rm.svg?style=flat-square" alt="License: MIT"></a>
 </p>
 <p align="center">
-  <a href="https://actions-badge.atrox.dev/secure-rm/core/goto?ref=master"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fsecure-rm%2Fcore%2Fbadge%3Fref%3Dmaster&style=flat-square&label=master%20build" alt="Build Status: master"/></a>
-  <a href="https://actions-badge.atrox.dev/secure-rm/core/goto?ref=develop"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fsecure-rm%2Fcore%2Fbadge%3Fref%3Ddevelop&style=flat-square&label=dev%20build" alt="Build Status: develop" /></a>
+  <a href="https://github.com/secure-rm/core/actions?query=branch%3Amaster"><img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/secure-rm/core/Node%20CI/master?style=flat-square&label=master%20build" alt="Build Status: master"></a>
+  <a href="https://github.com/secure-rm/core/actions?query=branch%3Amaster"><img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/secure-rm/core/Node%20CI/develop?style=flat-square&label=dev%20build" alt="Build Status: develop"></a>
   <a href="https://coveralls.io/github/secure-rm/core"><img src="https://img.shields.io/coveralls/github/secure-rm/core?style=flat-square" alt="Code coverage"></a>
 </p>
 
 ## ❓ Why
 
-When you delete a file using the `rm` command or `fs.unlink` in node, it only removes direct pointers to the data disk sectors and make the data recovery possible with common software tools.
+Secure-rm is composed of two parts: a Node.js module with a straightforward API and a [command line interface](https://www.npmjs.com/package/secure-rm-cli) optimized to delete files on the fly.
+
+When you delete a file using the `rm` UNIX command or `fs.unlink` in node, it only removes direct pointers to the data disk sectors and make the data recovery possible with common software tools.
 
 Permanent data erasure goes beyond basic file deletion commands, which:
+
 1. Allow for selection of a specific standard, based on unique needs,
 2. Verify the overwriting method has been successful and removed data across the entire device.
+
+## 🔩 How It Works
+
+The basic principle is to write files before deletion in order to make recovery harder. With secure-rm, you get to choose the standard that follow your needs. Each one is composed of instructions about how many passes it should perform.
+
+It goes from a simple pass of zeros to a 35 passes algorithm. Secure-rm comes with its own algorithm to ensure your data is safe:
+
+* A pass of cryptographically strong pseudo-random data,
+* The file is then renamed,
+* And finally truncated to hide the file size.
+
+## ✨ Features
+
+* [Choose your standard](core/standards.md)
+
+**Core library**
+
+* [Create your own standard](core/custom-standard/)
+  * [on files](core/custom-standard/unlink-methods.md)
+  * [on directories](core/custom-standard/rmdir-methods.md)
+* [Use events to follow the progression with huge files](core/events.md)
 
 ## 📦 Installation
 
 [Node](https://nodejs.org/) and [npm](https://www.npmjs.com/) required.
 
 ```shell
-npm install secure-rm
+$ yarn add secure-rm
+# or
+$ npm install secure-rm
 ```
 
-Looking for a **command line interface**? [Click here.](https://www.npmjs.com/package/secure-rm-cli)
-
-## 🚀 Getting started
+## 🚀 Quick Start
 
 If you want your application to delete specific files with a pass of cryptographically strong pseudo-random data, use one of these code snippets:
-
-### Callback version
 
 ```javascript
 const srm = require('secure-rm')
 
-srm('./folder/*.js', (err) => {
+srm.remove('./folder/*.js')
+  .then(() => console.log('Files successfully deleted !'))
+  .catch((err) => {throw err})
+
+// OR
+
+srm.remove('./folder/*.js', (err) => {
   if (err) throw err
   console.log('Files successfully deleted !')
 })
 ```
 
-### Promise version
+## 📚 [Documentation](https://docs.secure-rm.com/core/getting-started)
 
-```javascript
-const srm = require('secure-rm')
-
-srm('./folder/*.js')
-  .then(() => console.log('Files successfully deleted !'))
-  .catch((err) => {throw err})
-```
-
-## 📚 Usage
-
-[Visit the wiki](https://github.com/secure-rm/core/wiki) to discover all the possibilities secure-rm offers!
-
-- 📚 [Choose a standard](https://github.com/secure-rm/core/wiki/Standards)
-- ⚙️ [Customize your standard](https://github.com/secure-rm/core/wiki/Custom-Standard)
-- 📗 [Unlink Methods](https://github.com/secure-rm/core/wiki/Unlink-Methods)
-- 📙 [RmDir Methods](https://github.com/secure-rm/core/wiki/RmDir-Methods)
-- ✨ [Respond to events](https://github.com/secure-rm/core/wiki/Events)
-- 🚩 [Troubleshooting - Common issues](https://github.com/secure-rm/core/wiki/Troubleshooting---Common-issues)
-
-### Examples:
+## 📋 Examples:
 ```javascript
 const options = {
   standard: 'gutmann',
@@ -94,12 +103,7 @@ srm('./trash/dir/', { standard: 'preview' }, (err, fileTree) => {
 
 See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/secure-rm/releases).
 
-## 📌 TODO
-
-- [x] Implement more tests
-- [ ] Support of 64bit files
-
-## 🏗 Contributing
+## 🏗️ Contributing
 
 <p align="center">
   <a href="https://libraries.io/npm/secure-rm"><img src="https://img.shields.io/librariesio/release/npm/secure-rm?style=flat-square&logo=npm" alt="Dependencies"></a>
