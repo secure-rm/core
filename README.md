@@ -39,14 +39,13 @@ It goes from a simple pass of zeros to a 35 passes algorithm. Secure-rm comes wi
 
 ## ✨ Features
 
-* [Choose your standard](core/standards.md)
+* [Choose your standard](https://docs.secure-rm.com/core/standards)
+* [Create your own standard](https://docs.secure-rm.com/core/custom-standard)
+  * [on files](https://docs.secure-rm.com/core/custom-standard/unlink-methods)
+  * [on directories](https://docs.secure-rm.com/core/custom-standard/rmdir-methods)
+* [Use events to follow the progression with huge files](https://docs.secure-rm.com/core/events.md)
 
-**Core library**
-
-* [Create your own standard](core/custom-standard/)
-  * [on files](core/custom-standard/unlink-methods.md)
-  * [on directories](core/custom-standard/rmdir-methods.md)
-* [Use events to follow the progression with huge files](core/events.md)
+### 📚 [Documentation](https://docs.secure-rm.com/core/getting-started)
 
 ## 📦 Installation
 
@@ -65,38 +64,34 @@ If you want your application to delete specific files with a pass of cryptograph
 ```javascript
 const srm = require('secure-rm')
 
-srm.remove('./folder/*.js')
+srm.remove('./folder/file.js')
   .then(() => console.log('Files successfully deleted !'))
-  .catch((err) => {throw err})
+  .catch(console.error)
 
 // OR
 
-srm.remove('./folder/*.js', (err) => {
+srm.remove('./folder/file.js', (err) => {
   if (err) throw err
   console.log('Files successfully deleted !')
 })
 ```
 
-## 📚 [Documentation](https://docs.secure-rm.com/core/getting-started)
+## 📋 Examples
 
-## 📋 Examples:
 ```javascript
 const options = {
-  standard: 'gutmann',
-  maxBusyTries: 5,
-  disableGlob: true
+  standard: srm.standards.gutmann,
+  maxBusyTries: 5
 }
 
-srm('./data/*.js', options, (err) => {
+srm.remove('./data/file.js', options)
+  .then(() => console.log('Files successfully deleted !'))
+  .catch(console.error)
+
+srm.remove('./trash/dir/', { standard: srm.standards.schneier }, (err) => {
   if (err) throw err
   console.log('Files successfully deleted !')
 })
-
-srm('./trash/dir/', { standard: 'preview' }, (err, fileTree) => {
-  if (err) throw err
-  console.log('Files that would be deleted:' + fileTree)
-})
-
 ```
 
 ## 📜 Changelog / History
@@ -120,5 +115,7 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
 See [contributing guidelines](/CONTRIBUTING.md)
 
 ### Licensing
+
+Icon library by [Icons8](https://icons8.com/).
 
 This project is under [MIT License](/LICENSE).

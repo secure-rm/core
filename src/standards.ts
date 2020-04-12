@@ -5,14 +5,14 @@ export const standards = {
   mark: {
     unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
-        await file.markFile(path)
+        await file.mark(path)
       }
       // @ts-ignore
       remove().then(_ => cb(null)).catch(cb)
     },
     rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
-        await dir.markFolder(path)
+        await dir.mark(path)
       }
       // @ts-ignore
       remove().then(_ => cb(null)).catch(cb)

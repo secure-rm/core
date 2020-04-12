@@ -36,7 +36,7 @@ export async function rename (folderName: string) {
  * Mark the folder, does nothing.
  * @param folderName The folder that will be processed.
  */
-export async function markFolder (folderName: string) {
+export async function mark (folderName: string) {
   if (folderSet.has(folderName)) {
     folderSet.delete(folderName)
     eventEmitter.emit('mark', folderName)
