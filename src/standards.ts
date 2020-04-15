@@ -44,6 +44,18 @@ export const standards = {
     }
   },
 
+  'NZSIT-402': {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.randomByte(fileData, { check: true })
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
+
   zeros: {
     unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
@@ -107,13 +119,28 @@ export const standards = {
       await disk.random(deviceData)
     }
   },
-  HMG_IS5: {
+
+  'HMG-IS5': {
     unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
       const remove = async () => {
         const fileData = await file.init(path)
         await file.zeros(fileData)
         await file.ones(fileData)
-        await file.random(fileData)
+        await file.random(fileData, { check: true })
+        await file.end(fileData)
+      }
+      // @ts-ignore
+      remove().then(_ => cb(null)).catch(cb)
+    }
+  },
+
+  'DOD 5220.22 M': {
+    unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
+      const remove = async () => {
+        const fileData = await file.init(path)
+        await file.zeros(fileData, { check: true })
+        await file.ones(fileData, { check: true })
+        await file.random(fileData, { check: true })
         await file.end(fileData)
       }
       // @ts-ignore
