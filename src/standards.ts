@@ -1,5 +1,6 @@
 import * as file from './file'
 import * as dir from './dir'
+import * as disk from './disk'
 
 export const standards = {
   mark: {
@@ -100,6 +101,10 @@ export const standards = {
       }
       // @ts-ignore
       remove().then(_ => cb(null)).catch(cb)
+    },
+    wipe: async function (deviceData: disk.DeviceData) {
+      await disk.zeros(deviceData)
+      await disk.random(deviceData)
     }
   },
   HMG_IS5: {

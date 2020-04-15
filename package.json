@@ -18,6 +18,7 @@
     "release:trigger": "shipjs trigger"
   },
   "dependencies": {
+    "etcher-image-write": "^9.1.6",
     "fs-extra": "^9.0.0",
     "tslib": "^1.11.1"
   },
@@ -69,8 +70,8 @@
     "validate": [
       "typescript",
       "javascript",
- 	    "javascriptreact",
- 	    "html"
+      "javascriptreact",
+      "html"
     ],
     "envs": [
       "jest"
