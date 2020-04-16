@@ -4,7 +4,6 @@ import util from 'util'
 import crypto from 'crypto'
 import { kMaxLength } from 'buffer'
 import { eventEmitter } from './events'
-import crc32 from 'crc/crc32'
 
 /**
  * Open the file. This function is mandatory.
@@ -186,28 +185,28 @@ export async function changeTimestamps ({ fd }: FileData, { date1 = new Date(0),
  * @param pos Current file position (recursive function).
  * @param getBuffer Function that returns a buffer to write.
  */
-export async function writeExtended (fd: number, size: number, pos: number, getBuffer: (bufferSize: number, pos: number) => Promise<Buffer>, check?: boolean, crcValue?: number): Promise<void> {
+export async function writeExtended (fd: number, size: number, pos: number, getBuffer: (bufferSize: number, pos: number) => Promise<Buffer>, check?: boolean, hash: crypto.Hash = crypto.createHash('sha256')): Promise<void> {
   if (size - pos <= kMaxLength) {
     const data = await getBuffer(size - pos, pos)
     await fs.write(fd, data, 0, size - pos, pos)
-    const newCrcValue = check ? crc32(data, crcValue) : undefined
-    return check ? checkExtended(fd, size, 0, newCrcValue) : Promise.resolve()
+    return check
+      ? checkExtended(fd, size, 0, hash.update(data).digest('hex'))
+      : Promise.resolve()
   }
   const data = await getBuffer(kMaxLength, pos)
   await fs.write(fd, data, 0, kMaxLength, pos)
-  const newCrcValue = check ? crc32(data, crcValue) : undefined
-  return writeExtended(fd, size, pos + kMaxLength, getBuffer, check, newCrcValue)
+  return writeExtended(fd, size, pos + kMaxLength, getBuffer, check, check ? hash.update(data) : hash)
 }
 
-export async function checkExtended (fd: number, size: number, pos: number, checksum: number, crcValue?: number): Promise<void> {
+export async function checkExtended (fd: number, size: number, pos: number, checksum: string, hash: crypto.Hash = crypto.createHash('sha256')): Promise<void> {
   if (size - pos <= kMaxLength) {
-    const data = await fs.read(fd, Buffer.allocUnsafe(size - pos), 0, size - pos, pos)
-    const newCrcValue = crc32(data, crcValue)
-    return checksum === newCrcValue ? Promise.resolve() : Promise.reject(new Error('File was not written correctly, invalid checksum'))
+    const data = (await fs.read(fd, Buffer.allocUnsafe(size - pos), 0, size - pos, pos)).buffer
+    return checksum === hash.update(data).digest('hex')
+      ? Promise.resolve()
+      : Promise.reject(new Error('File was not written correctly, invalid checksum'))
   }
-  const data = await fs.read(fd, Buffer.allocUnsafe(kMaxLength), 0, kMaxLength, pos)
-  const newCrcValue = crc32(data, crcValue)
-  return checkExtended(fd, size, pos + kMaxLength, checksum, newCrcValue)
+  const data = (await fs.read(fd, Buffer.allocUnsafe(kMaxLength), 0, kMaxLength, pos)).buffer
+  return checkExtended(fd, size, pos + kMaxLength, checksum, hash.update(data))
 }
 
 function randomValueBetween (min: number, max: number) {
