@@ -1,7 +1,7 @@
 <h1 align="center">
-  <img src="./assets/logo.png" alt="secure-rm">
+  <img src="./assets/logo.png" alt="secure-rm" width="25%">
   <br>
-  Secure-rm : completely erases files by making recovery impossible.
+  <strong>Secure-rm</strong>: completely erases files by making recovery impossible.
   <br>
 </h1>
 
@@ -12,7 +12,7 @@
 </p>
 <p align="center">
   <a href="https://github.com/secure-rm/core/actions?query=branch%3Amaster"><img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/secure-rm/core/Node%20CI/master?style=flat-square&label=master%20build" alt="Build Status: master"></a>
-  <a href="https://github.com/secure-rm/core/actions?query=branch%3Amaster"><img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/secure-rm/core/Node%20CI/develop?style=flat-square&label=dev%20build" alt="Build Status: develop"></a>
+  <a href="https://github.com/secure-rm/core/actions?query=branch%3Adevelop"><img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/secure-rm/core/Node%20CI/develop?style=flat-square&label=dev%20build" alt="Build Status: develop"></a>
   <a href="https://coveralls.io/github/secure-rm/core"><img src="https://img.shields.io/coveralls/github/secure-rm/core?style=flat-square" alt="Code coverage"></a>
 </p>
 

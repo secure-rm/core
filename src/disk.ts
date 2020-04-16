@@ -2,6 +2,7 @@ import imageWrite from 'etcher-image-write'
 import fs from 'fs-extra'
 import crypto from 'crypto'
 import stream from 'stream'
+import events from 'events'// eslint-disable-line
 
 class DataStream extends stream.Readable {
   deviceSize: number
@@ -29,53 +30,53 @@ class DataStream extends stream.Readable {
   }
 }
 
-export async function random (deviceData: DeviceData, { check = false, passes = 1 } = {}) {
+export async function random (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
-    await overwriteExtended(deviceData, bufferSize => crypto.randomBytes(bufferSize), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => crypto.randomBytes(bufferSize), check)
   }
 }
 
-export async function zeros (deviceData: DeviceData, { check = false, passes = 1 } = {}) {
+export async function zeros (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
-    await overwriteExtended(deviceData, bufferSize => Buffer.alloc(bufferSize, 0b00000000), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, 0b00000000), check)
   }
 }
 
-export async function ones (deviceData: DeviceData, { check = false, passes = 1 } = {}) {
+export async function ones (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
-    await overwriteExtended(deviceData, bufferSize => Buffer.alloc(bufferSize, 0b11111111), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, 0b11111111), check)
   }
 }
 
-export async function byte (deviceData: DeviceData, { check = false, passes = 1, data }: ByteOptions) {
+export async function byte (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1, data }: ByteOptions) {
   for (let i = 0; i < passes; i++) {
-    await overwriteExtended(deviceData, bufferSize => Buffer.alloc(bufferSize, data), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, data), check)
   }
 }
 
-export async function byteArray (deviceData: DeviceData, { check = false, passes = 1, data }: ByteArrayOptions) {
+export async function byteArray (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1, data }: ByteArrayOptions) {
   const dataConverted = Buffer.from(data)
   for (let i = 0; i < passes; i++) {
-    await overwriteExtended(deviceData, bufferSize => Buffer.alloc(bufferSize, dataConverted), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, dataConverted), check)
   }
 }
 
-export async function forByte (deviceData: DeviceData, { check = false, initial, condition, increment }: ForByteOptions) {
+export async function forByte (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, initial, condition, increment }: ForByteOptions) {
   for (let i = initial; condition(i); i = increment(i)) {
-    await overwriteExtended(deviceData, bufferSize => Buffer.alloc(bufferSize, i), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, i), check)
   }
 }
 
-export async function randomByte (deviceData: DeviceData, { check = false, passes = 1 } = {}) {
+export async function randomByte (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
   const data = crypto.randomBytes(1)[0]
   for (let i = 0; i < passes; i++) {
-    await overwriteExtended(deviceData, bufferSize => Buffer.alloc(bufferSize, data), check)
+    await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, data), check)
   }
 }
 
-function overwriteExtended ({ device, deviceSize, chunkSize }: DeviceData, getBuffer: GetBuffer, check: boolean) {
+function overwriteExtended ({ device, deviceSize, chunkSize }: DeviceData, eventEmitter: events.EventEmitter, getBuffer: GetBuffer, check: boolean) {
   return new Promise((resolve, reject) => {
-    const emitter = imageWrite.write({
+    const emitter: events.EventEmitter = imageWrite.write({
       fd: fs.openSync(device, 'rs+'),
       device,
       size: deviceSize
@@ -87,11 +88,12 @@ function overwriteExtended ({ device, deviceSize, chunkSize }: DeviceData, getBu
     })
 
     emitter.on('progress', (state: Progress) => {
-      console.log(state)
+      eventEmitter.emit('progress', state)
     })
 
-    emitter.on('error', (error: NodeJS.ErrnoException) => {
-      reject(error)
+    emitter.on('error', (err: NodeJS.ErrnoException) => {
+      eventEmitter.emit('error', err)
+      reject(err)
     })
 
     emitter.on('done', () => {

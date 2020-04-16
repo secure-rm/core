@@ -11,7 +11,7 @@ describe('Each standard ends:', () => {
       const folderName = tools.createPath()
       tools.fill(2, 2, 1, folderName)
       expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
-      await srm.remove(folderName, { standard })
+      await srm.remove(folderName, { standard }).result
       expect(() => fs.statSync(folderName)).toThrow()
     })
   }
@@ -19,13 +19,13 @@ describe('Each standard ends:', () => {
   it('ID: mark', async () => {
     const folderName = tools.createPath()
     tools.fill(2, 2, 1, folderName)
-    tools.fill(2, 2, 1, tools.createPath())
     expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
-    let count = 0 // TODO
-    srm.eventEmitter.on('mark', () => count++)
-    await srm.remove(folderName, { standard: srm.standards.mark })
+    let count = 0
+    const { events, result } = srm.remove(folderName, { standard: srm.standards.mark })
+    events.on('mark', () => count++)
+    await result
     expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
-    expect(count).toStrictEqual(10)
+    expect(count).toStrictEqual(11)
   })
 })
 
