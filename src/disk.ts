@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import crypto from 'crypto'
 import stream from 'stream'
 import events from 'events'// eslint-disable-line
+import { Settings } from './standards'// eslint-disable-line
 
 class DataStream extends stream.Readable {
   deviceSize: number
@@ -30,44 +31,44 @@ class DataStream extends stream.Readable {
   }
 }
 
-export async function random (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
+export async function random (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => crypto.randomBytes(bufferSize), check)
   }
 }
 
-export async function zeros (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
+export async function zeros (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, 0b00000000), check)
   }
 }
 
-export async function ones (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
+export async function ones (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, 0b11111111), check)
   }
 }
 
-export async function byte (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1, data }: ByteOptions) {
+export async function byte (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, passes = 1, data }: ByteOptions) {
   for (let i = 0; i < passes; i++) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, data), check)
   }
 }
 
-export async function byteArray (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1, data }: ByteArrayOptions) {
+export async function byteArray (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, passes = 1, data }: ByteArrayOptions) {
   const dataConverted = Buffer.from(data)
   for (let i = 0; i < passes; i++) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, dataConverted), check)
   }
 }
 
-export async function forByte (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, initial, condition, increment }: ForByteOptions) {
+export async function forByte (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, initial, condition, increment }: ForByteOptions) {
   for (let i = initial; condition(i); i = increment(i)) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, i), check)
   }
 }
 
-export async function randomByte (deviceData: DeviceData, eventEmitter: events.EventEmitter, { check = false, passes = 1 } = {}) {
+export async function randomByte (deviceData: DeviceData, { eventEmitter }: Settings, { check = false, passes = 1 } = {}) {
   const data = crypto.randomBytes(1)[0]
   for (let i = 0; i < passes; i++) {
     await overwriteExtended(deviceData, eventEmitter, bufferSize => Buffer.alloc(bufferSize, data), check)

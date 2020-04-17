@@ -4,18 +4,18 @@ import * as dir from './dir'
 import * as disk from './disk'
 
 export const standards = {
-  mark: (eventEmitter: events.EventEmitter) => {
+  mark: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          await file.mark(path, eventEmitter)
+          await file.mark(path, settings)
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
       },
       rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          await dir.mark(path, eventEmitter)
+          await dir.mark(path, settings)
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
@@ -23,11 +23,11 @@ export const standards = {
     }
   },
 
-  randomData: (eventEmitter: events.EventEmitter) => {
+  randomData: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.random(fileData)
           await file.end(fileData)
         }
@@ -37,11 +37,11 @@ export const standards = {
     }
   },
 
-  randomByte: (eventEmitter: events.EventEmitter) => {
+  randomByte: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.randomByte(fileData)
           await file.end(fileData)
         }
@@ -51,11 +51,11 @@ export const standards = {
     }
   },
 
-  'NZSIT-402': (eventEmitter: events.EventEmitter) => {
+  'NZSIT-402': (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.randomByte(fileData, { check: true })
           await file.end(fileData)
         }
@@ -65,11 +65,11 @@ export const standards = {
     }
   },
 
-  zeros: (eventEmitter: events.EventEmitter) => {
+  zeros: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.zeros(fileData)
           await file.end(fileData)
         }
@@ -79,11 +79,11 @@ export const standards = {
     }
   },
 
-  ones: (eventEmitter: events.EventEmitter) => {
+  ones: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.ones(fileData)
           await file.end(fileData)
         }
@@ -93,11 +93,11 @@ export const standards = {
     }
   },
 
-  secure: (eventEmitter: events.EventEmitter) => {
+  secure: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          let fileData = await file.init(path, eventEmitter)
+          let fileData = await file.init(path, settings)
           await file.random(fileData)
           fileData = await file.rename(fileData)
           await file.truncate(fileData)
@@ -109,7 +109,7 @@ export const standards = {
       },
       rmdir: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          let folderData = await dir.init(path, eventEmitter)
+          let folderData = await dir.init(path, settings)
           folderData = await dir.rename(folderData)
           await dir.end(folderData)
         }
@@ -119,11 +119,11 @@ export const standards = {
     }
   },
 
-  'GOST_R50739-95': (eventEmitter: events.EventEmitter) => {
+  'GOST_R50739-95': (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.zeros(fileData)
           await file.random(fileData)
           await file.end(fileData)
@@ -132,17 +132,17 @@ export const standards = {
         remove().then(_ => cb(null)).catch(cb)
       },
       wipe: async function (deviceData: disk.DeviceData) {
-        await disk.zeros(deviceData, eventEmitter)
-        await disk.random(deviceData, eventEmitter)
+        await disk.zeros(deviceData, settings)
+        await disk.random(deviceData, settings)
       }
     }
   },
 
-  'HMG-IS5': (eventEmitter: events.EventEmitter) => {
+  'HMG-IS5': (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.zeros(fileData)
           await file.ones(fileData)
           await file.random(fileData, { check: true })
@@ -154,11 +154,11 @@ export const standards = {
     }
   },
 
-  'DOD 5220.22 M': (eventEmitter: events.EventEmitter) => {
+  'DOD 5220.22 M': (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.zeros(fileData, { check: true })
           await file.ones(fileData, { check: true })
           await file.random(fileData, { check: true })
@@ -170,11 +170,11 @@ export const standards = {
     }
   },
 
-  'AR380-19': (eventEmitter: events.EventEmitter) => {
+  'AR380-19': (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.random(fileData)
           await file.randomByte(fileData)
           await file.complementary(fileData)
@@ -186,11 +186,11 @@ export const standards = {
     }
   },
 
-  VSITR: (eventEmitter: events.EventEmitter) => {
+  VSITR: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.zeros(fileData)
           await file.ones(fileData)
           await file.zeros(fileData)
@@ -206,11 +206,11 @@ export const standards = {
     }
   },
 
-  schneier: (eventEmitter: events.EventEmitter) => {
+  schneier: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.zeros(fileData)
           await file.ones(fileData)
           await file.random(fileData, { passes: 5 })
@@ -222,11 +222,11 @@ export const standards = {
     }
   },
 
-  pfitzner: (eventEmitter: events.EventEmitter) => {
+  pfitzner: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.random(fileData, { passes: 33 })
           await file.end(fileData)
         }
@@ -236,11 +236,11 @@ export const standards = {
     }
   },
 
-  gutmann: (eventEmitter: events.EventEmitter) => {
+  gutmann: (settings: Settings) => {
     return {
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
-          const fileData = await file.init(path, eventEmitter)
+          const fileData = await file.init(path, settings)
           await file.random(fileData, { passes: 4 })
           await file.byte(fileData, { data: 0x55 })
           await file.byte(fileData, { data: 0xAA })
@@ -262,4 +262,9 @@ export const standards = {
       }
     }
   }
+}
+
+export interface Settings {
+  eventEmitter: events.EventEmitter
+  maxCheckTries?: number
 }
