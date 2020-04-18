@@ -3,7 +3,7 @@ const srm = require('..')
 
 const tools = require('./tools')(__dirname, __filename)
 
-describe('Each standard ends:', () => {
+describe('Each file standard ends:', () => {
   for (const key in srm.standards) {
     if (key === 'mark') continue
     const standard = srm.standards[key]
@@ -26,6 +26,23 @@ describe('Each standard ends:', () => {
     await result
     expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
     expect(count).toStrictEqual(11)
+  })
+})
+
+describe('Each disk standard ends:', () => {
+  const size = 1024 * 1024 * 100
+  for (const key in srm.standards) {
+    if (key === 'mark') continue
+    const standard = srm.standards[key]
+    it('ID: ' + key, async () => {
+      const device = await tools.createFile(size)
+      expect(await srm.wipeDisk(device, size, { standard }).result).toResolve()
+    })
+  }
+
+  it('ID: mark', async () => {
+    const device = await tools.createFile(size)
+    expect(await srm.wipeDisk(device, size, { standard: srm.standards.mark }).result).rejects.toMatchObject({ code: 'EWIPE' })
   })
 })
 

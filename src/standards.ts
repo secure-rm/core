@@ -104,14 +104,14 @@ export const standards = {
   secure: (settings: StandardSettings) => {
     return {
       description: `**SECURE-RM STANDARD**
-        Pass 1: Overwriting the data with cryptographically strong pseudo-random data;
+        Pass 1: Overwriting the data with cryptographically strong pseudo-random data as well as verifying the writing of the data;
         Then : Renaming the file with random data;
         Then : Truncating between 25% and 75% of the file;
         Then : Resetting file timestamps to 1970-01-01T00:00:00.000Z.`,
       unlink: function (path: string, cb: (err: NodeJS.ErrnoException) => void) {
         const remove = async () => {
           let fileData = await file.init(path, settings)
-          await file.random(fileData)
+          await file.random(fileData, { check: true })
           fileData = await file.rename(fileData)
           await file.truncate(fileData)
           await file.resetTimestamps(fileData)
@@ -130,7 +130,7 @@ export const standards = {
         remove().then(_ => cb(null)).catch(cb)
       },
       wipe: async function (deviceData: disk.DeviceData) {
-        await disk.random(deviceData, settings)
+        await disk.random(deviceData, settings, { check: true })
       }
     }
   },

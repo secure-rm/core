@@ -12,7 +12,7 @@ function init (__dirname, __filename) {
   try {
     fs.mkdirSync(target)
   } catch (err) {}
-  return { fill, cleanup, createPath }
+  return { fill, cleanup, createPath, createFile }
 }
 
 function fill (depth, files, folders, target) {
@@ -45,6 +45,12 @@ function fill (depth, files, folders, target) {
 
 function createPath () {
   return path.resolve(target, crypto.randomBytes(18).toString('base64').replace(/\//g, '0').replace(/\+/g, 'a'))
+}
+
+async function createFile (size) {
+  const file = createPath()
+  await fs.writeFile(file, Buffer.alloc(size))
+  return file
 }
 
 async function cleanup () {

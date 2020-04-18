@@ -1,33 +1,7 @@
 import fs from 'fs-extra'
 import events from 'events'
 import { standards, StandardSettings } from './standards'// eslint-disable-line
-
-interface Options {
-  standard?: (settings: StandardSettings) => {
-    unlink?: typeof fs.unlink
-    rmdir?: typeof fs.rmdir
-  }
-  maxBusyTries?: number
-  maxCheckTries?: number
-}
-
-interface ParsedOptions {
-  standard: (settings: StandardSettings) => {
-    unlink?: typeof fs.unlink
-    rmdir?: typeof fs.rmdir
-  }
-  maxBusyTries?: number
-  maxCheckTries?: number
-}
-
-type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
-type RemoveReturn = ReturnType<typeof remove_>
-type Callback = (err: NodeJS.ErrnoException | null, res: any) => ThenArg<RemoveReturn>
-type ReturnCallback = events.EventEmitter
-type ReturnPromise = {
-  events: events.EventEmitter
-  result: RemoveReturn
-}
+import * as disk from './disk'// eslint-disable-line
 
 export function remove (path: string, options?: Options): ReturnPromise
 export function remove (path: string, callback: Callback): ReturnCallback
@@ -59,11 +33,40 @@ async function remove_ (path: string, options: ParsedOptions, eventEmitter: even
   const update = (path: string) => { count++; index.push(path) }
   eventEmitter.on('mark', update)
   eventEmitter.on('init', update)
-  // @ts-ignore
   await fs.remove(path, {
-    ...options,
+    // @ts-ignore
+    maxBusyTries: options.maxBusyTries,
     ...options.standard({ eventEmitter, maxCheckTries: options.maxCheckTries })
   })
   eventEmitter.emit('done', path)
   return { count, index }
+}
+
+interface Options {
+  standard?: (settings: StandardSettings) => {
+    unlink?: typeof fs.unlink
+    rmdir?: typeof fs.rmdir
+    wipe?: (deviceData: disk.DeviceData) => Promise<void>
+  }
+  maxBusyTries?: number
+  maxCheckTries?: number
+}
+
+interface ParsedOptions {
+  standard: (settings: StandardSettings) => {
+    unlink: typeof fs.unlink
+    rmdir?: typeof fs.rmdir
+    wipe: (deviceData: disk.DeviceData) => Promise<void>
+  }
+  maxBusyTries?: number
+  maxCheckTries?: number
+}
+
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
+type RemoveReturn = ReturnType<typeof remove_>
+type Callback = (err: NodeJS.ErrnoException | null, res: any) => ThenArg<RemoveReturn>
+type ReturnCallback = events.EventEmitter
+type ReturnPromise = {
+  events: events.EventEmitter
+  result: RemoveReturn
 }

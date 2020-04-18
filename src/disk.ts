@@ -75,7 +75,7 @@ class DataStream extends stream.Readable {
   }
 }
 
-function overwriteExtended ({ device, deviceSize, chunkSize }: DeviceData, eventEmitter: events.EventEmitter, getBuffer: GetBuffer, check: boolean) {
+function overwriteExtended ({ device, deviceSize, chunkSize = defaultChunkSize }: DeviceData, eventEmitter: events.EventEmitter, getBuffer: GetBuffer, check: boolean) {
   return new Promise((resolve, reject) => {
     const emitter: events.EventEmitter = imageWrite.write({
       fd: fs.openSync(device, 'rs+'),
@@ -107,6 +107,8 @@ function overwriteExtended ({ device, deviceSize, chunkSize }: DeviceData, event
   })
 }
 
+const defaultChunkSize = 1024 * 1024 * 64
+
 interface Options {
   check?: boolean
   passes?: number
@@ -132,7 +134,7 @@ type GetBuffer = (bufferSize: number, pos: number) => Buffer
 export interface DeviceData {
   device: string
   deviceSize: number
-  chunkSize: number
+  chunkSize?: number
 }
 
 interface DataStreamOptions extends stream.ReadableOptions {

@@ -35,7 +35,7 @@ it('Handles large files (above kMaxLength)', async () => {
   expect(() => fs.statSync(fileName)).toThrow()
 })
 
-it.only('Handles large files checksum (above kMaxLength)', async () => {
+it('Handles large files checksum (above kMaxLength)', async () => {
   const fileName = tools.createPath()
   await fs.writeFile(fileName, Buffer.alloc(0))
   const fileData = await srm.fileMethods.init(fileName, { eventEmitter })
