@@ -9,7 +9,7 @@
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
-    "test": "jest --verbose --runInBand",
+    "test": "jest --verbose",
     "coverage": "jest --coverage --coverageDirectory=./coverage",
     "watch-test": "jest --verbose --watchAll",
     "clean": "rimraf dist coverage",

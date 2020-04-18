@@ -28,7 +28,7 @@ export function wipeDisk (device: string, deviceSize: number, options?: Options 
 }
 
 async function wipeDisk_ (device: string, deviceSize: number, options: ParsedOptions, eventEmitter: events.EventEmitter) {
-  (await options.standard({ eventEmitter, maxCheckTries: options.maxCheckTries }))
+  await options.standard({ eventEmitter, maxCheckTries: options.maxCheckTries })
     .wipe({
       device,
       deviceSize,
