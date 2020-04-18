@@ -1,9 +1,10 @@
 <h1 align="center">
   <img src="./assets/logo.png" alt="secure-rm" width="25%">
   <br>
-  <strong>Secure-rm</strong>: completely erases files by making recovery impossible.
+  <strong>Secure-rm</strong>
   <br>
 </h1>
+<p align="center">Completely erases files by making recovery impossible.</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/v/secure-rm.svg?style=flat-square" alt="Version"></a>

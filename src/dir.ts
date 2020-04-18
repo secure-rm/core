@@ -2,7 +2,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import crypto from 'crypto'
 import events from 'events'// eslint-disable-line
-import { Settings } from './standards'// eslint-disable-line
+import { StandardSettings } from './standards'// eslint-disable-line
 
 const folderSet = new Set()
 
@@ -10,7 +10,7 @@ const folderSet = new Set()
  * Initialize the folder. This function is mandatory.
  * @param folderName The folder that will be processed.
  */
-export async function init (folderName: string, { eventEmitter }: Settings) {
+export async function init (folderName: string, { eventEmitter }: StandardSettings) {
   const files = await fs.readdir(folderName)
   if (files.length) {
     // will throw error
@@ -44,7 +44,7 @@ export async function rename ({ folderName, eventEmitter }: FolderData) {
  * Mark the folder, does nothing.
  * @param folderName The folder that will be processed.
  */
-export async function mark (folderName: string, { eventEmitter }: Settings) {
+export async function mark (folderName: string, { eventEmitter }: StandardSettings) {
   const files = await fs.readdir(folderName)
   if (files.length) {
     if (folderSet.has(folderName)) {

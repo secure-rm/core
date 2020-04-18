@@ -1,9 +1,9 @@
 import fs from 'fs-extra'
 import events from 'events'
-import { standards, Settings } from './standards'// eslint-disable-line
+import { standards, StandardSettings } from './standards'// eslint-disable-line
 
 interface Options {
-  standard?: (settings: Settings) => {
+  standard?: (settings: StandardSettings) => {
     unlink?: typeof fs.unlink
     rmdir?: typeof fs.rmdir
   }
@@ -12,7 +12,7 @@ interface Options {
 }
 
 interface ParsedOptions {
-  standard: (settings: Settings) => {
+  standard: (settings: StandardSettings) => {
     unlink?: typeof fs.unlink
     rmdir?: typeof fs.rmdir
   }

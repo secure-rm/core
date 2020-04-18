@@ -3,13 +3,13 @@ import path from 'path'
 import util from 'util'
 import crypto from 'crypto'
 import { kMaxLength } from 'buffer'
-import { Settings } from './standards'// eslint-disable-line
+import { StandardSettings, CheckError } from './standards'// eslint-disable-line
 
 /**
  * Open the file. This function is mandatory.
  * @param fileName The file that will be processed.
  */
-export async function init (fileName: string, { eventEmitter, maxCheckTries }: Settings, alreadyInit?: boolean): Promise<FileData> {
+export async function init (fileName: string, { eventEmitter, maxCheckTries }: StandardSettings, alreadyInit?: boolean): Promise<FileData> {
   const fileSize = (await fs.stat(fileName)).size
   const fd = await fs.open(fileName, 'r+')
   if (!alreadyInit) eventEmitter.emit('init', fileName)
@@ -30,7 +30,7 @@ export async function end ({ fd, fileName, eventEmitter }: FileData) {
  * Mark the file, does nothing.
  * @param fileName The file that will be processed.
  */
-export async function mark (fileName: string, { eventEmitter }: Settings) {
+export async function mark (fileName: string, { eventEmitter }: StandardSettings) {
   eventEmitter.emit('mark', fileName)
 }
 
@@ -41,7 +41,7 @@ export async function mark (fileName: string, { eventEmitter }: Settings) {
  */
 export async function random ({ fd, fileSize, maxCheckTries }: FileData, { check = false, passes = 1 } = {}) {
   for (let i = 0; i < passes; i++) {
-    await writeExtended(fd, fileSize, 0, async bufferSize => crypto.randomBytes(bufferSize), check, maxCheckTries)
+    await writeExtended(fd, fileSize, 0, async bufferSize => randomBytes(bufferSize), check, maxCheckTries)
   }
 }
 
@@ -225,17 +225,9 @@ function randomValueBetween (min: number, max: number) {
 }
 
 const futimes = util.promisify(fs.futimes)
+const randomBytes = util.promisify(crypto.randomBytes)
 
-class CheckError extends Error {
-  code: string
-  constructor (message: string) {
-    super(message)
-    this.message = 'Invalid checksum, file was not written correctly : ' + message
-    this.code = 'ECHECKSUM'
-  }
-}
-
-interface FileData extends Settings {
+interface FileData extends StandardSettings {
   fd: number
   fileName: string
   fileSize: number
