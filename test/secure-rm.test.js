@@ -59,11 +59,11 @@ it('Accept custom standard', async () => {
   expect(fs.statSync(folderName).isDirectory()).toBeTruthy()
 
   await srm.remove(folderName, {
-    standard: (eventEmitter) => {
+    standard: (settings) => {
       return {
         unlink: function (path, cb) {
           const remove = async () => {
-            let fileData = await srm.fileMethods.init(path, eventEmitter)
+            let fileData = await srm.fileMethods.init(path, settings)
             await srm.fileMethods.byte(fileData, { data: 0x56 })
             await srm.fileMethods.byteArray(fileData, { data: [0x23, 0x15] })
             await srm.fileMethods.changeTimestamps(fileData)
@@ -87,7 +87,7 @@ it('Accept custom standard', async () => {
         },
         rmdir: function (path, cb) {
           const remove = async () => {
-            let folderData = await srm.dirMethods.init(path, eventEmitter)
+            let folderData = await srm.dirMethods.init(path, settings)
             folderData = await srm.dirMethods.rename(folderData)
             await srm.dirMethods.end(folderData)
           }

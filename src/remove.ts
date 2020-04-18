@@ -1,21 +1,23 @@
 import fs from 'fs-extra'
 import events from 'events'
-import { standards } from './standards'
+import { standards, Settings } from './standards'// eslint-disable-line
 
 interface Options {
-  standard?: (eventEmitter: events.EventEmitter) => {
+  standard?: (settings: Settings) => {
     unlink?: typeof fs.unlink
     rmdir?: typeof fs.rmdir
   }
-  maxBusyTries: number
+  maxBusyTries?: number
+  maxCheckTries?: number
 }
 
 interface ParsedOptions {
-  standard: (eventEmitter: events.EventEmitter) => {
+  standard: (settings: Settings) => {
     unlink?: typeof fs.unlink
     rmdir?: typeof fs.rmdir
   }
-  maxBusyTries: number
+  maxBusyTries?: number
+  maxCheckTries?: number
 }
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T
@@ -60,7 +62,7 @@ async function remove_ (path: string, options: ParsedOptions, eventEmitter: even
   // @ts-ignore
   await fs.remove(path, {
     ...options,
-    ...options.standard(eventEmitter)
+    ...options.standard({ eventEmitter, maxCheckTries: options.maxCheckTries })
   })
   eventEmitter.emit('done', path)
   return { count, index }
