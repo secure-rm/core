@@ -69,7 +69,7 @@ onWindowsDescribe('Universal function', () => {
     })
   }
 
-  describe.only('Each disk standard ends:', () => {
+  describe('Each disk standard ends:', () => {
     it('ID: mark', done => {
       srm.wipeDisk('\\\\.\\PhysicalDrive1', 104857600, { standard: srm.standards.mark }).result
         .then(() => expect(false).toBeTrue())
