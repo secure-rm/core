@@ -101,7 +101,6 @@ function overwriteExtended ({ device, deviceSize, chunkSize = defaultChunkSize }
     })
 
     emitter.on('done', () => {
-      console.log('Success!')
       resolve()
     })
   })

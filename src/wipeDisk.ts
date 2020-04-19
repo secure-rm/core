@@ -28,7 +28,7 @@ export function wipeDisk (device: string, deviceSize: number, options?: Options 
 }
 
 async function wipeDisk_ (device: string, deviceSize: number, options: ParsedOptions, eventEmitter: events.EventEmitter) {
-  await options.standard({ eventEmitter, maxCheckTries: options.maxCheckTries })
+  await options.standard({ eventEmitter })
     .wipe({
       device,
       deviceSize,
@@ -43,7 +43,6 @@ interface Options {
     rmdir?: typeof fs.rmdir
     wipe?: (deviceData: disk.DeviceData) => Promise<void>
   }
-  maxCheckTries?: number
   chunkSize?: number
 }
 
@@ -53,7 +52,6 @@ interface ParsedOptions {
     rmdir?: typeof fs.rmdir
     wipe: (deviceData: disk.DeviceData) => Promise<void>
   }
-  maxCheckTries?: number
   chunkSize?: number
 }
 
