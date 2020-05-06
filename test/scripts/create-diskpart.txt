@@ -1,4 +1,4 @@
-create vdisk file=c:\virtual-disk1.vhd maximum=100
+create vdisk file=c:\virtual-disk1.vhd maximum=10
 select vdisk file=c:\virtual-disk1.vhd
 attach vdisk
 convert mbr

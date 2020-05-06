@@ -3,6 +3,8 @@ import events from 'events'
 import { standards, StandardSettings } from './standards'// eslint-disable-line
 import * as disk from './disk'// eslint-disable-line
 
+// etcher-image-write
+
 export function wipeDisk (device: string, deviceSize: number, options?: Options): ReturnPromise
 export function wipeDisk (device: string, deviceSize: number, callback: Callback): ReturnCallback
 export function wipeDisk (device: string, deviceSize: number, options: Options, callback: Callback): ReturnCallback

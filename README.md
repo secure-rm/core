@@ -4,7 +4,7 @@
   <strong>Secure-rm</strong>
   <br>
 </h1>
-<p align="center">Completely erases files by making recovery impossible.</p>
+<p align="center">Data erasure solution for files and drives</p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/secure-rm"><img src="https://img.shields.io/npm/v/secure-rm.svg?style=flat-square" alt="Version"></a>
@@ -65,7 +65,7 @@ If you want your application to delete specific files with a pass of cryptograph
 ```javascript
 const srm = require('secure-rm')
 
-srm.remove('./folder/file.js')
+srm.remove('./folder/file.js').result
   .then(() => console.log('Files successfully deleted !'))
   .catch(console.error)
 
@@ -85,14 +85,16 @@ const options = {
   maxBusyTries: 5
 }
 
-srm.remove('./data/file.js', options)
-  .then(() => console.log('Files successfully deleted !'))
+srm.remove('./data/file.js', options).result
+  .then(({count, index}) => console.log(`Successfully deleted ${count} files: ${index}`))
   .catch(console.error)
 
-srm.remove('./trash/dir/', { standard: srm.standards.schneier }, (err) => {
+const events = srm.remove('./trash/dir/', { standard: srm.standards.schneier }, (err, {count, index}) => {
   if (err) throw err
-  console.log('Files successfully deleted !')
+  console.log(`Successfully deleted ${count} files: ${index}`))
 })
+
+event.on('removed', (fileName) => console.log(fileName))
 ```
 
 ## 📜 Changelog / History
@@ -114,6 +116,10 @@ See the [changelog](/CHANGELOG.md) or [releases](https://github.com/oganexon/sec
 </p>
 
 See [contributing guidelines](/CONTRIBUTING.md)
+
+## Todo
+
+[] Fix wipeDrive (removed from 5.0)
 
 ### Licensing
 
