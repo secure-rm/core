@@ -14,13 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## [Unreleased] -->
 
-## [5.0.0] - Unreleased
+<!-- - `` function to clear free space on drive.
+- `` function to properly format drive. -->
+
+## [5.0.0] - 2020-06-05
 
 ### Added
 
 - Support for 64bit files and files of any size.
-- `` function to clear free space on drive.
-- `` function to properly format drive.
 
 ### Changed
 
@@ -32,13 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Standards syntax.
 - `preview` standard becomes `mark`.
 
-### Removed
-
 ### Fixed
 
 - Queues up open and readdir calls, and retries them once something closes if there is an EMFILE error from too many file descriptors.
 
-### Security
 
 ## [4.2.0] - 2019-11-02
 
