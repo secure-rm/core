@@ -2,7 +2,8 @@
 /.nyc_output
 /dist
 /tmp
-/yarn.lock
+/docs
 /coverage
-/node_modules
+**/node_modules
 git-ignore*
+.env

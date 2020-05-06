@@ -1,0 +1,7 @@
+create vdisk file=c:\virtual-disk1.vhd maximum=10
+select vdisk file=c:\virtual-disk1.vhd
+attach vdisk
+convert mbr
+create partition primary
+format fs=ntfs label=”virtual-secure-rm” quick
+assign letter=v

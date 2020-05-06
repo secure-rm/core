@@ -1,3 +1,7 @@
+# [5.0.0](https://github.com/secure-rm/core/compare/v4.0.0-2...v5.0.0) (2020-05-06)
+
+
+
 # Changelog
 All notable changes to this project will be documented in this file.
 
@@ -13,6 +17,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security -->
 
 <!-- ## [Unreleased] -->
+
+<!-- - `` function to clear free space on drive.
+- `` function to properly format drive. -->
+
+## [5.0.0] - 2020-06-05
+
+### Added
+
+- Support for 64bit files and files of any size.
+
+### Changed
+
+- `srm` function becomes `srm.remove`
+- Global syntax.
+- `secure` standard changes timestamps.
+- Internal changes:
+  - Functions are async.
+  - Standards syntax.
+- `preview` standard becomes `mark`.
+
+### Fixed
+
+- Queues up open and readdir calls, and retries them once something closes if there is an EMFILE error from too many file descriptors.
+
 
 ## [4.2.0] - 2019-11-02
 

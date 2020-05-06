@@ -1,36 +1,38 @@
 {
   "name": "secure-rm",
-  "version": "4.2.0",
-  "description": "Completely erases files by making recovery impossible.",
+  "version": "5.0.0",
+  "description": "Data erasure solution for files and drives",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "npm run lint && npm run build-ts",
+    "build": "yarn lint && yarn build-ts",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "lint": "standard \"**/*.{js,ts}\" --fix --env jest",
-    "coverage": "jest --coverage --coverageDirectory=./coverage",
     "test": "jest --verbose",
-    "watch-test": "npm run test -- --watchAll",
+    "coverage": "jest --coverage --coverageDirectory=./coverage",
+    "watch-test": "jest --verbose --watchAll",
     "clean": "rimraf dist coverage",
-    "prepack": "npm run clean && npm run build"
+    "prepack": "npm run clean && npm run build",
+    "release:prepare": "shipjs prepare",
+    "release:trigger": "shipjs trigger"
   },
   "dependencies": {
-    "rimraf": "^3.0.0",
-    "tslib": "^1.10.0"
+    "fs-extra": "^9.0.0",
+    "tslib": "^1.11.2"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/node": "^12.11.7",
-    "@types/rimraf": "^2.0.3",
-    "@typescript-eslint/eslint-plugin": "^2.5.0",
-    "@typescript-eslint/parser": "^2.5.0",
-    "jest": "^24.9.0",
-    "standard": "^14.3.1",
-    "ts-jest": "^24.1.0",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.4",
-    "uuid": "^3.3.3"
+    "@types/fs-extra": "^8.1.0",
+    "@types/glob": "^7.1.1",
+    "@types/jest": "^25.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "eslint": "^6.8.0",
+    "jest": "^26.0.1",
+    "jest-extended": "^0.11.5",
+    "shipjs": "^0.18.3",
+    "standard": "^14.3.3",
+    "typescript": "^3.8.3"
   },
   "author": "Oganexon @oganexon",
   "bugs": "https://github.com/secure-rm/core/issues",
@@ -40,11 +42,10 @@
     "url": "git+https://github.com/secure-rm/core.git"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "files": [
-    "/dist",
-    "/bin"
+    "/dist"
   ],
   "keywords": [
     "privacy",
@@ -65,6 +66,15 @@
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint/eslint-plugin"
+    ],
+    "validate": [
+      "typescript",
+      "javascript",
+      "javascriptreact",
+      "html"
+    ],
+    "envs": [
+      "jest"
     ]
   }
 }
