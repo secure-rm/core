@@ -1,7 +1,8 @@
+/* istanbul ignore file */
 import fs from 'fs-extra'
 import events from 'events'
 import { standards, StandardSettings } from './standards'// eslint-disable-line
-import * as disk from './disk'// eslint-disable-line
+import * as disk from './disk-ignore-ts'// eslint-disable-line
 
 // etcher-image-write
 

@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import events from 'events'
 import { standards, StandardSettings } from './standards'// eslint-disable-line
-import * as disk from './disk'// eslint-disable-line
+// import * as disk from './disk'// eslint-disable-line
 
 export function remove (path: string, options?: Options): ReturnPromise
 export function remove (path: string, callback: Callback): ReturnCallback
@@ -46,7 +46,7 @@ interface Options {
   standard?: (settings: StandardSettings) => {
     unlink?: typeof fs.unlink
     rmdir?: typeof fs.rmdir
-    wipe?: (deviceData: disk.DeviceData) => Promise<void>
+    // wipe?: (deviceData: disk.DeviceData) => Promise<void>
   }
   maxBusyTries?: number
   maxCheckTries?: number
@@ -56,7 +56,7 @@ interface ParsedOptions {
   standard: (settings: StandardSettings) => {
     unlink: typeof fs.unlink
     rmdir?: typeof fs.rmdir
-    wipe: (deviceData: disk.DeviceData) => Promise<void>
+    // wipe: (deviceData: disk.DeviceData) => Promise<void>
   }
   maxBusyTries?: number
   maxCheckTries?: number

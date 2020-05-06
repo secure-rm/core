@@ -3,7 +3,7 @@ import util from 'util'
 import crypto from 'crypto'
 import * as file from './file'
 import * as dir from './dir'
-import * as disk from './disk'
+// import * as disk from './disk'
 
 export const standards = {
   mark: (settings: StandardSettings) => {
@@ -22,10 +22,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         throw new WipeError('mark')
-      }
+      } */
     }
   },
 
@@ -40,10 +40,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.random(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -58,10 +58,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.randomByte(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -76,10 +76,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.zeros(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -94,10 +94,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.ones(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -128,10 +128,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.random(deviceData, settings, { check: true })
-      }
+      } */
     }
   },
 
@@ -147,10 +147,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.randomByte(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -167,14 +167,14 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         if (deviceData.deviceSize < 15 * 1024 * 1024 * 1024) {
           await disk.randomByte(deviceData, settings, { passes: 3 })
         } else {
           await disk.randomByte(deviceData, settings)
         }
-      }
+      } */
     }
   },
 
@@ -192,11 +192,11 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.zeros(deviceData, settings)
         await disk.randomByte(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -216,12 +216,12 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.zeros(deviceData, settings)
         await disk.ones(deviceData, settings)
         await disk.randomByte(deviceData, settings, { check: true })
-      }
+      } */
     }
   },
 
@@ -257,7 +257,7 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         const bool = (await randomBytes(1))[0] < 128
         if (bool) {
@@ -268,7 +268,7 @@ export const standards = {
           await disk.zeros(deviceData, settings)
         }
         await disk.randomByte(deviceData, settings, { check: true })
-      }
+      } */
     }
   },
 
@@ -298,12 +298,12 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.zeros(deviceData, settings, { check: true })
         await disk.ones(deviceData, settings, { check: true })
         await disk.randomByte(deviceData, settings, { check: true })
-      }
+      } */
     }
   },
 
@@ -334,13 +334,13 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.randomByte(deviceData, settings)
         const byte = (await randomBytes(1))[0]
         await disk.byte(deviceData, settings, { data: byte })
         await disk.byte(deviceData, settings, { data: ~byte, check: true })
-      }
+      } */
     }
   },
 
@@ -363,14 +363,14 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         for (let i = 0; i < 3; i++) {
           await disk.zeros(deviceData, settings)
           await disk.ones(deviceData, settings)
         }
         await disk.randomByte(deviceData, settings, { check: true })
-      }
+      } */
     }
   },
 
@@ -393,14 +393,14 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         for (let i = 0; i < 3; i++) {
           await disk.zeros(deviceData, settings)
           await disk.ones(deviceData, settings)
         }
         await disk.randomByte(deviceData, settings)
-      }
+      } */
     }
   },
 
@@ -420,12 +420,12 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.zeros(deviceData, settings)
         await disk.ones(deviceData, settings)
         await disk.randomByte(deviceData, settings, { passes: 5 })
-      }
+      } */
     }
   },
 
@@ -441,10 +441,10 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.randomByte(deviceData, settings, { passes: 33 })
-      }
+      } */
     }
   },
 
@@ -480,7 +480,7 @@ export const standards = {
         }
         // @ts-ignore
         remove().then(_ => cb(null)).catch(cb)
-      },
+      }/* ,
       wipe: async function (deviceData: disk.DeviceData) {
         await disk.random(deviceData, settings, { passes: 4 })
         await disk.byte(deviceData, settings, { data: 0x55 })
@@ -496,7 +496,7 @@ export const standards = {
         await disk.byteArray(deviceData, settings, { data: [0xB6, 0xDB, 0x6D] })
         await disk.byteArray(deviceData, settings, { data: [0xDB, 0x6D, 0xB6] })
         await disk.random(deviceData, settings, { passes: 4 })
-      }
+      } */
     }
   }
 }
@@ -510,14 +510,14 @@ export class CheckError extends Error {
   }
 }
 
-export class WipeError extends Error {
+/* export class WipeError extends Error {
   code: string
   constructor (message: string) {
     super(message)
     this.message = 'Unsupported wipe function: ' + message
     this.code = 'EWIPE'
   }
-}
+} */
 
 const randomBytes = util.promisify(crypto.randomBytes)
 

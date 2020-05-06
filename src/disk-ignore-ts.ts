@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import imageWrite from 'etcher-image-write'
 import fs from 'fs-extra'
 import crypto from 'crypto'
