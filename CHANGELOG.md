@@ -1,3 +1,7 @@
+# [5.0.0](https://github.com/secure-rm/core/compare/v4.0.0-2...v5.0.0) (2020-05-06)
+
+
+
 # Changelog
 All notable changes to this project will be documented in this file.
 
