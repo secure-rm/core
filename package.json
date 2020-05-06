@@ -1,6 +1,6 @@
 {
   "name": "secure-rm",
-  "version": "5.0.0",
+  "version": "4.2.0",
   "description": "Data erasure solution for files and drives",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
