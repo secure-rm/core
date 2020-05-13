@@ -32,7 +32,7 @@
     "jest-extended": "^0.11.5",
     "shipjs": "^0.18.3",
     "standard": "^14.3.3",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.2"
   },
   "author": "Oganexon @oganexon",
   "bugs": "https://github.com/secure-rm/core/issues",
