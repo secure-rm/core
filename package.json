@@ -18,7 +18,7 @@
     "release:trigger": "shipjs trigger"
   },
   "dependencies": {
-    "fs-extra": "^9.0.0",
+    "fs-extra": "^9.0.1",
     "tslib": "^1.11.2"
   },
   "devDependencies": {
