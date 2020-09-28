@@ -812,16 +812,6 @@
     regexpp "^3.0.0"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@2.28.0":
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.28.0.tgz#1fd0961cd8ef6522687b4c562647da6e71f8833d"
-  integrity sha512-4SL9OWjvFbHumM/Zh/ZeEjUFxrYKtdCi7At4GyKTbQlrj1HcphIDXlje4Uu4cY+qzszR5NdVin4CCm6AXCjd6w==
-  dependencies:
-    "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.28.0"
-    eslint-scope "^5.0.0"
-    eslint-utils "^2.0.0"
-
 "@typescript-eslint/experimental-utils@2.31.0":
   version "2.31.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.31.0.tgz#a9ec514bf7fd5e5e82bc10dcb6a86d58baae9508"
@@ -841,19 +831,6 @@
     "@typescript-eslint/experimental-utils" "2.31.0"
     "@typescript-eslint/typescript-estree" "2.31.0"
     eslint-visitor-keys "^1.1.0"
-
-"@typescript-eslint/typescript-estree@2.28.0":
-  version "2.28.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-2.28.0.tgz#d34949099ff81092c36dc275b6a1ea580729ba00"
-  integrity sha512-HDr8MP9wfwkiuqzRVkuM3BeDrOC4cKbO5a6BymZBHUt5y/2pL0BXD6I/C/ceq2IZoHWhcASk+5/zo+dwgu9V8Q==
-  dependencies:
-    debug "^4.1.1"
-    eslint-visitor-keys "^1.1.0"
-    glob "^7.1.6"
-    is-glob "^4.0.1"
-    lodash "^4.17.15"
-    semver "^6.3.0"
-    tsutils "^3.17.1"
 
 "@typescript-eslint/typescript-estree@2.31.0":
   version "2.31.0"
@@ -5171,10 +5148,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shipjs-lib@0.18.3:
-  version "0.18.3"
-  resolved "https://registry.yarnpkg.com/shipjs-lib/-/shipjs-lib-0.18.3.tgz#a1d1f56047284ce49b7ab7f3ccbcdfa1c254ebe4"
-  integrity sha512-26HvaYNElw60TZ9QYnbrC8xe9nVnvtHAaAIcXYCSWk4KTklxThkZMQ9R/OUS+BNLiuLTbrJLXByJ0KBNjD4j8Q==
+shipjs-lib@0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/shipjs-lib/-/shipjs-lib-0.22.0.tgz#e9413529b3cb03d971f14a6ce7502bddf40d0ed9"
+  integrity sha512-49xomVWwy3Bbu7ieF/D9GURVltJcFZTSYVVM3fa1w/vrZMxskTHjS0UWm/jiUL/EHACyp+7mbTWK8qPHEKz6xA==
   dependencies:
     deepmerge "^4.2.2"
     dotenv "^8.1.0"
@@ -5182,10 +5159,10 @@ shipjs-lib@0.18.3:
     semver "6.3.0"
     shelljs "0.8.4"
 
-shipjs@^0.18.3:
-  version "0.18.3"
-  resolved "https://registry.yarnpkg.com/shipjs/-/shipjs-0.18.3.tgz#f15e108a3a820cc80b0f6d608f1aa5ff8bedeb20"
-  integrity sha512-8zTnZS1TcJM/gRCFilTcIs/Auh4MlBmeGjwcdhvBCpfTahZyC9/Kic38ZBMLuBtetbq0er94mqKcUBMQ54YY8g==
+shipjs@^0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/shipjs/-/shipjs-0.22.0.tgz#01641f12d464cc4442f1686c4174a36e3e6d351c"
+  integrity sha512-43Ia3tnnM5lCOY0XqkoWZ55WqVRWO/b5ce51zh42TfHvNYhFL/5WYb9/avhUHs1ey0Rtxfq4YAAIjAyKx0RVhA==
   dependencies:
     "@babel/runtime" "^7.6.3"
     "@octokit/rest" "^17.0.0"
@@ -5206,7 +5183,7 @@ shipjs@^0.18.3:
     prettier "^2.0.0"
     serialize-javascript "^3.0.0"
     shell-quote "^1.7.2"
-    shipjs-lib "0.18.3"
+    shipjs-lib "0.22.0"
     temp-write "4.0.0"
     tempfile "^3.0.0"
 
