@@ -17,7 +17,7 @@
   <a href="https://coveralls.io/github/secure-rm/core"><img src="https://img.shields.io/coveralls/github/secure-rm/core?style=flat-square" alt="Code coverage"></a>
 </p>
 
-## ❓ Why
+## ❓ Why ❓ 
 
 Secure-rm is composed of two parts: a Node.js module with a straightforward API and a [command line interface](https://www.npmjs.com/package/secure-rm-cli) optimized to delete files on the fly.
 
